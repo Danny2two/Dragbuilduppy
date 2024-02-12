@@ -2,7 +2,7 @@ import math
 import matplotlib
 import numpy
 
-class Line :
+class Drag :
     def calc_reynolds(Density: float,V_inf: float,Chord,DynamicViscosity:float)->float:
         """Calculates the Reynolds number for an airfoil at given conditions.
         @Density: Density in kg/m^3
