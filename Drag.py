@@ -30,7 +30,7 @@ class Drag:
         @reynolds: reynolds number.
         @mach: mach number.
         """
-        Cf = 0.455/(((math.log10(reynolds))^(2.58)) * (1 + 0.144*(mach^2))^(0.65))
+        Cf = 0.455/(numpy.power((math.log10(reynolds)),(2.58)) * (1 + 0.144*(numpy.power(numpy.power(mach,2),(0.65)))))
         return(Cf)
 
     def calc_formfactorwing(XC, TC, mach: float, sweepback)->float:
@@ -40,7 +40,7 @@ class Drag:
         @mach: mach number.
         @sweepback: Sweepback of max thickness line (degrees).
         """
-        FF = (1 + (0.6/XC)*TC + 100*TC^4)*((1.34*mach^(0.18))*(numpy.cos(numpy.deg2rad(sweepback)))^(0.28))
+        FF = (1 + (0.6/XC)*TC + 100*numpy.power(TC,4))*((1.34*numpy.power(mach,(0.18)))*numpy.power((numpy.cos(numpy.deg2rad(sweepback))),(0.28)))
         return(FF)
 
     def calc_wettedareawing(TC, Area):
@@ -55,9 +55,25 @@ class Drag:
         return(Swet)
     
     def calc_oswald_swept(AR, ALe):
+        """Calculate the Oswald efficiency factor.
+        @AR: Aspect Ratio
+        @ALe: Angle of sweepback
+        """
         e0 = 4.61 * (1-0.045*(numpy.power(AR,0.68))) * numpy.power(numpy.cos(numpy.deg2rad(ALe)),0.15) - 3.1
         return(e0)
+    
+    def calc_mach(V_inf, Temp):
+        """Calculate Mach
+        @V_inf: Velocity in m/s
+        @Temp: Temperature
+        """
+        gasconst = 287 #j/kg k
+        y = 1.4
+        a_inf = math.sqrt(y * gasconst * Temp)
+        M = V_inf/a_inf
+        return(M)
 
     def calc_cd0(Skin_Friction_Coefficient, Form_Factor, Interference_Factor, Swet, Swing):
         Cd0 = (Skin_Friction_Coefficient * Form_Factor * Interference_Factor * (Swet/Swing))
         return(Cd0)
+    
