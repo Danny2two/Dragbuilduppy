@@ -69,15 +69,17 @@ class Wing3d:
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
         print("├Mach: " + str(self.mach))
+        print("├Oswald Eff: " + str(self.OswaldE))
         print("└DRAG BUILDUP")
         print(" ├Skin Friction: " + str(self.FPSF))
         print(" ├Form Factor: " + str(self.FormFactor))
         print(" ├Wetted Area: " + str(self.Swet))
+        print(" ├Interf factor: " + str(self.Interf_Factor))
         print(" └CD0_Wing: " + str(self.CD0_wing))
 
 if __name__ == "__main__":
     #From CAD model, wing Area = 208.122 ft^2, 19.335 m^2
     #Span is 15ft, 9.144 m, total length is 4.77m, ave chord 2.36 m
-    NACA4312 = Wing3d("OppaStoppa","NACA4312",40,19.335,9.114,2.36,-6.3,17,0.12,0.3)
+    NACA4312 = Wing3d("OppaStoppa","NACA4312",40,19.335,9.114,2.36,-4,17,0.12,0.3)
     NACA4312.compute()
     NACA4312.printStats()
