@@ -34,13 +34,31 @@ class Drag :
         return(Cf)
 
     def calc_formfactorwing(XC, TC, mach: float, sweepback)->float:
-        """Calculates Form Factor for wings.
+        """Calculates Form Factor for wings, tails, struts and pylons.
         @XC: (x/c)m is the chordwise location of the maximum thickness point.
         @TC: (t/c)m is the thickness ratio. 
         @mach: mach number.
         @sweepback: Sweepback of max thickness line (degrees).
         """
         FF = (1 + (0.6/XC)*TC + 100*numpy.power(TC,4))*((1.34*numpy.power(mach,(0.18)))*numpy.power((numpy.cos(numpy.deg2rad(sweepback))),(0.28)))
+        return(FF)
+    
+    def calc_formfactorfuse(Len,A_max):
+        """Calculates Form Factor for Fuselage
+        @Len: Length of component
+        @A_max: maximum cross-sectional area
+        """
+        f= Len/numpy.sqrt((4/math.pi)*A_max)
+        FF = (0.9 + (5/numpy.power(f,1.5)) + (f/400))
+        return(FF)
+    
+    def calc_formfactornacelle(Len,A_max):
+        """Calculates Form Factor for Fuselage
+        @Len: Length of component
+        @A_max: maximum cross-sectional area
+        """
+        f= Len/numpy.sqrt((4/math.pi)*A_max)
+        FF = 1 + (0.35/f)
         return(FF)
 
     def calc_wettedareawing(TC, Area):
@@ -55,12 +73,35 @@ class Drag :
         return(Swet)
     
     def calc_oswald_swept(AR, ALe):
-        """Calculate the Oswald efficiency factor.
+        """Calculate the Oswald efficiency factor for a swept wing (ALE >= 30).
         @AR: Aspect Ratio
         @ALe: Angle of sweepback
         """
         e0 = 4.61 * (1-0.045*(numpy.power(AR,0.68))) * numpy.power(numpy.cos(numpy.deg2rad(ALe)),0.15) - 3.1
         return(e0)
+    
+    def calc_oswald_straight(AR):
+        """Calculate the Oswald efficiency factor for a straight wing.
+        @AR: Aspect Ratio
+        """
+        e0 = (1.78*(1-0.045*numpy.power(AR,0.68))) - 0.64
+        return(e0)
+    
+    def calc_oswald_any(self,AR, ALe):
+        """Calculate the Oswald efficiency factor for either swept or straight wings.
+        @AR: Aspect Ratio
+        @ALe: Angle of sweepback
+        """
+        if ALe == 0:
+            e0 = self.calc_oswald_straight(AR)
+        elif ALe >=30:
+            e0 = self.calc_oswald_swept(AR,ALe)
+        else:
+            e0st = self.calc_oswald_straight(AR)
+            e0sw = self.calc_oswald_swept(AR,30)
+
+            e0 = e0st - (ALe * (e0st-e0sw/30))
+        return (e0)
     
     def calc_mach(V_inf, Temp):
         """Calculate Mach
