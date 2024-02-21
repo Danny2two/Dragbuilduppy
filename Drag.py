@@ -29,7 +29,7 @@ class Drag :
         @reynolds: reynolds number.
         @mach: mach number.
         """
-        Cf = 0.455/(numpy.power((math.log10(reynolds)),(2.58)) * (1 + 0.144*(numpy.power(numpy.power(mach,2),(0.65)))))
+        Cf = 0.455/(numpy.power((math.log10(reynolds)),(2.58)) * numpy.power(1 + 0.144*(numpy.power(mach,2)),(0.65)))
         return(Cf)
 
     def calc_formfactorwing(XC, TC, mach: float, sweepback)->float:
@@ -61,7 +61,7 @@ class Drag :
         #print(str(f) + " | " + str(FF))
         return(FF)
 
-    def calc_wettedareawing(TC, Area):
+    def calc_wetted_area_wing(TC, Area):
         """Estimates wetted area
         @TC: (t/c)m is the thickness ratio.
         @Aera: area of wing
@@ -71,6 +71,14 @@ class Drag :
         else:
             Swet = 2.003*Area
         return(Swet)
+    
+    def calc_wetted_area_fuse(Atop,Aside):
+        """Estimates wetted area of fuselage
+        @Atop: area of top view of fuse
+        @Aside: side area
+        """
+        swet = 3.4*((Atop + Aside)/2)
+        return (swet)
     
     def calc_oswald_swept(AR, ALe):
         """Calculate the Oswald efficiency factor for a swept wing (ALE >= 30).
