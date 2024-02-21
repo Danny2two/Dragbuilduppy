@@ -69,7 +69,7 @@ class Wing3d(DragyComponent):
         self.mach = Drag.calc_mach(Default_Vinf, Temp)
         self.FPSF = Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
         self.FormFactor = Drag.calc_formfactorwing(self.XC,self.TC,self.mach,self.WingSweep)
-        self.Swet = Drag.calc_wettedareawing(self.TC,(self.Area-self.AreaObs))
+        self.Swet = Drag.calc_wetted_area_wing(self.TC,(self.Area-self.AreaObs))
         self.CD0_wing = Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.Area)
 
     def getCD0(self):
