@@ -10,7 +10,6 @@ class Drag :
         @DynamicViscosity: μ value
         """
         Re: float = (Density * V_inf * Chord)/DynamicViscosity
-
         return (Re)
 
     def calc_dynamicviscosity(temperature: float)->float:

@@ -127,7 +127,7 @@ class Nacelle(DragyComponent):
         Args:
             name (string): Name of nacelle
             len (float): Length in meters
-            CrossArea (float): Max cross-sectional area
+            CrossArea (float): Max cross-sectional area in square meters
             InterFactor (float): Interferance factor
             SWet (float): Wetted surface area in square meters
             SWing (float): Wing area in square meters
