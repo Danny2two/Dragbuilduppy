@@ -30,7 +30,7 @@ class Wing3d(DragyComponent):
     WingSweep = .0
     Area = .0
     AreaObs = .0
-    Span = .0
+    Span = 1.0
     Chord = .1
     A_zero_lift = .0
     A_Stall = .0
@@ -52,8 +52,9 @@ class Wing3d(DragyComponent):
         self.Name = name
         self.airfoil = Airfoil
         self.Chord = Chord
+        self.WingSweep = Sweep
         self.AR = (numpy.power(Span, 2))/Area
-        self.OswaldE = Drag.calc_oswald_any(AR=self.AR,ALE=Sweep)
+        self.OswaldE = Drag.calc_oswald_any(self.AR,self.WingSweep)
         self.WingSweep = Sweep
         self.Area = Area
         self.Span = Span
@@ -194,8 +195,8 @@ if __name__ == "__main__":
     #Components of DC-3
     MainFuselage = Fuselage("DC3 Fuselage",0.0046) #Not Computing, just placeholding
     MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
-    HorizTail = Wing3d("HorizTail","NA",25,19.5096,1,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
-    VertTail = Wing3d("VertTail","NA",33,9.0116,1,3.56616,0,0,0.09,0.50,0) #Specs of the Vertical tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
+    HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
+    VertTail = Wing3d("VertTail","NA",33,9.0116,5,3.56616,0,0,0.09,0.50,0) #Specs of the Vertical tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
     LNacelle = Nacelle("LeftNacelle",4.84632,1.5886,1.5,15.0967,91.7) #Specs of nacelles (metric)
     RNacelle = Nacelle("RightNacelle",4.84632,1.5886,1.5,15.0967,91.7)
     TailGear = FixedGear("Tail Gear",0.25,0.196129,91.7,1.2) #Specs of gear (metric)
@@ -212,13 +213,13 @@ if __name__ == "__main__":
     TailGear.compute()
 
     #Print all of the computed Values
-    MainFuselage.printStats()
+    #MainFuselage.printStats()
     MainWing.printStats()
     HorizTail.printStats()
     VertTail.printStats()
-    LNacelle.printStats()
-    RNacelle.printStats()
-    TailGear.printStats()
+    #LNacelle.printStats()
+    #RNacelle.printStats()
+    #TailGear.printStats()
 
     CD0ALL = MainFuselage.getCD0() + MainWing.getCD0() + HorizTail.getCD0() + VertTail.getCD0() + LNacelle.getCD0() + RNacelle.getCD0() + TailGear.getCD0()
     print("Overall CD0: " + str(CD0ALL))
