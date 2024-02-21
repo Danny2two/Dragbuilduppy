@@ -194,8 +194,8 @@ class FixedGear(DragyComponent):
     def printStats(self):
         print("Stats for:" + self.Name )
         print("└DRAG BUILDUP")
-        print(" ├Frontal Area: " + str(self.S_Frontal))
-        print(" ├ref Wing Area: " + str(self.S_Wing))
+        print(" ├Frontal Area: " + str(self.S_Frontal) + " m^2")
+        print(" ├ref Wing Area: " + str(self.S_Wing) + " m^2")
         print(" ├CD Comp: " + str(self.CDC))
         print(" ├Interf factor: " + str(self.interfFactor))
         print(" └CD0_gear: " + str(self.CDC0))
@@ -252,6 +252,8 @@ class Fuselage(DragyComponent):
     def printStats(self):
         print("Stats for:" + self.Name )
         print("├Length: " + str(self.length)+ " m")
+        print("├Top Area: " + str(self.atop)+" m^2")
+        print("├Side Area: " + str(self.aside)+" m^2")
         print("├CrossArea: " + str(self.maxcross)+" m^2")
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
@@ -259,7 +261,7 @@ class Fuselage(DragyComponent):
         print("└DRAG BUILDUP")
         print(" ├Skin Friction: " + str(self.FPSF))
         print(" ├Form Factor: " + str(self.FormFactor))
-        print(" ├Wetted Area: " + str(self.Swet))
+        print(" ├Wetted Area: " + str(self.Swet) + " m^2")
         print(" ├Interf factor: " + str(self.Interf_Factor))
         print(" └CD0_fuse: " + str(self.CDC0))
 
@@ -269,7 +271,7 @@ class Fuselage(DragyComponent):
 
 if __name__ == "__main__":
     #Components of DC-3
-    MainFuselage = Fuselage("oppaFuse",15.,10.,10.,4.,1.,97.7) #Not Computing, just placeholding
+    MainFuselage = Fuselage("oppaFuse",15.,20.,15.,4.,1.,97.7)
     MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
     HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
     VertTail = Wing3d("VertTail","NA",33,9.0116,5,3.56616,0,0,0.09,0.50,0) #Specs of the Vertical tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
