@@ -49,6 +49,21 @@ class Wing3d(DragyComponent):
     airfoil = ""
 
     def __init__(self,name,Airfoil,Sweep,Area,Span,Chord,Azerolift,Astall,TC,XC, AwingObscured) -> None:
+        """Creates a new 3D wing.
+
+        Args:
+            name: Name to be usef for this wing.
+            Airfoil: Airfoil used for wing.
+            Sweep: Sweep angle in degrees.
+            Area: Planform area of wing in square meters.
+            Span: Wingspan in meters.
+            Chord: Chord length in meters.
+            Azerolift: Angle of zero lift in degrees.
+            Astall: Stall angle of wing in degrees.
+            TC: Thickness Ratio.
+            XC: Chordwise location of the maximum thickness.
+            AwingObscured: Planform area that is obsucred in square meters.
+        """
         self.Name = name
         self.airfoil = Airfoil
         self.Chord = Chord
@@ -79,11 +94,11 @@ class Wing3d(DragyComponent):
     def printStats(self):
         print("Stats for:" + self.Name )
         print("├Airfoil: " + str(self.airfoil))
-        print("├Span: " + str(self.Span))
-        print("├Area: " + str(self.Area))
+        print("├Span: " + str(self.Span)  + " m")
+        print("├Area: " + str(self.Area) + " m^2")
         print("├Aspect Ratio: " + str(self.AR))
-        print("├Chord: " + str(self.Chord))
-        print("├Sweep: " + str(self.WingSweep))
+        print("├Chord: " + str(self.Chord)+ " m")
+        print("├Sweep: " + str(self.WingSweep)+ " deg")
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
         print("├Mach: " + str(self.mach))
@@ -94,7 +109,6 @@ class Wing3d(DragyComponent):
         print(" ├Wetted Area: " + str(self.Swet))
         print(" ├Interf factor: " + str(self.Interf_Factor))
         print(" └CD0_Wing: " + str(self.CD0_wing))
-
 
 class Nacelle(DragyComponent):
     Name = ""
@@ -108,6 +122,16 @@ class Nacelle(DragyComponent):
     SWing = .0
 
     def __init__(self,name,len,CrossArea,InterFactor,SWet,SWing) -> None:
+        """Creates a new Nacelle
+
+        Args:
+            name (string): Name of nacelle
+            len (float): Length in meters
+            CrossArea (float): Max cross-sectional area
+            InterFactor (float): Interferance factor
+            SWet (float): Wetted surface area in square meters
+            SWing (float): Wing area in square meters
+        """
         self.Name = name
         self.Length = len
         self.CrossSectionArea = CrossArea
@@ -125,8 +149,8 @@ class Nacelle(DragyComponent):
 
     def printStats(self):
         print("Stats for:" + self.Name )
-        print("├Length: " + str(self.Length))
-        print("├CrossArea: " + str(self.CrossSectionArea))
+        print("├Length: " + str(self.Length)+ " m")
+        print("├CrossArea: " + str(self.CrossSectionArea)+" m^2")
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
         print("├Mach: " + str(self.mach))
@@ -148,6 +172,15 @@ class FixedGear(DragyComponent):
     interfFactor = 0
     CDC0 = 0
     def __init__(self,name,CDC,SFrontal,SWing,InterfFactor) -> None:
+        """Creates a new fixed gear
+
+        Args:
+            name (string): Name for gear.
+            CDC (float): Estimated Cd for gear.
+            SFrontal (float): Frontal area in square meters.
+            SWing (float): Area of main wing in square meters
+            InterfFactor (float): Interference factor
+        """
         self.Name = name
         self.CDC = CDC
         self.S_Frontal= SFrontal
@@ -172,19 +205,62 @@ class FixedGear(DragyComponent):
     
 class Fuselage(DragyComponent):
     Name = ""
-
     CDC0 = 0
-    def __init__(self,name,CD0) -> None:
+    length = 1.0
+    dyn_vc = 1.0
+    FPSF = 1.0
+    FormFactor = 1.0
+    Swet = 1.0
+    atop =1.0
+    aside = 1.0
+    Interf_Factor =1.0
+    maxcross = 1.0
+    refwing_area = 1.0
+    dyn_vc = 1.0
+    rey_nm = 1.0
+    mach = 1.0
+    def __init__(self,name,length,area_top,area_side,maxcross,interf_factor,refrence_wing_area) -> None:
+        """Creates a new fuselage
+
+        Args:
+            name (string): Name for the fuselage.
+            length (float): Length of the fuselage in meters.
+            area_top (float): Area of the fuselage from top view in square meters.
+            area_side (float): Area of the side of the fuslage in square meters.
+            maxcross (float): Max cross-section area in square meters.
+            interf_factor (float): interference factor.
+            refrence_wing_area (float): Area of the main wing as refernce in square meters.
+        """
         self.Name = name
-        self.CDC0 = CD0
-        super().__init__()
+        self.length = length
+        self.atop = area_top
+        self.aside = area_side
+        self.Interf_Factor = interf_factor
+        self.maxcross = maxcross
+        self.refwing_area = refrence_wing_area
 
     def compute(self):
-        pass
+        self.dyn_vc = Drag.calc_dynamicviscosity(Temp)
+        self.rey_nm = Drag.calc_reynolds(Dens,Default_Vinf,self.length,self.dyn_vc)
+        self.mach = Drag.calc_mach(Default_Vinf, Temp)
+        self.FPSF = Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        self.FormFactor = Drag.calc_formfactorfuse(self.length,self.maxcross)
+        self.Swet = Drag.calc_wetted_area_fuse(self.atop,self.aside)
+        self.CDC0 = Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.refwing_area)
+
     
     def printStats(self):
         print("Stats for:" + self.Name )
+        print("├Length: " + str(self.length)+ " m")
+        print("├CrossArea: " + str(self.maxcross)+" m^2")
+        print("├Dyn Viscosity: " + str(self.dyn_vc))
+        print("├Reynolds: " + str(self.rey_nm))
+        print("├Mach: " + str(self.mach))
         print("└DRAG BUILDUP")
+        print(" ├Skin Friction: " + str(self.FPSF))
+        print(" ├Form Factor: " + str(self.FormFactor))
+        print(" ├Wetted Area: " + str(self.Swet))
+        print(" ├Interf factor: " + str(self.Interf_Factor))
         print(" └CD0_fuse: " + str(self.CDC0))
 
     def getCD0(self) -> float:
@@ -193,7 +269,7 @@ class Fuselage(DragyComponent):
 
 if __name__ == "__main__":
     #Components of DC-3
-    MainFuselage = Fuselage("DC3 Fuselage",0.0046) #Not Computing, just placeholding
+    MainFuselage = Fuselage("oppaFuse",15.,10.,10.,4.,1.,97.7) #Not Computing, just placeholding
     MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
     HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
     VertTail = Wing3d("VertTail","NA",33,9.0116,5,3.56616,0,0,0.09,0.50,0) #Specs of the Vertical tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
@@ -205,6 +281,7 @@ if __name__ == "__main__":
     VertTail.Interf_Factor = 1.04
 
     #Compute CD0's for all the components
+    MainFuselage.compute()
     MainWing.compute()
     HorizTail.compute()
     VertTail.compute()
@@ -213,13 +290,13 @@ if __name__ == "__main__":
     TailGear.compute()
 
     #Print all of the computed Values
-    #MainFuselage.printStats()
+    MainFuselage.printStats()
     MainWing.printStats()
     HorizTail.printStats()
     VertTail.printStats()
-    #LNacelle.printStats()
-    #RNacelle.printStats()
-    #TailGear.printStats()
+    LNacelle.printStats()
+    RNacelle.printStats()
+    TailGear.printStats()
 
     CD0ALL = MainFuselage.getCD0() + MainWing.getCD0() + HorizTail.getCD0() + VertTail.getCD0() + LNacelle.getCD0() + RNacelle.getCD0() + TailGear.getCD0()
     print("Overall CD0: " + str(CD0ALL))
