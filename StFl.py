@@ -19,3 +19,7 @@ def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight):
 def calc_dynpressure(P_inf,V_inf):
     dynpress = 0.5*P_inf*math.pow(V_inf,2)
     return dynpress
+
+def calc_K_value(OswaldEff,AspectRatio):
+    k= 1/(OswaldEff * math.pi * AspectRatio)
+    return k

@@ -4,13 +4,13 @@ from Drag import Drag
 
 """ATMOSPHERE CONDITIONS
 """
-Alt = 3000 #meters
-Temp = 268 #Kelvin
-Press = 70121 #N/m^2
-Dens = 0.905 #kg/m^3  𝜌
-Default_Vinf = 92.59 #m/s
+Alt = 300 #meters
+Temp = 286.21 #Kelvin
+Press = 9.77774/4 #N/m^2
+Dens = 1.19 #kg/m^3  𝜌
+Default_Vinf = 76 #m/s
 
-class Atmosphere:
+class Atmosphere: #CURRENTLY UNUSED
     Altitude = 0
     Temp = 0
     Pressure = 0
