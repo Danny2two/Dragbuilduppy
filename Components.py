@@ -10,6 +10,18 @@ Press = 70121 #N/m^2
 Dens = 0.905 #kg/m^3  𝜌
 Default_Vinf = 92.59 #m/s
 
+class Atmosphere:
+    Altitude = 0
+    Temp = 0
+    Pressure = 0
+    Density = 0 #𝜌
+    Vinfinity = 0
+    
+    def __init__(self,Altitude, Temp, Pressure, Density, Vinf) -> None:
+        self.Altitude = Altitude
+        self.Temp = Temp
+        self.Pressure
+
 class DragyComponent:
     Name = ""
     def __init__(self) -> None:
@@ -271,6 +283,7 @@ class Fuselage(DragyComponent):
 
 
 if __name__ == "__main__":
+    '''
     MainFuselage = Fuselage("oppaFuse",15.,20.,15.,4.,1.,97.7)
     MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
     HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
@@ -320,3 +333,4 @@ if __name__ == "__main__":
 
     print("Thrust Requred for level flight:" + str(ThrustRequred) + " N")
     print("Power Requred for level flight:" + str(PowerRequred) + " Watts")
+    '''
