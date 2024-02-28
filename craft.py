@@ -6,8 +6,8 @@ from StFl import *
 class Craft():
     name = "" #Name for craft
     mass = 0.0
-    weight_empty = 4350 * 9.81 #kg * g
-    weight_takeoff = 5085 * 9.81 #kg * g
+    weight_empty = 1200 * 9.81#4350 * 9.81 #kg * g
+    weight_takeoff = 1400 * 9.81 #5085 * 9.81 #kg * g
     Cd0 = 0
     Cl = 0
     dragcomponents = []#List of of components of drag
@@ -47,6 +47,7 @@ if __name__ == "__main__":
     q = calc_dynpressure(1.19,76)
     print("Power Req: " + str(calc_PowerReq(1.19,76,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff)) + " Watts")
     print("Thrust req: " + str(calc_ThrustReq(q,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff)) + " Newtons")
+    print("V Stall: " + str(calc_Vstall(1.19,OppaStoppa.weight_takeoff,MainWing.Area,1.3858))+ " m/s")
     estCL = calc_CL(OppaStoppa.weight_takeoff,q,MainWing.Area)
-    print("Estimated CL for routine flight:" + str(estCL))
+    print("Estimated CL for routine flight: " + str(estCL))
 
