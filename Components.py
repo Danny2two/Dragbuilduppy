@@ -4,13 +4,14 @@ from Drag import Drag
 
 """ATMOSPHERE CONDITIONS
 """
-Alt = 3000 #meters (10000 ft)
+Alt = 3000 #meters
 Temp = 268 #Kelvin
 Press = 70121 #N/m^2
 Dens = 0.905 #kg/m^3  𝜌
 Default_Vinf = 92.59 #m/s
 
 class DragyComponent:
+    Name = ""
     def __init__(self) -> None:
         pass
 
@@ -270,7 +271,6 @@ class Fuselage(DragyComponent):
 
 
 if __name__ == "__main__":
-    #Components of DC-3
     MainFuselage = Fuselage("oppaFuse",15.,20.,15.,4.,1.,97.7)
     MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
     HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
