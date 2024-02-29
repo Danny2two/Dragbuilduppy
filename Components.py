@@ -3,14 +3,15 @@ import numpy
 from Drag import Drag
 
 """ATMOSPHERE CONDITIONS
-"""
+
 Alt = 300 #meters
 Temp = 286.21 #Kelvin
 Press = 9.77774/4 #N/m^2
 Dens = 1.19 #kg/m^3  𝜌
 Default_Vinf = 76 #m/s
+"""
 
-class Atmosphere: #CURRENTLY UNUSED
+class Atmosphere:
     Altitude = 0
     Temp = 0
     Pressure = 0
@@ -18,13 +19,33 @@ class Atmosphere: #CURRENTLY UNUSED
     Vinfinity = 0
     
     def __init__(self,Altitude, Temp, Pressure, Density, Vinf) -> None:
+        """Variables for the atmosphere
+
+        Args:
+            Altitude (_type_): Altitude (meters)
+            Temp (_type_): Temperature (kelvin)
+            Pressure (_type_): Pressure (N/m^2)
+            Density (_type_): Desnity of atmosphere (𝜌, kg/m^3)
+            Vinf (_type_): Velocity of incoming airstream (m/s)
+        """        
         self.Altitude = Altitude
         self.Temp = Temp
-        self.Pressure
+        self.Pressure = Pressure
+        self.Density = Density
+        self.Vinfinity = Vinf
+    
+    def printAtmos(self):
+        print("Atmosphere State:\n ALT: " + str(self.Altitude) +
+               " m\n Temp: " + str(self.Temp) + 
+               " k\n Pressure: " + str(self.Pressure)+ 
+               " N/m^2\n Density: " + str(self.Density)+ 
+               " kg/m^3\n V_inf: " + str(self.Vinfinity) + "m/s")
 
 class DragyComponent:
     Name = ""
-    def __init__(self) -> None:
+    Atmos = Atmosphere(0,0,0,0,0)
+    def __init__(self,Atmosphere) -> None:
+        self.Atmos = Atmosphere
         pass
 
     def compute():
@@ -61,7 +82,7 @@ class Wing3d(DragyComponent):
     CD0_wing = .0
     airfoil = ""
 
-    def __init__(self,name,Airfoil,Sweep,Area,Span,Chord,Azerolift,Astall,TC,XC, AwingObscured) -> None:
+    def __init__(self,name,Airfoil,Sweep,Area,Span,Chord,Azerolift,Astall,TC,XC, AwingObscured,atmos) -> None:
         """Creates a new 3D wing.
 
         Args:
@@ -76,6 +97,7 @@ class Wing3d(DragyComponent):
             TC: Thickness Ratio.
             XC: Chordwise location of the maximum thickness.
             AwingObscured: Planform area that is obsucred in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
         """
         self.Name = name
         self.airfoil = Airfoil
@@ -91,11 +113,13 @@ class Wing3d(DragyComponent):
         self.TC = TC
         self.XC = XC
         self.AreaObs = AwingObscured
+        super().__init__(Atmosphere=atmos)
+
 
     def compute(self):
-        self.dyn_vc = Drag.calc_dynamicviscosity(Temp)
-        self.rey_nm = Drag.calc_reynolds(Dens,Default_Vinf,self.Chord,self.dyn_vc)
-        self.mach = Drag.calc_mach(Default_Vinf, Temp)
+        self.dyn_vc = Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Chord,self.dyn_vc)
+        self.mach = Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
         self.FPSF = Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
         self.FormFactor = Drag.calc_formfactorwing(self.XC,self.TC,self.mach,self.WingSweep)
         self.Swet = Drag.calc_wetted_area_wing(self.TC,(self.Area-self.AreaObs))
@@ -134,7 +158,7 @@ class Nacelle(DragyComponent):
     SWet = .0
     SWing = .0
 
-    def __init__(self,name,len,CrossArea,InterFactor,SWet,SWing) -> None:
+    def __init__(self,name,len,CrossArea,InterFactor,SWet,SWing,atmos) -> None:
         """Creates a new Nacelle
 
         Args:
@@ -144,6 +168,7 @@ class Nacelle(DragyComponent):
             InterFactor (float): Interferance factor
             SWet (float): Wetted surface area in square meters
             SWing (float): Wing area in square meters
+            atmos (Atmosphere): Atmosphere to be used in calculations
         """
         self.Name = name
         self.Length = len
@@ -151,11 +176,13 @@ class Nacelle(DragyComponent):
         self.InterfFactor = InterFactor
         self.SWet = SWet
         self.SWing =SWing
+        super().__init__(Atmosphere=atmos)
+
 
     def compute(self):
-        self.dyn_vc = Drag.calc_dynamicviscosity(Temp)
-        self.rey_nm = Drag.calc_reynolds(Dens,Default_Vinf,self.Length,self.dyn_vc)
-        self.mach = Drag.calc_mach(Default_Vinf, Temp)
+        self.dyn_vc = Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Length,self.dyn_vc)
+        self.mach = Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
         self.FPSFC = Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
         self.FF = Drag.calc_formfactornacelle(self.Length,self.CrossSectionArea)
         self.CD0C = Drag.calc_cd0(self.FPSFC,self.FF,self.InterfFactor,self.SWet,self.SWing)
@@ -184,7 +211,7 @@ class FixedGear(DragyComponent):
     S_Wing = 0
     interfFactor = 0
     CDC0 = 0
-    def __init__(self,name,CDC,SFrontal,SWing,InterfFactor) -> None:
+    def __init__(self,name,CDC,SFrontal,SWing,InterfFactor,atmos) -> None:
         """Creates a new fixed gear
 
         Args:
@@ -199,7 +226,7 @@ class FixedGear(DragyComponent):
         self.S_Frontal= SFrontal
         self.S_Wing = SWing
         self.interfFactor = InterfFactor
-        super().__init__()
+        super().__init__(Atmosphere=atmos)
 
     def compute(self):
         self.CDC0 = Drag.calc_cd0_gear(self.CDC,self.S_Frontal,self.S_Wing,self.interfFactor)
@@ -232,7 +259,7 @@ class Fuselage(DragyComponent):
     dyn_vc = 1.0
     rey_nm = 1.0
     mach = 1.0
-    def __init__(self,name,length,area_top,area_side,maxcross,interf_factor,refrence_wing_area) -> None:
+    def __init__(self,name,length,area_top,area_side,maxcross,interf_factor,refrence_wing_area,atmos) -> None:
         """Creates a new fuselage
 
         Args:
@@ -243,6 +270,7 @@ class Fuselage(DragyComponent):
             maxcross (float): Max cross-section area in square meters.
             interf_factor (float): interference factor.
             refrence_wing_area (float): Area of the main wing as refernce in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
         """
         self.Name = name
         self.length = length
@@ -251,11 +279,13 @@ class Fuselage(DragyComponent):
         self.Interf_Factor = interf_factor
         self.maxcross = maxcross
         self.refwing_area = refrence_wing_area
+        super().__init__(Atmosphere=atmos)
+
 
     def compute(self):
-        self.dyn_vc = Drag.calc_dynamicviscosity(Temp)
-        self.rey_nm = Drag.calc_reynolds(Dens,Default_Vinf,self.length,self.dyn_vc)
-        self.mach = Drag.calc_mach(Default_Vinf, Temp)
+        self.dyn_vc = Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.length,self.dyn_vc)
+        self.mach = Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
         self.FPSF = Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
         self.FormFactor = Drag.calc_formfactorfuse(self.length,self.maxcross)
         self.Swet = Drag.calc_wetted_area_fuse(self.atop,self.aside)
