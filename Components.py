@@ -311,56 +311,32 @@ class Fuselage(DragyComponent):
     def getCD0(self) -> float:
         return(self.CDC0)
 
+class Engine():
+    BSFC = 0
+    TSFC = 0
+    MaxThrust = 0
+    Effic = 0
+    Name = ""
+    
+    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,Effic) -> None:
+        self.Name = Name
+        self.TSFC = TSFC #Idealy in g/N/s
+        self.BSFC = BSFC
+        self.MaxThrust = MAX_Thrust
+        self.Effic = Effic
+
+    def calc_fuelrate_from_thrust(self,Thrust):
+        """_summary_
+
+        Args:
+            Thrust (_type_): Requred Thrust in Newtons
+
+        Returns:
+            _type_: Fuel consumption(g) per second
+        """        
+        fr = self.TSFC * Thrust
+        return fr
+    
 
 if __name__ == "__main__":
-    '''
-    MainFuselage = Fuselage("oppaFuse",15.,20.,15.,4.,1.,97.7)
-    MainWing = Wing3d("MainWing","NACA2215",10.5,91.7,29,3.16,-1.85,14,0.15,0.3,(4.32*2.4384)) #Specs of Wing
-    HorizTail = Wing3d("HorizTail","NA",25,19.5096,10,2.578608,0,0,0.08,0.5,0) #Specs of the horizontal tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
-    VertTail = Wing3d("VertTail","NA",33,9.0116,5,3.56616,0,0,0.09,0.50,0) #Specs of the Vertical tail, ALL UNITS CONVERTED TO METRIC, meters or m^2
-    LNacelle = Nacelle("LeftNacelle",4.84632,1.5886,1.5,15.0967,91.7) #Specs of nacelles (metric)
-    RNacelle = Nacelle("RightNacelle",4.84632,1.5886,1.5,15.0967,91.7)
-    TailGear = FixedGear("Tail Gear",0.25,0.196129,91.7,1.2) #Specs of gear (metric)
-
-    HorizTail.Interf_Factor = 1.04
-    VertTail.Interf_Factor = 1.04
-
-    #Compute CD0's for all the components
-    MainFuselage.compute()
-    MainWing.compute()
-    HorizTail.compute()
-    VertTail.compute()
-    LNacelle.compute()
-    RNacelle.compute()
-    TailGear.compute()
-
-    #Print all of the computed Values
-    MainFuselage.printStats()
-    MainWing.printStats()
-    HorizTail.printStats()
-    VertTail.printStats()
-    LNacelle.printStats()
-    RNacelle.printStats()
-    TailGear.printStats()
-
-    CD0ALL = MainFuselage.getCD0() + MainWing.getCD0() + HorizTail.getCD0() + VertTail.getCD0() + LNacelle.getCD0() + RNacelle.getCD0() + TailGear.getCD0()
-    print("Overall CD0: " + str(CD0ALL))
-
-    """
-        Some Info for Power requred calculation
-    """
-    K = 0.05
-    mass = 11430 
-    W = 112128.3
-
-    M1 = 0.5 * (Dens * math.pow(Default_Vinf,2) * MainWing.Area * CD0ALL)
-    M2 = (2 * K * math.pow(W,2))/(Dens*math.pow(Default_Vinf,2)*MainWing.Area)
-    ThrustRequred = M1 + M2
-
-    H1 = 0.5*(Dens * (math.pow(Default_Vinf, 3)) * MainWing.Area * CD0ALL)
-    H2 = (2 * K * math.pow(W,2))/ (Dens * Default_Vinf * MainWing.Area)
-    PowerRequred = H1+H2
-
-    print("Thrust Requred for level flight:" + str(ThrustRequred) + " N")
-    print("Power Requred for level flight:" + str(PowerRequred) + " Watts")
-    '''
+    pass

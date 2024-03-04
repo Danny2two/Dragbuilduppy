@@ -21,5 +21,27 @@ def calc_dynpressure(P_inf,V_inf):
     return dynpress
 
 def calc_K_value(OswaldEff,AspectRatio):
+    """Calculates K value
+
+    Args:
+        OswaldEff (_type_): Oswalds efficany
+        AspectRatio (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """    
     k= 1/(OswaldEff * math.pi * AspectRatio)
     return k
+
+def calc_CL_CDmax(K, CD0):
+    """Finds (CL/CD)max given K and CDO
+
+    Args:
+        K (_type_): K value
+        CD0 (_type_): C_D0
+
+    Returns:
+        Float: Ratio = (CL/CD)max
+    """    
+    clcd = math.sqrt(1/(4*K*CD0))
+    return clcd
