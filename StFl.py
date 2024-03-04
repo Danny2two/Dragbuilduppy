@@ -1,6 +1,6 @@
 import math
 
-def calc_requred_CL(weight, Q_inf, wingarea):
+def calc_req_CL(weight, Q_inf, wingarea):
     CL = (weight/(Q_inf * wingarea))
     return CL
 
