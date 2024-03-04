@@ -11,6 +11,7 @@ class Craft():
     Cd0 = 0
     Cl = 0
     dragcomponents = []#List of of components of drag
+    powertrain = [] #list of engines
 
     Atmosphere = Atmosphere(300,286.21, 9.77774/4,1.19,76)
 
@@ -30,6 +31,12 @@ class Craft():
     def print_stats_components(self):
         for i in self.dragcomponents:
             i.printStats()
+
+    def get_max_thrust(self):
+        thr = 0
+        for i in self.powertrain:
+            thr += i.MaxThrust
+        return thr
 
 if __name__ == "__main__":
     OppaStoppa = Craft("OpptaStoppa")

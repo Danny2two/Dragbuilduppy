@@ -315,21 +315,23 @@ class Engine():
     BSFC = 0
     TSFC = 0
     MaxThrust = 0
+    MaxPower =0
     Effic = 0
     Name = ""
     
-    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,Effic) -> None:
+    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic) -> None:
         self.Name = Name
         self.TSFC = TSFC #Idealy in g/N/s
         self.BSFC = BSFC
         self.MaxThrust = MAX_Thrust
+        self.MaxPower = MAX_Power
         self.Effic = Effic
 
     def calc_fuelrate_from_thrust(self,Thrust):
         """_summary_
 
         Args:
-            Thrust (_type_): Requred Thrust in Newtons
+            Thrust (_type_): Required Thrust in Newtons
 
         Returns:
             _type_: Fuel consumption(g) per second
