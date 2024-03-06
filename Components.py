@@ -321,7 +321,7 @@ class Engine():
     
     def __init__(self,Name,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic) -> None:
         self.Name = Name
-        self.TSFC = TSFC #Idealy in g/N/s
+        self.TSFC = TSFC #Idealy in g/kN/s
         self.BSFC = BSFC
         self.MaxThrust = MAX_Thrust
         self.MaxPower = MAX_Power
@@ -336,7 +336,7 @@ class Engine():
         Returns:
             _type_: Fuel consumption(g) per second
         """        
-        fr = self.TSFC * Thrust
+        fr = self.TSFC * Thrust/1000
         return fr
     
 
