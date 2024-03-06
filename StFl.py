@@ -108,3 +108,20 @@ def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
     """    
     endur =(1/TSFC) * Cl_Cd * (math.log((weightTO/weightEm),math.e))
     return endur
+
+def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
+    """Calculates range for a turbojet at a given parameters
+
+    Args:
+        p_inf (_type_): Atmospheric Density (kg/m^3)
+        wingarea (_type_): _description_
+        TSFC (_type_): Thrust specific fuel consumption
+        clcd (_type_): Cl/Cd ratio (Cl^1/2 / Cd for max range)
+        weighttakeoff (_type_): Craft weight at takeoff (N)
+        weightempty (_type_): Craft empty weight (N)
+
+    Returns:
+        _type_: Range
+    """    
+    range = 2 * math.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (math.sqrt(weighttakeoff) - math.sqrt(weightempty))
+    return range
