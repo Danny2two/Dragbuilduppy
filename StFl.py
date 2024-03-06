@@ -99,7 +99,7 @@ def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
 
     Args:
         TSFC (g/N/s): Thrust Specific fuel Consumption
-        Cl_Cd (Coeff): Cl / Cd
+        Cl_Cd (Coeff): Cl / Cd max
         weightTO (N): Takeoff weight
         weightEm (N): Empty weight
 
@@ -123,5 +123,5 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     Returns:
         _type_: Range
     """    
-    range = 2 * math.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (math.sqrt(weighttakeoff) - math.sqrt(weightempty))
+    range = (2/8.91) * math.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (math.sqrt(weighttakeoff) - math.sqrt(weightempty))
     return range
