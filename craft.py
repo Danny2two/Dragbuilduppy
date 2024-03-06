@@ -61,6 +61,6 @@ if __name__ == "__main__":
     print("Power Req: " + str(calc_PowerReq(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff)) + " Watts")
     print("Thrust req: " + str(calc_ThrustReq(q,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff)) + " Newtons")
     print("V Stall: " + str(calc_Vstall(OppaStoppa.Atmosphere.Density,OppaStoppa.weight_takeoff,MainWing.Area,1.3858))+ " m/s")
-    estCL = calc_CL(OppaStoppa.weight_takeoff,q,MainWing.Area)
+    estCL = calc_req_CL(OppaStoppa.weight_takeoff,q,MainWing.Area)
     print("Estimated CL for routine flight: " + str(estCL))
 
