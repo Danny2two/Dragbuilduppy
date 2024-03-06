@@ -34,7 +34,9 @@ def calc_K_value(OswaldEff,AspectRatio):
     return k
 
 def calc_CL_CDmax(K, CD0):
-    """Finds (CL/CD)max given K and CDO
+    """Finds (CL/CD)max given K and CDO usefull for:
+    PROP: max range
+    JET: max endurace 
 
     Args:
         K (_type_): K value
@@ -45,3 +47,64 @@ def calc_CL_CDmax(K, CD0):
     """    
     clcd = math.sqrt(1/(4*K*CD0))
     return clcd
+
+def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
+    """Calculates V_Inf to achieve max endurance with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max endurance (m/s)
+    """    
+    vinf = math.sqrt((2/P_inf) * (weight/wingArea)* math.sqrt(K/Cd_0))
+    return vinf
+
+def calc_Vinf_MaxJetRange(P_inf,weight,wingArea,Cd_0,K):
+    """Calculates V_Inf to achieve max range with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max range (m/s)
+    """    
+    vinf = math.sqrt((2/P_inf) * (weight/wingArea)* math.sqrt((3*K)/Cd_0))
+    return vinf
+
+def calc_CL_CDmaxRangeJet(K,CD_0):
+    """Calculates Cl^1/2 / CD max usefull for max range of jets
+
+    Args:
+        K (_type_): K value
+        CD_0 (_type_): CD_0 value
+
+    Returns:
+        _type_: (Cl^1/2 / CD)max
+    """
+    clcd = (3/4) * math.pow((1/(3 * K * math.pow(CD_0,3))),(1/4))
+    return clcd
+
+
+def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
+    """Calculates Enduance for a turbojet with the provided characteristitcs
+
+    Args:
+        TSFC (g/N/s): Thrust Specific fuel Consumption
+        Cl_Cd (Coeff): Cl / Cd
+        weightTO (N): Takeoff weight
+        weightEm (N): Empty weight
+
+    Returns:
+        float: Endurance (hours)
+    """    
+    endur =(1/TSFC) * Cl_Cd * (math.log((weightTO/weightEm),math.e))
+    return endur
