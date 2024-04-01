@@ -4,13 +4,13 @@ import numpy as np
 from Craft import Craft
 from Atmosphere import Atmosphere
 
-class CraftStatisitics():
+class CraftStatistics():
     StatsCraft: Craft
     Active_Atmosphere: Atmosphere
 
     def __init__(self, Craft: Craft) -> None:
         self.StatsCraft = Craft
-        self.Active_Atmosphere = Craft.Atmoshere
+        self.Active_Atmosphere = Craft.Atmosphere
 
     def get_ThrustAvailable_jet(self,alt):
         """Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
