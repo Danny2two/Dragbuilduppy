@@ -57,7 +57,7 @@ class CraftStatistics():
         Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
         return Pr
     
-    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT: str):
+    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT: str,GRAPH_EXCESS: bool = False):
         """Returns a MPL figure of power requred and available vs alt
 
         Args:
@@ -92,10 +92,18 @@ class CraftStatistics():
         fig, ax = plt.subplots()
         #ax.plot(alt_array,dens_array,linewidth=1,label="Dens")
         #ax.plot(alt_array,temp_array,linewidth=1,label="temp")
+        if GRAPH_EXCESS:
+            prEx_arr = prA_array - prR_array
+            ax.plot(alt_array,prEx_arr,linewidth=2,label="Power Excess (kW)")
+            strTitle = "Altitude vs Excess power"
+            ax.hlines(0,Alt_lower,Alt_upper,colors="red",linestyles="dotted",label="Zero Excess")
+        else:
+            strTitle = "Altitude vs Power Available & Required"
+            ax.plot(alt_array,prA_array,linewidth=2,label="Power Available (kW)")
+            ax.plot(alt_array,prR_array,linewidth=2,label="Power Required (kW)")
 
-        ax.plot(alt_array,prA_array,linewidth=2,label="Power Available (kW)")
-        ax.plot(alt_array,prR_array,linewidth=2,label="Power Required (kW)")
-        ax.set(xlabel='Altitude (meters)', ylabel='Power (kW)',title='Altitude vs Power Available & Required')
+
+        ax.set(xlabel='Altitude (meters)', ylabel='Power (kW)',title=strTitle)
         textstr = "$V_\infty = $" + str(Velocity) + "$\dfrac{m}{s}$" +"\nweight =" + str(round(weight / 1000,2)) + "kN"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
@@ -176,7 +184,7 @@ if __name__ == "__main__":
     ThrustAvailableCurve = MyCraftStats.graph_ThrustAvailable(0,10000,1000)
     ThrustAvailableCurve.legend()
 
-    PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(0,10000,1000,76,"AVE")
+    PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(0,10000,1000,76,"AVE",GRAPH_EXCESS=True)
     PowerCurve.legend()
     plt.show()
     
