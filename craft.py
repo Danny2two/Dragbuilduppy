@@ -5,7 +5,7 @@ from Drag import Drag
 from StFl import *
 
 class Craft():
-    name = "" #Name for craft
+    name = "" #Name for craft 
     mass = 0.0
     weight_empty = 0#4350 * 9.81 #kg * g
     weight_takeoff = 0 #5085 * 9.81 #kg * g
