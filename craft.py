@@ -12,6 +12,7 @@ class Craft():
     Cl = 0
     dragcomponents = []#List of of components of drag
     powertrain = [] #list of engines
+    mainwing = Wing3d
 
     Atmosphere = Atmosphere(300,286.21, 9.77774/4,1.19,76)
 
