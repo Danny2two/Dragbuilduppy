@@ -13,10 +13,32 @@ def calc_Vstall(P_inf, weight,wingarea,CL_max):
     return vstall
 
 def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight):
+    """Calculates power requred for flight 
+
+    Args:
+        P_inf (_type_): Atmospheric density (kg/m^3)
+        V_inf (_type_): Velocity @ infinity
+        wingarea (_type_): Wing planform area
+        CD_0 (_type_): Crafts Cd_0
+        K (_type_): k value
+        weight (_type_): craft weight (N)
+
+    Returns:
+        _type_: _description_
+    """    
     pr = 0.5*P_inf*math.pow(V_inf,3)*wingarea*CD_0 + ((2*K*math.pow(weight,2))/(P_inf*V_inf*wingarea))
     return pr
 
 def calc_dynpressure(P_inf,V_inf):
+    """Calculates dynamic pressure
+
+    Args:
+        P_inf (_type_): Density (kg/m^3)
+        V_inf (_type_): Velocity m/s
+
+    Returns:
+        _type_: Dynamic pressure
+    """    
     dynpress = 0.5*P_inf*math.pow(V_inf,2)
     return dynpress
 
@@ -98,7 +120,7 @@ def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
     """Calculates Enduance for a turbojet with the provided characteristitcs
 
     Args:
-        TSFC (g/N/s): Thrust Specific fuel Consumption
+        TSFC (g/N/s): Thrust Specific fuel Consumption *IN N fuel / sec / N thrust*
         Cl_Cd (Coeff): Cl / Cd max
         weightTO (N): Takeoff weight
         weightEm (N): Empty weight
@@ -115,7 +137,7 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     Args:
         p_inf (_type_): Atmospheric Density (kg/m^3)
         wingarea (_type_): _description_
-        TSFC (_type_): Thrust specific fuel consumption
+        TSFC (_type_): Thrust specific fuel consumption *IN N fuel / sec / N thrust*
         clcd (_type_): Cl/Cd ratio (Cl^1/2 / Cd for max range)
         weighttakeoff (_type_): Craft weight at takeoff (N)
         weightempty (_type_): Craft empty weight (N)
