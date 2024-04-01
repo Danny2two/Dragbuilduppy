@@ -173,8 +173,8 @@ if __name__ == "__main__":
 
 
     MyCraftStats = CraftStatistics(OppaStoppa)
-    #ThrustAvailableCurve = MyCraftStats.graph_ThrustAvailable(0,10000,1000)
-    #ThrustAvailableCurve.legend()
+    ThrustAvailableCurve = MyCraftStats.graph_ThrustAvailable(0,10000,1000)
+    ThrustAvailableCurve.legend()
 
     PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(0,10000,1000,76,"AVE")
     PowerCurve.legend()
