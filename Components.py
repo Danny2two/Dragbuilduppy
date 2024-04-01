@@ -79,6 +79,7 @@ class Wing3d(DragyComponent):
 
 
     def compute(self):
+        self.AR = (numpy.power(self.Span, 2))/self.Area
         self.dyn_vc = Drag.calc_dynamicviscosity(self.Atmos.Temp)
         self.rey_nm = Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Chord,self.dyn_vc)
         self.mach = Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
