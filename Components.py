@@ -2,45 +2,6 @@ import math
 import numpy
 from Drag import Drag
 
-"""ATMOSPHERE CONDITIONS
-
-Alt = 300 #meters
-Temp = 286.21 #Kelvin
-Press = 9.77774/4 #N/m^2
-Dens = 1.19 #kg/m^3  𝜌
-Default_Vinf = 76 #m/s
-"""
-
-class Atmosphere:
-    Altitude = 0
-    Temp = 0
-    Pressure = 0
-    Density = 0 #𝜌
-    Vinfinity = 0
-    
-    def __init__(self,Altitude, Temp, Pressure, Density, Vinf) -> None:
-        """Variables for the atmosphere
-
-        Args:
-            Altitude (_type_): Altitude (meters)
-            Temp (_type_): Temperature (kelvin)
-            Pressure (_type_): Pressure (N/m^2)
-            Density (_type_): Desnity of atmosphere (𝜌, kg/m^3)
-            Vinf (_type_): Velocity of incoming airstream (m/s)
-        """        
-        self.Altitude = Altitude
-        self.Temp = Temp
-        self.Pressure = Pressure
-        self.Density = Density
-        self.Vinfinity = Vinf
-    
-    def printAtmos(self):
-        print("Atmosphere State:\n ALT: " + str(self.Altitude) +
-               " m\n Temp: " + str(self.Temp) + 
-               " k\n Pressure: " + str(self.Pressure)+ 
-               " N/m^2\n Density: " + str(self.Density)+ 
-               " kg/m^3\n V_inf: " + str(self.Vinfinity) + "m/s")
-
 class DragyComponent:
     Name = ""
     Atmos = Atmosphere(0,0,0,0,0)
