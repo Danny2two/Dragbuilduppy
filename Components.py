@@ -1,5 +1,6 @@
 import math
 import numpy
+import Atmosphere
 from Drag import Drag
 
 class DragyComponent:
