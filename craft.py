@@ -5,6 +5,7 @@ from Drag import Drag
 from StFl import *
 
 class Craft():
+    Atmosphere: Atmosphere
     name = "" #Name for craft 
     mass = 0.0
     weight_empty = 0#4350 * 9.81 #kg * g

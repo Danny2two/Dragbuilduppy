@@ -66,6 +66,17 @@ class Atmosphere:
         """
         dens = self.Density_SeaLevel * math.pow((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a *-1))))
         return dens
+    
+    def dens_trop_alt(self, alt):
+        """Calculates density from temperature in troposphere
+        Args:
+        alt: Altitude in meters above sea level
+        Returns:
+        density: density kg/m^3
+        """
+        temperature = self.temp_trop(alt)
+        dens = self.Density_SeaLevel * math.pow((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a *-1))))
+        return dens
 
     def jet_thrust_available(self,refThrust, density, m):
         """Calculates thrust available
@@ -76,5 +87,18 @@ class Atmosphere:
         Returns:
         Thrust: Thrust available
         """
+        thrust = refThrust * math.pow((density/self.Density_SeaLevel),m)
+        return thrust
+    
+    def jet_thrust_available_alt(self,refThrust, alt, m):
+        """Calculates thrust available
+        Args:
+        refThrust: refrence thrust at sea level
+        alt: Altitude in meters above sea level
+        m:
+        Returns:
+        Thrust: Thrust available
+        """
+        density = self.dens_trop_alt(alt)
         thrust = refThrust * math.pow((density/self.Density_SeaLevel),m)
         return thrust
