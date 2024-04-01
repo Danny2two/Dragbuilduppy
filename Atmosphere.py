@@ -75,7 +75,7 @@ class Atmosphere:
         density: density kg/m^3
         """
         temperature = self.temp_trop(alt)
-        dens = self.Density_SeaLevel * math.pow((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a *-1))))
+        dens = self.Density_SeaLevel * math.pow((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a *(-1)))))
         return dens
 
     def jet_thrust_available(self,refThrust, density, m):

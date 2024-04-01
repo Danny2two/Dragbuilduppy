@@ -35,12 +35,16 @@ class CraftStatistics():
             plt: Plot containing Thrust available vs altitude
         """        
         alt_array = np.linspace(Alt_lower_lim,Alt_upper_lim,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        dens_array = np.zeros(alt_array.shape)
         thrust_array = np.zeros(alt_array.shape) #Make new array for thrust
 
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
             thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1])
+            dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1])
+
 
         fig, ax = plt.subplots()
+        ax.plot(alt_array,dens_array,linewidth=1,label="Dens")
         ax.plot(alt_array,thrust_array,linewidth=2,label="Thrust Available (N)")
         ax.set(xlabel='Altitude (meters)', ylabel='Thrust available(N)',title='Altitude vs Thrust Available')
 
