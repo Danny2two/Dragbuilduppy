@@ -13,6 +13,10 @@ class CraftStatistics():
         self.StatsCraft = Craft
         self.Active_Atmosphere = Craft.Atmosphere
 
+        print("Initalizing Statistics for Craft: " + self.StatsCraft.name)
+        print("CD0: " + str(self.StatsCraft.Cd0))
+        print("Ozwald: " + str(self.StatsCraft.mainwing.OswaldE))
+
     #PART F
     def weight_from_str(self, WEIGHT: str)-> float:
         """Gets the crafts weight from a string.
@@ -168,7 +172,7 @@ class CraftStatistics():
         """        
         weight = self.weight_from_str(WEIGHT)
     
-        PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,str(weight),GRAPH_EXCESS=True,SENDRAW=True)
+        PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,str(weight),GRAPH_EXCESS=True,SENDRAW=True)
         """About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
         this is deviding every number in powercurve[1] (our excess power) by the weight. 
         """
@@ -212,7 +216,7 @@ class CraftStatistics():
         alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
         vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
 
-        vectorized = np.vectorize(self.get_ROC_vel_alt) #Num
+        vectorized = np.vectorize(self.get_ROC_vel_alt) #Numpy magic
 
         X, Y = np.meshgrid(vel_array, alt_array)
         Z = vectorized(Y,X,WEIGHT)
@@ -279,6 +283,6 @@ if __name__ == "__main__":
     rcfCurve.legend()
     #rcCurve.show()
     """
-    curve = MyCraftStats.graph_ROC_3d(0,10000,1000,50,90,1000,"AVE")
+    curve = MyCraftStats.graph_ROC_3d(0,10000,1000,50,150,1000,"AVE")
     plt.show()
     
