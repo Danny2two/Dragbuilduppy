@@ -233,7 +233,8 @@ class CraftStatistics():
         textstr = "Green line: ROC = 100 ft/min"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
-        ax.text(0, 100,-10, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
+        ax.text(0, 0,0, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
+        ax.set_box_aspect(aspect=None, zoom=0.8)
         fig.add_axes(ax)
         return fig
 
