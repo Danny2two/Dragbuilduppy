@@ -2,7 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from Craft import *
+from craft import *
 from Atmosphere import Atmosphere
 
 class CraftStatistics():
@@ -165,9 +165,7 @@ class CraftStatistics():
         """Graphs rate of climb vs Altitude for the given velocity and weight.
 
         Args:
-            alt_Lower (_type_): Lower limit for altitude (meters above sea level)
-            alt_Upper (_type_): Upper limit for altitude (meters above sea level)
-            numPoints (_type_): Number of points to graph
+            alt_Lower (_type_): Lower limit for altityay -Syu --develraph
             Velocity (_type_): Velocity to be used in excess energy calculation (m/s)
             WEIGHT (_type_): Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
             INFEETMIN (bool, optional): Graph in ROC in feet/min rather than m/s Defaults to False.
@@ -226,11 +224,17 @@ class CraftStatistics():
         alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
         vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
 
+        vectorized = np.vectorize(self.get_ROC_vel_alt)
+
         X, Y = np.meshgrid(vel_array, alt_array)
-        Z = self.get_ROC_vel_alt(Y,X,WEIGHT)
-        fig = plt.figure()
-        ax = plt.axes(projection ='3d')
-        ax.plot_wireframe(X, Y, Z, color ='green')
+        Z = vectorized(Y,X,WEIGHT)
+
+        fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+        surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False)
+        fig.colorbar(surf, shrink=0.5, aspect=5)
+        ax.set_xlabel("Velocity (m/s)")
+        ax.set_ylabel("Altitude (m)")
+        ax.set_zlabel("ROC (m/s)")
         return fig
 
         
