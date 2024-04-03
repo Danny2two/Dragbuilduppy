@@ -13,6 +13,7 @@ class CraftStatistics():
         self.StatsCraft = Craft
         self.Active_Atmosphere = Craft.Atmosphere
 
+    #PART F
     def weight_from_str(self, WEIGHT: str)-> float:
         """Gets the crafts weight from a string.
 
@@ -72,6 +73,7 @@ class CraftStatistics():
         Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
         return Pr
     
+    #PART F
     def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT: str,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
         """Returns a MPL figure of power requred and available vs alt
 
@@ -93,8 +95,6 @@ class CraftStatistics():
             prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity) /1000
             prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,str(weight)) /1000
 
-        #ax.plot(alt_array,dens_array,linewidth=1,label="Dens")
-        #ax.plot(alt_array,temp_array,linewidth=1,label="temp")
         if GRAPH_EXCESS:
             prEx_arr = prA_array - prR_array
             if SENDRAW:
@@ -137,21 +137,14 @@ class CraftStatistics():
         thrust_array = np.zeros(alt_array.shape) #Make new array for thrust
         temp_array = np.zeros(alt_array.shape) #Make new array for thrust
 
-
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
             thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1])
             dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1])
             temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1])
 
-
-
         fig, ax = plt.subplots()
-        #ax.plot(alt_array,dens_array,linewidth=1,label="Dens")
-        #ax.plot(alt_array,temp_array,linewidth=1,label="temp")
-
         ax.plot(alt_array,thrust_array,linewidth=2,label="Thrust Available (N)")
         ax.set(xlabel='Altitude (meters)', ylabel='Thrust available(N)',title='Altitude vs Thrust Available')
-
         return fig
     
     def get_ROC_vel_alt(self,alt,vel,WEIGHT):
@@ -176,11 +169,9 @@ class CraftStatistics():
         weight = self.weight_from_str(WEIGHT)
     
         PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,str(weight),GRAPH_EXCESS=True,SENDRAW=True)
-
         """About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
         this is deviding every number in powercurve[1] (our excess power) by the weight. 
         """
-
         if INFEETMIN:
             PowerCurve = [PowerCurve[0], ((PowerCurve[1] * 1000)/weight) * 3.28084 * 60] # Convert from m/s to ft/min
             if SENDRAW: #If we want, we can send back the data without graphing it.
@@ -199,7 +190,6 @@ class CraftStatistics():
             ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label="Rate of Climb (m/s)")
             ax.set(xlabel='Altitude (meters)', ylabel='Rate of Climb',title='Altitude vs RoC')
             ax.hlines(0.508,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors="red",linestyles="dotted",label="0.508 m/s")
-
         return fig
     
     def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt:
@@ -219,12 +209,10 @@ class CraftStatistics():
         Returns:
             plt: 3d plot
         """
-
-
         alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
         vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
 
-        vectorized = np.vectorize(self.get_ROC_vel_alt)
+        vectorized = np.vectorize(self.get_ROC_vel_alt) #Num
 
         X, Y = np.meshgrid(vel_array, alt_array)
         Z = vectorized(Y,X,WEIGHT)
@@ -292,6 +280,5 @@ if __name__ == "__main__":
     #rcCurve.show()
     """
     curve = MyCraftStats.graph_ROC_3d(0,10000,1000,50,90,1000,"AVE")
-    curve.legend()
     plt.show()
     

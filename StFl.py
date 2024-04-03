@@ -58,7 +58,7 @@ def calc_K_value(OswaldEff,AspectRatio):
 def calc_CL_CDmax(K, CD0):
     """Finds (CL/CD)max given K and CDO usefull for:
     PROP: max range
-    JET: max endurace 
+    JET: max endurace, Velocity of climb at ROC max
 
     Args:
         K (_type_): K value
