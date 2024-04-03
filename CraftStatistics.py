@@ -221,13 +221,15 @@ class CraftStatistics():
         X, Y = np.meshgrid(vel_array, alt_array)
         Z = vectorized(Y,X,WEIGHT)
 
-        fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
-        surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False)
-        fig.colorbar(surf, shrink=0.5, aspect=5)
+
+        ax = plt.axes(projection='3d',computed_zorder=False)
+        cs = ax.contour(X,Y,Z, levels=[0.508],cmap=cm.summer,offset=+0,zorder = 5,label = "Z = 0.508 m/s")
+        surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False,alpha = 1,zorder = 1)
         ax.set_xlabel("Velocity (m/s)")
         ax.set_ylabel("Altitude (m)")
         ax.set_zlabel("ROC (m/s)")
-        return fig
+
+        return ax
 
         
         
@@ -283,6 +285,6 @@ if __name__ == "__main__":
     rcfCurve.legend()
     #rcCurve.show()
     """
-    curve = MyCraftStats.graph_ROC_3d(0,10000,1000,50,150,1000,"AVE")
+    curve = MyCraftStats.graph_ROC_3d(0,10000,100,50,150,100,"AVE")
     plt.show()
     
