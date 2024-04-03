@@ -1,4 +1,5 @@
 import math
+import numpy as np
 """ATMOSPHERE CONDITIONS
 
 Alt = 300 #meters
@@ -64,7 +65,7 @@ class Atmosphere:
         Returns:
         density: density kg/m^3
         """
-        dens = self.Density_SeaLevel * math.pow((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a * self.R))-1))
+        dens = self.Density_SeaLevel * np.power((temperature/self.Temp_SeaLevel), (((-1 * self.g)/(self.a * self.R))-1))
         return dens
     
     def dens_trop_alt(self, alt):
@@ -87,7 +88,7 @@ class Atmosphere:
         Returns:
         Thrust: Thrust available
         """
-        thrust = refThrust * math.pow((density/self.Density_SeaLevel),m)
+        thrust = refThrust * np.power((density/self.Density_SeaLevel),m)
         return thrust
     
     def jet_thrust_available_alt(self,refThrust, alt, m):
@@ -100,5 +101,5 @@ class Atmosphere:
         Thrust: Thrust available
         """
         density = self.dens_trop_alt(alt)
-        thrust = refThrust * math.pow((density/self.Density_SeaLevel),m)
+        thrust = refThrust * np.power((density/self.Density_SeaLevel),m)
         return thrust
