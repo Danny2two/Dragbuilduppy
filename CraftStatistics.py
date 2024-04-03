@@ -294,7 +294,7 @@ class CraftStatistics():
 
         return rcmax
 
-    def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT):
+    def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
@@ -309,12 +309,18 @@ class CraftStatistics():
         ax.set(xlabel='Altitude (meters)', ylabel='ROC (m/s)',title='Altitude vs Max RoC')
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
         ax.hlines(0.508,alt_array[0],alt_array[len(alt_array) -1 ],colors="red",linestyles="dotted",label="0.508 m/s")
-        textstr = "weight =" + str(round(weight / 1000,2)) + "kN"
+        
+        if PLOT_CEILING:
+            minarr = np.absolute(ROC_array - 0.508)
+            locOfCelling = minarr.argmin()
+            ax.vlines(alt_array[locOfCelling],ROC_array.min(),ROC_array.max(),colors="Purple",linestyles="dotted",label="Service Ceiling")
+            textstr = "weight =" + str(round(weight / 1000,2)) + "kN\n" + "Service Ceiling: " + str(round(alt_array[locOfCelling],1)) + "m"
+        else:
+            textstr = "weight =" + str(round(weight / 1000,2)) + "kN"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
         verticalalignment='top',horizontalalignment='center', bbox=props)
-        ax.set
         return fig
 
        
@@ -353,14 +359,8 @@ if __name__ == "__main__":
 
     MyCraftStats = CraftStatistics(OppaStoppa)
 
-    PowerCurve = MyCraftStats.graph_PowerAval_vs_PowerReq(0,10000,1000,76,"AVE",GRAPH_EXCESS=True)
-    PowerCurve.legend()
-
-    MAXRoc = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,"AVE")
+    MAXRoc = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,"AVE",PLOT_CEILING=True)
     MAXRoc.legend()
-
-    ROC_Cruse = MyCraftStats.graph_ROC(0,12000,1000,76,"AVE")
-    ROC_Cruse.legend()
 
     plt.show()
     
