@@ -228,6 +228,12 @@ class CraftStatistics():
         ax.set_xlabel("Velocity (m/s)")
         ax.set_ylabel("Altitude (m)")
         ax.set_zlabel("ROC (m/s)")
+        ax.view_init(elev=30, azim=120, roll=0)
+
+        textstr = "Green line: ROC = 100 ft/min"
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0, 100,-10, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
         fig.add_axes(ax)
         return fig
 
