@@ -41,7 +41,6 @@ class CraftStatistics():
                 print("Conversion to float failed")
         return weight
 
-
     #PART F
     def get_ThrustAvailable_jet(self,alt):
         """Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
@@ -123,7 +122,6 @@ class CraftStatistics():
 
         return fig
 
-
     #PART F
     def graph_ThrustAvailable(self,Alt_lower_lim, Alt_upper_lim,numPoints)-> plt:
         """Returns a Matplotlib plot of thrust available vs alt
@@ -157,6 +155,26 @@ class CraftStatistics():
         weight = self.weight_from_str(WEIGHT)
         powEx = powA - powR
         return (powEx/weight)
+    
+    def get_angle_climb_jet(self,Alt, WEIGHT):
+        '''MAX ANGLE OF CLIMB
+        '''
+        weight = self.weight_from_str(WEIGHT)
+        thA = self.get_ThrustAvailable_jet(Alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
+        theta = np.arcsin(sintheta)
+        return theta
+    
+    def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
+        aoad = np.rad2deg(aoa_array)
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,aoad, label = "AOA")
+        ax.set(xlabel='Altitude (meters)', ylabel='Angle of attack',title='Altitude vs RoC')
+        return fig
 
     def graph_ROC(self,alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt:
         """Graphs rate of climb vs Altitude for the given velocity and weight.
@@ -233,13 +251,47 @@ class CraftStatistics():
         textstr = "Green line: ROC = 100 ft/min"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
-        ax.text(0, 0,0, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
+        ax.text(0, 0,350, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
         ax.set_box_aspect(aspect=None, zoom=0.8)
         fig.add_axes(ax)
         return fig
 
-        
-        
+    def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False):
+        '''Using max ROC for jets equation from lecture
+        '''
+        weight = self.weight_from_str(WEIGHT)
+        wingarea = self.StatsCraft.mainwing.Area
+        cd0 = self.StatsCraft.Cd0
+        thrust = self.get_ThrustAvailable_jet(alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        ldmax = calc_CL_CDmax(k,cd0)
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        Z = 1 + np.sqrt(1 + (3/(math.pow(ldmax,2) * math.pow(thrust/weight,2))))
+        ST1 = math.pow(((weight/wingarea)*Z)/(3 * dens * cd0 ),0.5)
+        ST2 = math.pow(thrust/weight,3/2)
+        ST3 = 1 - (Z/6)- (3/(2 * math.pow(thrust/weight,2) *math.pow(ldmax,2) * Z))
+        rcmax = ST1 * ST2 * ST3
+
+        if RETURN_VEL:
+            V_rc = math.pow((((thrust/weight) * (weight/wingarea))/(3 * dens * cd0)) * Z,0.5)
+            return V_rc
+        return rcmax
+
+    def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT):
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
+        Vel_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT,RETURN_VEL = True)
+
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,ROC_array, label = "Rate of climb")
+        ax1 = ax.twinx()
+        ax1.plot(alt_array,Vel_array, label = "Velocity",color="orange")
+        ax1.set(xlabel='Altitude (meters)', ylabel='Velocity m/s')
+
+        ax.set(xlabel='Altitude (meters)', ylabel='ROC',title='Altitude vs RoC')
+        ax.hlines(0.508,alt_array[0],alt_array[len(alt_array) -1 ],colors="red",linestyles="dotted",label="0.508 m/s")
+        return fig
 
        
 
@@ -292,7 +344,12 @@ if __name__ == "__main__":
     rcfCurve.legend()
     #rcCurve.show()
     """
-    curve = MyCraftStats.graph_ROC_3d(0,10000,100,50,150,100,"AVE")
-    curve.legend()
+    #curve = MyCraftStats.graph_ROC_3d(0,10000,100,50,190,100,"AVE")
+    #curve.legend()
+
+    rcCurve = MyCraftStats.graph_ROC(0,12000,1000,120,"AVE")
+   
+    aoa = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,"AVE")
+
     plt.show()
     
