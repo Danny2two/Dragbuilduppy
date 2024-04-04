@@ -154,14 +154,15 @@ class CraftStatistics():
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
 
         return fig
-    
+    #PART F
     def get_ROC_vel_alt(self,alt,vel,WEIGHT):
         powA = self.get_PowerAvailable_jet(alt,vel)
         powR = self.get_PowerRequired_alt_jet(alt,vel,WEIGHT)
         weight = self.weight_from_str(WEIGHT)
         powEx = powA - powR
         return (powEx/weight)
-    
+
+    #PART F
     def get_angle_climb_jet(self,Alt, WEIGHT):
         '''MAX ANGLE OF CLIMB
         '''
@@ -171,7 +172,8 @@ class CraftStatistics():
         sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
         theta = np.arcsin(sintheta)
         return theta
-    
+
+    #PART F
     def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
@@ -184,6 +186,7 @@ class CraftStatistics():
 
         return fig
 
+    #PART F
     def graph_ROC(self,alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt:
         """Graphs rate of climb vs Altitude for the given velocity and weight.
 
@@ -228,7 +231,8 @@ class CraftStatistics():
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
 
         return fig
-    
+
+    #PART F
     def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt:
         """Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY
 
@@ -271,6 +275,7 @@ class CraftStatistics():
         fig.add_axes(ax)
         return fig
 
+    #PART F
     def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False):
         '''Using max ROC for jets equation from lecture
         '''
@@ -294,6 +299,7 @@ class CraftStatistics():
 
         return rcmax
 
+    #PART F
     def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
