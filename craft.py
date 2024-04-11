@@ -5,20 +5,18 @@ from Drag import Drag
 from StFl import *
 
 class Craft():
-    Atmosphere: Atmosphere
+    Atmosphere = Atmosphere(1,1,1,1,1)
     name = "" #Name for craft 
     mass = 0.0
     weight_empty = 0#4350 * 9.81 #kg * g
     weight_takeoff = 0 #5085 * 9.81 #kg * g
     Cd0 = 0
     Cl = 0
-    PosStruturalNlinit = 1
-    NegStruturalNlinit = -1
+    PosStruturalNlimit = 1
+    NegStruturalNlimit = -1
     dragcomponents: DragyComponent = []#List of of components of drag
     powertrain = [] #list of engines
     mainwing: Wing3d
-
-    Atmosphere = Atmosphere(300,286.21, 9.77774/4,1.19,76)
 
     def __init__(self,name) -> None:
         self.name = name

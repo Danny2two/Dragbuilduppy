@@ -34,6 +34,8 @@ class Wing3d(DragyComponent):
     XC = 0.3
     Vinf = .0
     Interf_Factor = 1
+    CLmax = 0
+    CLmin = 0
     ##To be computed later
     dyn_vc = .0
     rey_nm = .0

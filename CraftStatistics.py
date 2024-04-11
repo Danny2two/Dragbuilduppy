@@ -2,7 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from Craft import *
+from craft import *
 from Atmosphere import Atmosphere
 
 class CraftStatistics():
@@ -159,6 +159,7 @@ class CraftStatistics():
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
 
         return fig
+    
     #PART F
     def get_ROC_vel_alt(self,alt,vel,WEIGHT):
         powA = self.get_PowerAvailable_jet(alt,vel)
