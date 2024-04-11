@@ -2,7 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from craft import *
+from Craft import *
 from Atmosphere import Atmosphere
 
 class CraftStatistics():
@@ -10,6 +10,11 @@ class CraftStatistics():
     Active_Atmosphere: Atmosphere
 
     def __init__(self, Craft: Craft) -> None:
+        """CraftStatistics serves as a layer to 
+
+        Args:
+            Craft (Craft): _description_
+        """        
         self.StatsCraft = Craft
         self.Active_Atmosphere = Craft.Atmosphere
 
@@ -175,6 +180,17 @@ class CraftStatistics():
 
     #PART F
     def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
+        """Gets the max angle of constant climb
+
+        Args:
+            alt_lower (_type_): _description_
+            alt_upper (_type_): _description_
+            numPoints (_type_): _description_
+            WEIGHT (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """        
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
@@ -243,7 +259,7 @@ class CraftStatistics():
             Velocity_min (_type_): lower velocity limit
             Velocity_max (_type_): upper velocity limit
             num_vel_points (_type_): number of velocity points
-            WEIGHT (_type_): WEIGHT (_type_): Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            WEIGHT (_type_): Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
             INFEETMIN (bool, optional): _description_. Defaults to False.
             SENDRAW (bool, optional): _description_. Defaults to False.
 
@@ -277,8 +293,11 @@ class CraftStatistics():
 
     #PART F
     def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False):
-        '''Using max ROC for jets equation from lecture
-        '''
+        """Returns max achivable ROC for a given alt
+
+        Returns:
+            _type_: _description_
+        """        
         weight = self.weight_from_str(WEIGHT)
         wingarea = self.StatsCraft.mainwing.Area
         cd0 = self.StatsCraft.Cd0
@@ -301,6 +320,18 @@ class CraftStatistics():
 
     #PART F
     def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
+        """Returns a plot of absolute Max rate of climb over the given altitude range, Also plots the Velocity requred to achive that RoC
+
+        Args:
+            alt_lower (_type_): Lower alt limit (meters)
+            alt_upper (_type_): Upper alt limit (meters)
+            numPoints (_type_): number of graph points
+            WEIGHT (_type_): Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            PLOT_CEILING (bool, optional): Plot where the ROC equals 100 ft/min. Defaults to False.
+
+        Returns:
+            _type_: _description_
+        """        
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
