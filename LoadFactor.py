@@ -88,16 +88,23 @@ class LoadFactor():
         LocNn1 = locofn1n.argmin()
 
         fig, ax = plt.subplots()
-        maskedNplus = np.ma.masked_where(nplusarr < 1,nplusarr)
-        ax.plot(vArr,maskedNplus,linewidth=2,label="Positive Aero Limit",color='blue')
+        maskedNplus = np.ma.masked_where((nplusarr < 1) | (nplusarr > self.LoadCraft.PosStruturalNlimit),nplusarr) #Mask to just data below nmax
+        ABOVENplus = np.ma.masked_where((nplusarr < self.LoadCraft.PosStruturalNlimit),nplusarr) #Mask to just data below nmax
 
-        maskedNminus = np.ma.masked_where(nminusarr > -1,nminusarr)
-        ax.plot(vArr,maskedNminus,linewidth=2,label="Negative Aero Limit",color='orange')
+        ax.plot(vArr,maskedNplus,linewidth=1,label="Positive Aero Limit",color='blue')
+        ax.plot(vArr,ABOVENplus,linewidth=1,color='blue',linestyle="--")
 
-        ax.hlines(self.LoadCraft.PosStruturalNlimit,Vmin,Vmax,colors="red",linestyles="dotted",label="Positive Structual Limit")
+        maskedNminus = np.ma.masked_where((nminusarr > -1) | (nminusarr < (-1 *self.LoadCraft.NegStruturalNlimit)),nminusarr)
+        BELOWNminus = np.ma.masked_where((nminusarr > (-1 *self.LoadCraft.NegStruturalNlimit)),nminusarr)
+
+        ax.plot(vArr,maskedNminus,linewidth=1,label="Negative Aero Limit",color='orange')
+        ax.plot(vArr,BELOWNminus,linewidth=1,color='orange',linestyle='--')
+
+
+        ax.hlines(self.LoadCraft.PosStruturalNlimit,Vmin,Vmax,colors="red",linestyles="dotted",label="+/- Structual Limit")
         ax.vlines(vArr[LocPn1],0,1,colors="blue")
 
-        ax.hlines((-1) * self.LoadCraft.NegStruturalNlimit,Vmin,Vmax,colors="red",linestyles="dotted",label="Negative Structural Limit")
+        ax.hlines((-1) * self.LoadCraft.NegStruturalNlimit,Vmin,Vmax,colors="red",linestyles="dotted")
         ax.vlines(vArr[LocNn1],-1,0,colors="orange")
 
 
@@ -107,10 +114,11 @@ class LoadFactor():
 
         
         strTitle = "V-n Diagram"
-        ax.set(xlabel='Velocity', ylabel='LoadFactor',title=strTitle)
+        ax.set(xlabel='Velocity (m/s)', ylabel='LoadFactor',title=strTitle)
         ax.spines.bottom.set_position('zero')
         
         ax.spines.top.set_color('none')
+        ax.legend(loc='center right')
 
         return fig
 
@@ -191,8 +199,7 @@ if __name__ == "__main__":
     Vmeeting = LFA.getAeroStructMeetV(OppaStoppa.PosStruturalNlimit,alt,CLMAX,wstr)
     print("\nV* = " + str(Vmeeting) + " m/s")
 
-    fig = LFA.genVnDiagram(0,200,400,300,"TAKEOFF",CLMIN,CLMAX)
-    fig.legend()
+    fig = LFA.genVnDiagram(40,200,400,300,"TAKEOFF",CLMIN,CLMAX)
 
     plt.show()
 
