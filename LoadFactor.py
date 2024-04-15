@@ -6,7 +6,6 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-g = 9.81 #m/s
 
 class LoadFactor():
     LoadCraft: Craft
@@ -15,6 +14,8 @@ class LoadFactor():
     def __init__(self,craft:Craft) -> None:
         self.LoadCraft: Craft= craft
         self.ActiveAtmos = craft.Atmosphere
+        self.ur = self.ActiveAtmos.ur
+        self.g = 9.81 * self.ur.meters / self.ur.seconds ** 2
 
     def weight_from_str(self, WEIGHT: str)-> float:
         """Gets the crafts weight from a string.
@@ -40,28 +41,29 @@ class LoadFactor():
         return weight
 
     def getRadiusPullUp(self,LoadFactor,velocity):
-        RPU = math.pow(velocity,2) / (g * (LoadFactor - 1))
+        RPU = numpy.power(velocity,2) / (self.g * (LoadFactor - 1))
         return RPU
 
     def getRadiusPullDown(self,LoadFactor,velocity):
-        RPD = math.pow(velocity,2) / (g * (LoadFactor + 1))
+        RPD = numpy.power(velocity,2) / (self.g * (LoadFactor + 1))
         return RPD
     
     def getRadiusLevelTurn(self,LoadFactor,velocity):
-        RLT = math.pow(velocity,2) / (g * math.sqrt(math.pow(LoadFactor,2) - 1))
+        RLT = numpy.power(velocity,2) / (self.g * numpy.sqrt(numpy.power(LoadFactor,2) - 1))
         return RLT
     
     def getn(self, Vinf, CL, alt, Weight):
         dens = self.ActiveAtmos.dens_trop_alt(alt)
         weight = self.weight_from_str(Weight)
-        n = (0.5 * dens * math.pow(Vinf,2) * self.LoadCraft.mainwing.Area * CL) / weight
+        n = (0.5 * dens * (Vinf ** 2) * self.LoadCraft.mainwing.Area * CL) / weight
         #print("0.5 * " + str(dens) + )
+        #print(f'Nvalue: {n}\nDens {dens}\nWeight {weight}\nVel^2 {numpy.power(vinf,2)}\nWing Area {self.LoadCraft.mainwing.Area}')
         return(n)
     
     def getAeroStructMeetV(self, NstructPOS, alt, CLMAX, WEIGHT):
         weight = self.weight_from_str(WEIGHT)
         dens = self.ActiveAtmos.dens_trop_alt(alt)
-        vinf = math.sqrt(((2 * NstructPOS)/(dens * CLMAX)) * (weight/self.LoadCraft.mainwing.Area))
+        vinf = numpy.sqrt(((2 * NstructPOS)/(dens * CLMAX)) * (weight/self.LoadCraft.mainwing.Area))
         return vinf
 
     def genVnDiagram(self,Vmin,Vmax,numpoints,alt,Weight,clmin,clmax):
@@ -79,8 +81,9 @@ class LoadFactor():
         nminusarr = np.zeros(vArr.shape)
 
         for vel in enumerate(vArr):
-            nplusarr[vel[0]] = self.getn(vel[1],clmax,alt,Weight)
-            nminusarr[vel[0]] = (-1) * self.getn(vel[1],clmin,alt,Weight)
+            #print("HELLO " + str(self.getn(vel[1],clmax,alt,Weight)))
+            nplusarr[vel[0]] = self.getn(vel[1],clmax,alt,Weight).magnitude
+            nminusarr[vel[0]] = (-1) * self.getn(vel[1],clmin,alt,Weight).magnitude
 
         locofn1p = np.abs(nplusarr - 1)
         LocPn1 = locofn1p.argmin()
@@ -128,10 +131,11 @@ class LoadFactor():
 
 if __name__ == "__main__":
     OppaStoppa = Craft("OppaStoppa")
-    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,170)
+    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,170,OppaStoppa.ur)
+    ur = OppaStoppa.ur
     atmo = OppaStoppa.Atmosphere
-    OppaStoppa.weight_empty = 4450 * 9.81
-    OppaStoppa.weight_takeoff = 5225 * 9.81
+    OppaStoppa.weight_empty = 4450 * 9.81 * ur.newton
+    OppaStoppa.weight_takeoff = 5225 * 9.81 * ur.newton
 
 
     """Defining the draggy components of our craft"""
@@ -152,7 +156,7 @@ if __name__ == "__main__":
     """Defining our engines"""
     #Engine defined: NAME, TSFC, BSFC, MaxThrust, MaxPower, efficency.
     #Note that for a turbojet we dont really need BSFC or power
-    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9)
+    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9,ur)
     OppaStoppa.powertrain = [WilliamsFJ33,WilliamsFJ33]
     OppaStoppa.mainwing = MainWing
 
@@ -183,21 +187,21 @@ if __name__ == "__main__":
     AradLT = LFA.getRadiusLevelTurn(nCLMAX,vinf)
 
     print("Load at:" )
-    print(" Craft weight used: " + wstr +"->" + str(LFA.weight_from_str(wstr)) + " N")
+    print(" Craft weight used: " + wstr +"->" + str(LFA.weight_from_str(wstr)) )
     LFA.ActiveAtmos.printAtmos()
 
     print("\nCrafts Structural n+, n-: " + str(OppaStoppa.PosStruturalNlimit) +", " + str(OppaStoppa.NegStruturalNlimit))
-    print(" Radius for PullUp: " + str(SradPU) + " m")
-    print(" Radius for PullDown: " + str(SradPD) + " m")
-    print(" Radius for LevelTurn: " + str(SradLT) + " m")
+    print(" Radius for PullUp: " + str(SradPU) )
+    print(" Radius for PullDown: " + str(SradPD) )
+    print(" Radius for LevelTurn: " + str(SradLT) )
 
-    print("\nCrafts Aero n+, n-: " + str(nCLMAX) +", " + str(nCLMIN))
-    print(" Radius for PullUp: " + str(AradPU) + " m")
-    print(" Radius for PullDown: " + str(AradPD) + " m")
-    print(" Radius for LevelTurn: " + str(AradLT) + " m")
+    print("\nCrafts Aero n+, n-: " + str(nCLMAX.magnitude) +", " + str(nCLMIN.magnitude))
+    print(" Radius for PullUp: " + str(AradPU) )
+    print(" Radius for PullDown: " + str(AradPD) )
+    print(" Radius for LevelTurn: " + str(AradLT) )
 
     Vmeeting = LFA.getAeroStructMeetV(OppaStoppa.PosStruturalNlimit,alt,CLMAX,wstr)
-    print("\nV* = " + str(Vmeeting) + " m/s")
+    print("\nV* = " + str(Vmeeting) )
 
     fig = LFA.genVnDiagram(40,200,400,300,"TAKEOFF",CLMIN,CLMAX)
 

@@ -1,18 +1,21 @@
 import math
+import numpy
+import pint
 
 def calc_req_CL(weight, Q_inf, wingarea):
     CL = (weight/(Q_inf * wingarea))
     return CL
 
 def calc_ThrustReq(Q_inf, wingarea,CD_0,K,weight):
-    Thrust = Q_inf * wingarea * CD_0 + ((K*math.pow(weight,2))/(Q_inf*wingarea))
+    Thrust = Q_inf * wingarea * CD_0 + ((K*numpy.power(weight,2))/(Q_inf*wingarea))
     return Thrust
 
 def calc_Vstall(P_inf, weight,wingarea,CL_max):
-    vstall = math.sqrt((2/P_inf) * (weight/wingarea) * (1/CL_max))
+    #print(f'pinf: {P_inf}, w: {weight}, Wingarea: {wingarea}')
+    vstall = numpy.sqrt((2/P_inf) * (weight/wingarea) * (1/CL_max))
     return vstall
 
-def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight):
+def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight:float):
     """Calculates power requred for flight 
 
     Args:
@@ -26,7 +29,8 @@ def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight):
     Returns:
         _type_: _description_
     """    
-    pr = 0.5*P_inf*math.pow(V_inf,3)*wingarea*CD_0 + ((2*K*math.pow(weight,2))/(P_inf*V_inf*wingarea))
+    #print(f'pinf: {P_inf}, vinf: {V_inf}, warea: {wingarea}, weight: {weight}')
+    pr = 0.5*P_inf*numpy.power(V_inf,3)*wingarea*CD_0 + ((2*K*numpy.power(weight,2))/(P_inf*V_inf*wingarea))
     return pr
 
 def calc_dynpressure(P_inf,V_inf):
@@ -39,7 +43,7 @@ def calc_dynpressure(P_inf,V_inf):
     Returns:
         _type_: Dynamic pressure
     """    
-    dynpress = 0.5*P_inf*math.pow(V_inf,2)
+    dynpress = 0.5*P_inf*numpy.power(V_inf,2)
     return dynpress
 
 def calc_K_value(OswaldEff,AspectRatio):
@@ -67,7 +71,7 @@ def calc_CL_CDmax(K, CD0):
     Returns:
         Float: Ratio = (CL/CD)max
     """    
-    clcd = math.sqrt(1/(4*K*CD0))
+    clcd = numpy.sqrt(1/(4*K*CD0))
     return clcd
 
 def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
@@ -83,7 +87,7 @@ def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
     Returns:
         float: V infinity to get max endurance (m/s)
     """    
-    vinf = math.sqrt((2/P_inf) * (weight/wingArea)* math.sqrt(K/Cd_0))
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt(K/Cd_0))
     return vinf
 
 def calc_Vinf_MaxJetRange(P_inf,weight,wingArea,Cd_0,K):
@@ -99,7 +103,7 @@ def calc_Vinf_MaxJetRange(P_inf,weight,wingArea,Cd_0,K):
     Returns:
         float: V infinity to get max range (m/s)
     """    
-    vinf = math.sqrt((2/P_inf) * (weight/wingArea)* math.sqrt((3*K)/Cd_0))
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt((3*K)/Cd_0))
     return vinf
 
 def calc_CL_CDmaxRangeJet(K,CD_0):
@@ -112,7 +116,7 @@ def calc_CL_CDmaxRangeJet(K,CD_0):
     Returns:
         _type_: (Cl^1/2 / CD)max
     """
-    clcd = (3/4) * math.pow((1/(3 * K * math.pow(CD_0,3))),(1/4))
+    clcd = (3/4) * numpy.power((1/(3 * K * numpy.power(CD_0,3))),(1/4))
     return clcd
 
 
@@ -145,5 +149,5 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     Returns:
         _type_: Range
     """    
-    range = (2/1) * math.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (math.sqrt(weighttakeoff) - math.sqrt(weightempty))
+    range = (2/1) * numpy.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (numpy.sqrt(weighttakeoff) - numpy.sqrt(weightempty))
     return range
