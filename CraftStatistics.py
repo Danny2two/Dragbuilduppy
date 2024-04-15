@@ -17,13 +17,14 @@ class CraftStatistics():
         """        
         self.StatsCraft = Craft
         self.Active_Atmosphere = Craft.Atmosphere
+        self.ur = self.StatsCraft.ur
 
-        print("Initalizing Statistics for Craft: " + self.StatsCraft.name)
-        print("CD0: " + str(self.StatsCraft.Cd0))
-        print("Ozwald: " + str(self.StatsCraft.mainwing.OswaldE))
+        #print("Initalizing Statistics for Craft: " + self.StatsCraft.name)
+        #print("CD0: " + str(self.StatsCraft.Cd0))
+        #print("Ozwald: " + str(self.StatsCraft.mainwing.OswaldE))
 
     #PART F
-    def weight_from_str(self, WEIGHT: str)-> float:
+    def weight_from_str(self, WEIGHT:str)-> float:
         """Gets the crafts weight from a string.
 
         Args:
@@ -32,6 +33,8 @@ class CraftStatistics():
         Returns:
             float: weight in Newtons
         """
+
+
         if WEIGHT.upper() == "TAKEOFF":
             weight = self.StatsCraft.weight_takeoff
         elif WEIGHT.upper() == "EMPTY":
@@ -43,7 +46,7 @@ class CraftStatistics():
                 weight = float(WEIGHT)
             except:
                 weight = 0
-                print("Conversion to float failed")
+                print("Conversion to float failed: " + WEIGHT)
         return weight
 
     #PART F
@@ -60,10 +63,10 @@ class CraftStatistics():
     
     #PART F
     def get_PowerAvailable_jet(self,alt,velocity):
-        return (self.get_ThrustAvailable_jet(alt) * velocity)
+        return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
     
     #PART F
-    def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT: str):
+    def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT):
         """Finds power requred for SLF at given conditions
 
         Args:
@@ -74,15 +77,26 @@ class CraftStatistics():
         Returns:
             Pr: Power requred 
         """        
-        weight = self.weight_from_str(WEIGHT)
+        if type(WEIGHT) == str:
+            weight = self.weight_from_str(WEIGHT)
+        else:
+            weight = WEIGHT
+    
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            alt = alt * self.ur.meters
+        if self.ur.get_dimensionality(velocity) != self.ur.get_dimensionality(1 * self.ur.m / self.ur.s):
+            velocity = velocity * self.ur.m / self.ur.seconds
+        
 
         dens = self.Active_Atmosphere.dens_trop_alt(alt)
         k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        #print(f'w: {weight}, dens: {dens}, K: {k}, alt: {alt}, vel: {velocity}')
         Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
         return Pr
     
     #PART F
-    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT: str,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
+    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
         """Returns a MPL figure of power requred and available vs alt
 
         Args:
@@ -100,8 +114,9 @@ class CraftStatistics():
         prA_array = np.zeros(alt_array.shape)
         prR_array = np.zeros(alt_array.shape)
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
-            prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity) /1000
-            prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,str(weight)) /1000
+            #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
+            prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity).magnitude /1000 #need to strip units :(
+            prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
 
         if GRAPH_EXCESS:
             prEx_arr = prA_array - prR_array
@@ -122,7 +137,7 @@ class CraftStatistics():
 
 
         ax.set(xlabel='Altitude (meters)', ylabel='Power (kW)',title=strTitle)
-        textstr = "$V_\infty = $" + str(Velocity) + "$\dfrac{m}{s}$" +"\nweight =" + str(round(weight / 1000,2)) + "kN"
+        textstr = "$V_\infty = $" + str(Velocity) + "$\dfrac{m}{s}$" +"\nweight =" + str(round(weight.to("kilonewton"),2))
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
@@ -149,9 +164,9 @@ class CraftStatistics():
         temp_array = np.zeros(alt_array.shape) #Make new array for thrust
 
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
-            thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1])
-            dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1])
-            temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1])
+            thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1]).magnitude
+            dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1]).magnitude
+            temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1]).magnitude
 
         fig, ax = plt.subplots()
         ax.plot(alt_array,thrust_array,linewidth=2,label="Thrust Available (N)")
@@ -162,11 +177,14 @@ class CraftStatistics():
     
     #PART F
     def get_ROC_vel_alt(self,alt,vel,WEIGHT):
-        powA = self.get_PowerAvailable_jet(alt,vel)
-        powR = self.get_PowerRequired_alt_jet(alt,vel,WEIGHT)
         weight = self.weight_from_str(WEIGHT)
+        powA = self.get_PowerAvailable_jet(alt,vel)
+        powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
+        #print(f'Poweravil: {powA}')
+        #print(f'power R: {powR}')
         powEx = powA - powR
-        return (powEx/weight)
+        #print(powEx)
+        return ((powEx/weight).magnitude) #had to strip units for vecorization
 
     #PART F
     def get_angle_climb_jet(self,Alt, WEIGHT):
@@ -195,7 +213,7 @@ class CraftStatistics():
         weight = self.weight_from_str(WEIGHT)
         alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
-        aoad = np.rad2deg(aoa_array)
+        aoad = (np.rad2deg(aoa_array))*self.ur.degrees
         fig, ax = plt.subplots()
         ax.plot(alt_array,aoad, label = "AOA")
         ax.set(xlabel='Altitude (meters)', ylabel='Angle of attack',title='Altitude vs maxAOA')
@@ -218,7 +236,7 @@ class CraftStatistics():
         """        
         weight = self.weight_from_str(WEIGHT)
     
-        PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,str(weight),GRAPH_EXCESS=True,SENDRAW=True)
+        PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,GRAPH_EXCESS=True,SENDRAW=True)
         """About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
         this is deviding every number in powercurve[1] (our excess power) by the weight. 
         """
@@ -240,7 +258,7 @@ class CraftStatistics():
             ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label="Rate of Climb (m/s)")
             ax.set(xlabel='Altitude (meters)', ylabel='Rate of Climb (m/s)',title='Altitude vs RoC')
             ax.hlines(0.508,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors="red",linestyles="dotted",label="0.508 m/s")
-        textstr = "$V_\infty = $" + str(Velocity) + "$\dfrac{m}{s}$" +"\nweight =" + str(round(weight / 1000,2)) + "kN"
+        textstr = "$V_\infty = $" + str(Velocity) + "$\dfrac{m}{s}$" +"\nweight =" + str(round(weight.to("kilonewton"),2))
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
@@ -250,7 +268,7 @@ class CraftStatistics():
         return fig
 
     #PART F
-    def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt:
+    def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-> plt: # working post units
         """Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY
 
         Args:
@@ -273,7 +291,8 @@ class CraftStatistics():
         vectorized = np.vectorize(self.get_ROC_vel_alt) #Numpy magic
 
         X, Y = np.meshgrid(vel_array, alt_array)
-        Z = vectorized(Y,X,WEIGHT)
+        #print(f'X: {X}, Y: {Y}')
+        Z = (vectorized(Y,X,WEIGHT))
 
         fig = plt.figure()
         ax = plt.axes(projection='3d',computed_zorder=False)
@@ -282,7 +301,7 @@ class CraftStatistics():
         ax.set_xlabel("Velocity (m/s)")
         ax.set_ylabel("Altitude (m)")
         ax.set_zlabel("ROC (m/s)")
-        ax.view_init(elev=30, azim=120, roll=0)
+        ax.view_init(elev=30, azim=120)
 
         textstr = "Green line: ROC = 100 ft/min"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
@@ -293,12 +312,16 @@ class CraftStatistics():
         return fig
 
     #PART F
-    def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False):
+    def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False): #working post units
         """Returns max achivable ROC for a given alt
 
         Returns:
             _type_: _description_
-        """        
+        """
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            #print("oof")
+            alt = alt * self.ur.meters        
         weight = self.weight_from_str(WEIGHT)
         wingarea = self.StatsCraft.mainwing.Area
         cd0 = self.StatsCraft.Cd0
@@ -306,18 +329,19 @@ class CraftStatistics():
         k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
         ldmax = calc_CL_CDmax(k,cd0)
         dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        #print(f'GetMaxRocJet: \nweight: {weight} \nwingarea: {wingarea}\n thrust: {thrust}\n dens: {dens}\n Alt: {alt}')
         Z = 1 + np.sqrt(1 + (3/(np.power(ldmax,2) * np.power(thrust/weight,2))))
 
         if RETURN_VEL:
             V_rc = np.power((((thrust/weight) * (weight/wingarea))/(3 * dens * cd0)) * Z,0.5)
-            return V_rc
+            return V_rc.magnitude
         
         ST1 = np.power(((weight/wingarea)*Z)/(3 * dens * cd0 ),0.5)
         ST2 = np.power(thrust/weight,3/2)
         ST3 = 1 - (Z/6)- (3/(2 * np.power(thrust/weight,2) * np.power(ldmax,2) * Z))
         rcmax = ST1 * ST2 * ST3
-
-        return rcmax
+        #print("RCMAX: " + str(rcmax))
+        return rcmax.magnitude
 
     #PART F
     def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
@@ -365,10 +389,11 @@ class CraftStatistics():
 
 if __name__ == "__main__":
     OppaStoppa = Craft("OppaStoppa")
-    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,76)
+    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,76,OppaStoppa.ur)
     atmo = OppaStoppa.Atmosphere
-    OppaStoppa.weight_empty = 4450 * 9.81
-    OppaStoppa.weight_takeoff = 5225 * 9.81
+    ur = OppaStoppa.ur
+    OppaStoppa.weight_empty = 4450 * 9.81 *ur.newton
+    OppaStoppa.weight_takeoff = 5225 * 9.81 * ur.newton
 
 
     """Defining the draggy components of our craft"""
@@ -386,7 +411,7 @@ if __name__ == "__main__":
     """Defining our engines"""
     #Engine defined: NAME, TSFC, BSFC, MaxThrust, MaxPower, efficency.
     #Note that for a turbojet we dont really need BSFC or power
-    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9)
+    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9,OppaStoppa.ur)
     OppaStoppa.powertrain = [WilliamsFJ33,WilliamsFJ33]
 
     OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail,TailGear]
@@ -398,7 +423,17 @@ if __name__ == "__main__":
     MyCraftStats = CraftStatistics(OppaStoppa)
 
     MAXRoc = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,"AVE",PLOT_CEILING=True)
-    MAXRoc.legend()
+    #MAXRoc.legend()
+
+    powavr = MyCraftStats.graph_PowerAval_vs_PowerReq(0,12000,300,120,"AVE",GRAPH_EXCESS=True)
+
+    ROC3d = MyCraftStats.graph_ROC_3d(0,12000,50,40,200,50,"AVE")
+
+    ROC = MyCraftStats.graph_ROC(0,12000,100,120,"AVE")
+
+    AOC = MyCraftStats.graph_angle_max_ANGLE_OF_CLIMB(0,12000,100,"AVE")
+
+    THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
 
     plt.show()
     
