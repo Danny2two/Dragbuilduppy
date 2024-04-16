@@ -1,4 +1,3 @@
-import math
 import os
 os.environ['PINT_ARRAY_PROTOCOL_FALLBACK'] = "0"
 import pint
@@ -16,7 +15,9 @@ class Craft():
     weight_empty = 0 * ur.newton #4350 * 9.81 #kg * g
     weight_takeoff = 0 * ur.newton #5085 * 9.81 #kg * g
     Cd0 = 0
-    Cl = 0
+    CLmax = 0
+    CLrolling = 0
+    K = 0
     PosStruturalNlimit = 1
     NegStruturalNlimit = -1
     dragcomponents: DragyComponent = []#List of of components of drag
@@ -37,6 +38,7 @@ class Craft():
             #print(f'computing CD0 for {i.Name}')
             #print(f'  CD0: {i.getCD0()}')
             self.Cd0 += i.getCD0()
+        self.K = calc_K_value(self.mainwing.OswaldE,self.mainwing.AR)
 
     def print_stats_components(self):
         for i in self.dragcomponents:
@@ -63,6 +65,8 @@ if __name__ == "__main__":
     TailGear = FixedGear("Tail Gear",0.25,0.196129,MainWing.Area,1.2,atmo) 
 
     OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail,TailGear]
+    OppaStoppa.mainwing = MainWing
+    OppaStoppa.CLmax = 1.45
 
     OppaStoppa.compute_components()
     OppaStoppa.print_stats_components()
@@ -72,7 +76,7 @@ if __name__ == "__main__":
     q = calc_dynpressure(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity)
     print("Power Req: " + str(calc_PowerReq(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt")))
     print("Thrust req: " + str(calc_ThrustReq(q,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("newton")))
-    print("V Stall: " + str(calc_Vstall(OppaStoppa.Atmosphere.Density,OppaStoppa.weight_takeoff,MainWing.Area,1.3858).to('meters/second')))
+    print("V Stall: " + str(calc_Vstall(OppaStoppa.Atmosphere.Density,OppaStoppa.weight_takeoff,MainWing.Area,OppaStoppa.CLmax).to('meters/second')))
     estCL = calc_req_CL(OppaStoppa.weight_takeoff,q,MainWing.Area)
     print("Estimated CL for routine flight: " + str(estCL))
 

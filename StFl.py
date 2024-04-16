@@ -151,3 +151,12 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     """    
     range = (2/1) * numpy.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (numpy.sqrt(weighttakeoff) - numpy.sqrt(weightempty))
     return range
+
+def calc_Lift(CL,V_inf,Wingarea,dens):
+
+    Lift = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * CL
+    return Lift
+
+def calc_Drag(CD0,V_inf,Wingarea,dens,K,CL):
+    Drag = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * (CD0 + (K * numpy.power(CL,2)))
+    return Drag
