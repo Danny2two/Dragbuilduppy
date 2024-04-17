@@ -13,6 +13,8 @@ class Takeoff:
         self.Craft = Craft
         self.CraftStats = CraftStatistics.CraftStatistics(Craft)
         self.LoadFactor = LoadFactor.LoadFactor(Craft)
+        print(Craft)
+        print(Craft.ur)
         self.ur = Craft.ur
         self.ActiveAtmospere = Craft.Atmosphere
         self.Alt = Alt * ur.m
