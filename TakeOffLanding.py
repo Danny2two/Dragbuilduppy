@@ -125,10 +125,10 @@ class Landing:
         self.ur = Craft.ur
         self.Atmos = Craft.Atmosphere
         self.weight=weight
-        self.Alt = Alt * ur.m
+        self.Alt = Alt * self.ur.m
         self.n_flare = n_flare
         self.apprachA = ApproachAngle
-        self.g = 9.81 * ur.m /ur.second**2
+        self.g = 9.81 * self.ur.m /self.ur.second**2
         self.RollFricCoe = 0.4
         self.obsH = 10.668 * ur.m #35 ft
         self.V_A = 1.3 * StFl.calc_Vstall(self.Atmos.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
