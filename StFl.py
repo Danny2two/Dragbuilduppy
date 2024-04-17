@@ -3,14 +3,47 @@ import numpy
 import pint
 
 def calc_req_CL(weight, Q_inf, wingarea):
+    """Calculates requred CL for steady level flight
+
+    Args:
+        weight (_type_): weight of craft in newton
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): Main wing area
+
+    Returns:
+        _type_: Estimated CL
+    """    
     CL = (weight/(Q_inf * wingarea))
     return CL
 
 def calc_ThrustReq(Q_inf, wingarea,CD_0,K,weight):
+    """Calculates requred thrust for SLF
+
+    Args:
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): mainwing area
+        CD_0 (_type_): CD_0 for craft
+        K (_type_): K coef
+        weight (_type_): Craft weight in newtons
+
+    Returns:
+        _type_: thrust requred in newtons
+    """    
     Thrust = Q_inf * wingarea * CD_0 + ((K*numpy.power(weight,2))/(Q_inf*wingarea))
     return Thrust
 
 def calc_Vstall(P_inf, weight,wingarea,CL_max):
+    """Calculates the stall velocity of the craft
+
+    Args:
+        P_inf (_type_): Density of air
+        weight (_type_): weight of craft in newton
+        wingarea (_type_): wing area in square meters
+        CL_max (_type_): Max CL
+
+    Returns:
+        _type_: Stall Velocity
+    """    
     #print(f'pinf: {P_inf}, w: {weight}, Wingarea: {wingarea}')
     vstall = numpy.sqrt((2/P_inf) * (weight/wingarea) * (1/CL_max))
     return vstall
@@ -153,10 +186,33 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     return range
 
 def calc_Lift(CL,V_inf,Wingarea,dens):
+    """Calculates Lift at given conditions
 
+    Args:
+        CL (_type_): Coefficent of lift
+        V_inf (_type_): Incoming airstream velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Air density 
+
+    Returns:
+        _type_: Lift in newtons
+    """    
     Lift = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * CL
     return Lift
 
 def calc_Drag(CD0,V_inf,Wingarea,dens,K,CL):
+    """Calculates Drag for given conditions
+
+    Args:
+        CD0 (_type_): Crafts CD_0
+        V_inf (_type_): Incoming air velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Density of air
+        K (_type_): K coeff
+        CL (_type_): CL at curent conditions
+
+    Returns:
+        _type_: _description_
+    """    
     Drag = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * (CD0 + (K * numpy.power(CL,2)))
     return Drag

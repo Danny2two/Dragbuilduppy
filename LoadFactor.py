@@ -12,6 +12,11 @@ class LoadFactor():
     ActiveAtmos: Atmosphere
 
     def __init__(self,craft:Craft) -> None:
+        """LoadFactor takes in a craft and performs the analysis requred to generate a V-n Diagram as well as find various other performace charecteristics 
+
+        Args:
+            craft (Craft): Craft to be used 
+        """        
         self.LoadCraft: Craft= craft
         self.ActiveAtmos = craft.Atmosphere
         self.ur = self.ActiveAtmos.ur
@@ -41,18 +46,53 @@ class LoadFactor():
         return weight
 
     def getRadiusPullUp(self,LoadFactor,velocity):
+        """Finds the radius of a pull up for the given velocity and loadfactor
+
+        Args:
+            LoadFactor (_type_): LoadFactor
+            velocity (_type_): Velocity m/s
+
+        Returns:
+            _type_: Radius of pullup (or pushup) (m)
+        """        
         RPU = numpy.power(velocity,2) / (self.g * (LoadFactor - 1))
         return RPU
 
     def getRadiusPullDown(self,LoadFactor,velocity):
+        """Finds the radius of a pull down 
+
+        Args:
+            LoadFactor (_type_): _description_
+            velocity (_type_): Velocity m/s
+
+        Returns:
+            _type_: Radius of pull down (or pushdown) (m)
+        """        
         RPD = numpy.power(velocity,2) / (self.g * (LoadFactor + 1))
         return RPD
     
     def getRadiusLevelTurn(self,LoadFactor,velocity):
+        """gets radius of a level turn
+
+        Args:
+            LoadFactor (_type_): Load Factor
+            velocity (_type_): Velocity (m/s)
+
+        Returns:
+            _type_: Radius of turn (m)
+        """        
         RLT = numpy.power(velocity,2) / (self.g * numpy.sqrt(numpy.power(LoadFactor,2) - 1))
         return RLT
     
     def getn(self, Vinf, CL, alt, Weight):
+        """Finds the aerodynamicly possible n value
+
+        Args:
+            Vinf (_type_): Velocity
+            CL (_type_): Coeff of lift
+            alt (_type_): Altitude
+            Weight (_type_): Weight of craft (Newton)
+        """        
         dens = self.ActiveAtmos.dens_trop_alt(alt)
         weight = self.weight_from_str(Weight)
         n = (0.5 * dens * (Vinf ** 2) * self.LoadCraft.mainwing.Area * CL) / weight
@@ -61,12 +101,37 @@ class LoadFactor():
         return(n)
     
     def getAeroStructMeetV(self, NstructPOS, alt, CLMAX, WEIGHT):
+        """Find the Velocity where the Aero limits of craft meet the structural limit
+
+        Args:
+            NstructPOS (_type_): Structural n limit
+            alt (_type_): Altidude
+            CLMAX (_type_): Max CL value
+            WEIGHT (_type_): Weight of craft (newton)
+
+        Returns:
+            _type_: Velocity where n values meet
+        """        
         weight = self.weight_from_str(WEIGHT)
         dens = self.ActiveAtmos.dens_trop_alt(alt)
         vinf = numpy.sqrt(((2 * NstructPOS)/(dens * CLMAX)) * (weight/self.LoadCraft.mainwing.Area))
         return vinf
 
-    def genVnDiagram(self,Vmin,Vmax,numpoints,alt,Weight,clmin,clmax):
+    def genVnDiagram(self,Vmin,Vmax,numpoints,alt,Weight,clmin,clmax)-> plt:
+        """Returns a matplotlib figure of the Vn diagram for the craft
+
+        Args:
+            Vmin (_type_): Lower velocity limit of the graph, should be below stall speed of craft    
+            Vmax (_type_): Upper velocity limit of graph
+            numpoints (_type_): number of points to plot 
+            alt (_type_): Altitude to use
+            Weight (_type_): Weight of craft (newton)
+            clmin (_type_): Max CL value of craft
+            clmax (_type_): Max CL of craft in a push down (negative AoA)
+
+        Returns:
+            _type_: Figure of V-n Chart
+        """        
         weight = self.weight_from_str(Weight)
         atmos = self.LoadCraft.Atmosphere
         nplus = self.LoadCraft.PosStruturalNlimit

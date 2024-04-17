@@ -10,7 +10,7 @@ class CraftStatistics():
     Active_Atmosphere: Atmosphere
 
     def __init__(self, Craft: Craft) -> None:
-        """CraftStatistics serves as a layer to 
+        """CraftStatistics serves as a layer to make graphing properties of the craft simple.
 
         Args:
             Craft (Craft): _description_
@@ -63,6 +63,15 @@ class CraftStatistics():
     
     #PART F
     def get_PowerAvailable_jet(self,alt,velocity):
+        """Returns the power available from a jet at given alt
+
+        Args:
+            alt (_type_): Altiude 
+            velocity (_type_): Velocity of incoming air (m/s)
+
+        Returns:
+            _type_: Power available (watt)
+        """        
         return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
     
     #PART F
@@ -177,6 +186,16 @@ class CraftStatistics():
     
     #PART F
     def get_ROC_vel_alt(self,alt,vel,WEIGHT):
+        """Gets the achivable ROC for a jet
+
+        Args:
+            alt (_type_): Altitude
+            vel (_type_): Velocity m/s
+            WEIGHT (_type_): Weight newtons
+
+        Returns:
+            _type_: Rate of climb (m/s)
+        """        
         weight = self.weight_from_str(WEIGHT)
         powA = self.get_PowerAvailable_jet(alt,vel)
         powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
@@ -188,8 +207,15 @@ class CraftStatistics():
 
     #PART F
     def get_angle_climb_jet(self,Alt, WEIGHT):
-        '''MAX ANGLE OF CLIMB
-        '''
+        """Returns the maximum angle of climb for a jet powered craft
+
+        Args:
+            Alt (_type_): Altitude
+            WEIGHT (_type_): Weight (newton)
+
+        Returns:
+            _type_: max angle of climb (rad)
+        """        
         weight = self.weight_from_str(WEIGHT)
         thA = self.get_ThrustAvailable_jet(Alt)
         k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
@@ -313,11 +339,16 @@ class CraftStatistics():
 
     #PART F
     def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False): #working post units
-        """Returns max achivable ROC for a given alt
+        """Returns Max ROC for a jet
+
+        Args:
+            alt (_type_): Altitude (meters)
+            WEIGHT (_type_): weight (newtons)
+            RETURN_VEL (bool, optional): Return velcity of Max ROC rather than ROC. Defaults to False.
 
         Returns:
-            _type_: _description_
-        """
+            _type_: Rate of climb (m/s)
+        """        
 
         if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
             #print("oof")
