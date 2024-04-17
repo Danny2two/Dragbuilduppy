@@ -13,17 +13,17 @@ class Takeoff:
         self.Craft = Craft
         self.CraftStats = CraftStatistics.CraftStatistics(Craft)
         self.LoadFactor = LoadFactor.LoadFactor(Craft)
-        print(Craft)
-        print(Craft.ur)
+        #print(Craft)
+        #print(Craft.ur)
         self.ur = Craft.ur
         self.ActiveAtmospere = Craft.Atmosphere
-        self.Alt = Alt * ur.m
-        self.g = 9.81 * ur.m /ur.second**2
+        self.Alt = Alt * self.ur.m
+        self.g = 9.81 * self.ur.m /self.ur.second**2
         self.RollFricCoe = 0.04
         self.weight = Craft.weight_takeoff
         self.V_LO = 1.2 * StFl.calc_Vstall(self.ActiveAtmospere.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
         self.n_to = n_takeoff
-        self.height_Obs = 10.668 * ur.m #35 ft
+        self.height_Obs = 10.668 * self.ur.m #35 ft
         self.climbAngle = climbangle
     
     def GroundRoll(self):
