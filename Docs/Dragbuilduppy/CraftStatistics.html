@@ -1,0 +1,1694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Dragbuilduppy.CraftStatistics API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Dragbuilduppy.CraftStatistics</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import math
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import numpy as np
+from craft import *
+from Atmosphere import Atmosphere
+
+class CraftStatistics():
+    StatsCraft: Craft
+    Active_Atmosphere: Atmosphere
+
+    def __init__(self, Craft: Craft) -&gt; None:
+        &#34;&#34;&#34;CraftStatistics serves as a layer to make graphing properties of the craft simple.
+
+        Args:
+            Craft (Craft): _description_
+        &#34;&#34;&#34;        
+        self.StatsCraft = Craft
+        self.Active_Atmosphere = Craft.Atmosphere
+        self.ur = self.StatsCraft.ur
+
+        #print(&#34;Initalizing Statistics for Craft: &#34; + self.StatsCraft.name)
+        #print(&#34;CD0: &#34; + str(self.StatsCraft.Cd0))
+        #print(&#34;Ozwald: &#34; + str(self.StatsCraft.mainwing.OswaldE))
+
+    #PART F
+    def weight_from_str(self, WEIGHT:str)-&gt; float:
+        &#34;&#34;&#34;Gets the crafts weight from a string.
+
+        Args:
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            float: weight in Newtons
+        &#34;&#34;&#34;
+
+
+        if WEIGHT.upper() == &#34;TAKEOFF&#34;:
+            weight = self.StatsCraft.weight_takeoff
+        elif WEIGHT.upper() == &#34;EMPTY&#34;:
+            weight = self.StatsCraft.weight_empty
+        elif WEIGHT.upper() == &#34;AVE&#34;:
+            weight = (self.StatsCraft.weight_empty + self.StatsCraft.weight_takeoff)/2
+        else:
+            try:
+                weight = float(WEIGHT)
+            except:
+                weight = 0
+                print(&#34;Conversion to float failed: &#34; + WEIGHT)
+        return weight
+
+    #PART F
+    def get_ThrustAvailable_jet(self,alt):
+        &#34;&#34;&#34;Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
+        Assumes m = 1
+
+        Args:
+            alt (_type_): Altitude above sea level in meters
+        &#34;&#34;&#34;        
+        maxthurust = self.StatsCraft.get_max_thrust()
+        aval_thrust = self.Active_Atmosphere.jet_thrust_available_alt(maxthurust,alt,1)
+        return aval_thrust
+    
+    #PART F
+    def get_PowerAvailable_jet(self,alt,velocity):
+        &#34;&#34;&#34;Returns the power available from a jet at given alt
+
+        Args:
+            alt (_type_): Altiude 
+            velocity (_type_): Velocity of incoming air (m/s)
+
+        Returns:
+            _type_: Power available (watt)
+        &#34;&#34;&#34;        
+        return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
+    
+    #PART F
+    def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT):
+        &#34;&#34;&#34;Finds power requred for SLF at given conditions
+
+        Args:
+            alt (_type_): Altitude above sealevel
+            velocity (_type_): Velocity in m/s
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            Pr: Power requred 
+        &#34;&#34;&#34;        
+        if type(WEIGHT) == str:
+            weight = self.weight_from_str(WEIGHT)
+        else:
+            weight = WEIGHT
+    
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            alt = alt * self.ur.meters
+        if self.ur.get_dimensionality(velocity) != self.ur.get_dimensionality(1 * self.ur.m / self.ur.s):
+            velocity = velocity * self.ur.m / self.ur.seconds
+        
+
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        #print(f&#39;w: {weight}, dens: {dens}, K: {k}, alt: {alt}, vel: {velocity}&#39;)
+        Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
+        return Pr
+    
+    #PART F
+    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
+        &#34;&#34;&#34;Returns a MPL figure of power requred and available vs alt
+
+        Args:
+            Alt_lower (_type_): Altitude above sealevel lower lim
+            Alt_upper : Alt upper lim
+            velocity (_type_): Velocity in m/s
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            plt: Plot
+        &#34;&#34;&#34;     
+        weight = self.weight_from_str(WEIGHT)
+        
+        alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        prA_array = np.zeros(alt_array.shape)
+        prR_array = np.zeros(alt_array.shape)
+        for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+            #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
+            prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity).magnitude /1000 #need to strip units :(
+            prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
+
+        if GRAPH_EXCESS:
+            prEx_arr = prA_array - prR_array
+            if SENDRAW:
+                return [alt_array,prEx_arr]
+            fig, ax = plt.subplots()
+            ax.plot(alt_array,prEx_arr,linewidth=2,label=&#34;Power Excess (kW)&#34;)
+            ax.plot(alt_array,prA_array,linewidth=1,label=&#34;Power Available (kW)&#34;,linestyle=&#34;--&#34;)
+            ax.plot(alt_array,prR_array,linewidth=1,label=&#34;Power Required (kW)&#34;,linestyle=&#34;--&#34;)
+
+            strTitle = &#34;Altitude vs Excess power&#34;
+            ax.hlines(0,Alt_lower,Alt_upper,colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;Zero Excess&#34;)
+        else:
+            fig, ax = plt.subplots()
+            strTitle = &#34;Altitude vs Power Available &amp; Required&#34;
+            ax.plot(alt_array,prA_array,linewidth=2,label=&#34;Power Available (kW)&#34;)
+            ax.plot(alt_array,prR_array,linewidth=2,label=&#34;Power Required (kW)&#34;)
+
+
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Power (kW)&#39;,title=strTitle)
+        textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ThrustAvailable(self,Alt_lower_lim, Alt_upper_lim,numPoints)-&gt; plt:
+        &#34;&#34;&#34;Returns a Matplotlib plot of thrust available vs alt
+
+        Args:
+            Alt_lower_lim (_type_): Lower alt limit in meters above sea
+            Alt_upper_lim (_type_): Upper alt limit
+            numPoints (_type_): number of points
+
+        Returns:
+            plt: Plot containing Thrust available vs altitude
+        &#34;&#34;&#34;        
+        alt_array = np.linspace(Alt_lower_lim,Alt_upper_lim,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        dens_array = np.zeros(alt_array.shape)
+        thrust_array = np.zeros(alt_array.shape) #Make new array for thrust
+        temp_array = np.zeros(alt_array.shape) #Make new array for thrust
+
+        for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+            thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1]).magnitude
+            dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1]).magnitude
+            temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1]).magnitude
+
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,thrust_array,linewidth=2,label=&#34;Thrust Available (N)&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Thrust available(N)&#39;,title=&#39;Altitude vs Thrust Available&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+    
+    #PART F
+    def get_ROC_vel_alt(self,alt,vel,WEIGHT):
+        &#34;&#34;&#34;Gets the achivable ROC for a jet
+
+        Args:
+            alt (_type_): Altitude
+            vel (_type_): Velocity m/s
+            WEIGHT (_type_): Weight newtons
+
+        Returns:
+            _type_: Rate of climb (m/s)
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        powA = self.get_PowerAvailable_jet(alt,vel)
+        powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
+        #print(f&#39;Poweravil: {powA}&#39;)
+        #print(f&#39;power R: {powR}&#39;)
+        powEx = powA - powR
+        #print(powEx)
+        return ((powEx/weight).magnitude) #had to strip units for vecorization
+
+    #PART F
+    def get_angle_climb_jet(self,Alt, WEIGHT):
+        &#34;&#34;&#34;Returns the maximum angle of climb for a jet powered craft
+
+        Args:
+            Alt (_type_): Altitude
+            WEIGHT (_type_): Weight (newton)
+
+        Returns:
+            _type_: max angle of climb (rad)
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        thA = self.get_ThrustAvailable_jet(Alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
+        theta = np.arcsin(sintheta)
+        return theta
+
+    #PART F
+    def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
+        &#34;&#34;&#34;Gets the max angle of constant climb
+
+        Args:
+            alt_lower (_type_): _description_
+            alt_upper (_type_): _description_
+            numPoints (_type_): _description_
+            WEIGHT (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
+        aoad = (np.rad2deg(aoa_array))*self.ur.degrees
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,aoad, label = &#34;AOA&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Angle of attack&#39;,title=&#39;Altitude vs maxAOA&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ROC(self,alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt:
+        &#34;&#34;&#34;Graphs rate of climb vs Altitude for the given velocity and weight.
+
+        Args:
+            alt_Lower (_type_): Lower limit for altitude
+            Velocity (_type_): Velocity to be used in excess energy calculation (m/s)
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            INFEETMIN (bool, optional): Graph in ROC in feet/min rather than m/s Defaults to False.
+
+        Returns:
+            _type_: A plot of ROC vs Altitide
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+    
+        PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,GRAPH_EXCESS=True,SENDRAW=True)
+        &#34;&#34;&#34;About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
+        this is deviding every number in powercurve[1] (our excess power) by the weight. 
+        &#34;&#34;&#34;
+        if INFEETMIN:
+            PowerCurve = [PowerCurve[0], ((PowerCurve[1] * 1000)/weight) * 3.28084 * 60] # Convert from m/s to ft/min
+            if SENDRAW: #If we want, we can send back the data without graphing it.
+                return PowerCurve
+            
+            fig, ax = plt.subplots()
+            ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (ft / m)&#34;)
+            ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (ft/min)&#39;,title=&#39;Altitude vs RoC&#39;)
+            ax.hlines(100,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;100 ft/min&#34;)
+        else:
+            PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] #Convert to m/s
+            if SENDRAW:
+                return PowerCurve
+            
+            fig, ax = plt.subplots()
+            ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (m/s)&#34;)
+            ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (m/s)&#39;,title=&#39;Altitude vs RoC&#39;)
+            ax.hlines(0.508,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+        textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt: # working post units
+        &#34;&#34;&#34;Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY
+
+        Args:
+            alt_Lower (_type_): lower alt limit
+            alt_Upper (_type_): upper alt limit
+            numPoints (_type_): number of altitude points
+            Velocity_min (_type_): lower velocity limit
+            Velocity_max (_type_): upper velocity limit
+            num_vel_points (_type_): number of velocity points
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            INFEETMIN (bool, optional): _description_. Defaults to False.
+            SENDRAW (bool, optional): _description_. Defaults to False.
+
+        Returns:
+            plt: 3d plot
+        &#34;&#34;&#34;
+        alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
+        vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
+
+        vectorized = np.vectorize(self.get_ROC_vel_alt) #Numpy magic
+
+        X, Y = np.meshgrid(vel_array, alt_array)
+        #print(f&#39;X: {X}, Y: {Y}&#39;)
+        Z = (vectorized(Y,X,WEIGHT))
+
+        fig = plt.figure()
+        ax = plt.axes(projection=&#39;3d&#39;,computed_zorder=False)
+        cs = ax.contour(X,Y,Z, levels=[0.508],cmap=cm.summer,offset=+0,zorder = 5)
+        surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False,alpha = 1,zorder = 1)
+        ax.set_xlabel(&#34;Velocity (m/s)&#34;)
+        ax.set_ylabel(&#34;Altitude (m)&#34;)
+        ax.set_zlabel(&#34;ROC (m/s)&#34;)
+        ax.view_init(elev=30, azim=120)
+
+        textstr = &#34;Green line: ROC = 100 ft/min&#34;
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0, 0,350, textstr, transform=ax.transAxes, fontsize=10,verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        ax.set_box_aspect(aspect=None, zoom=0.8)
+        fig.add_axes(ax)
+        return fig
+
+    #PART F
+    def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False): #working post units
+        &#34;&#34;&#34;Returns Max ROC for a jet
+
+        Args:
+            alt (_type_): Altitude (meters)
+            WEIGHT (_type_): weight (newtons)
+            RETURN_VEL (bool, optional): Return velcity of Max ROC rather than ROC. Defaults to False.
+
+        Returns:
+            _type_: Rate of climb (m/s)
+        &#34;&#34;&#34;        
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            #print(&#34;oof&#34;)
+            alt = alt * self.ur.meters        
+        weight = self.weight_from_str(WEIGHT)
+        wingarea = self.StatsCraft.mainwing.Area
+        cd0 = self.StatsCraft.Cd0
+        thrust = self.get_ThrustAvailable_jet(alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        ldmax = calc_CL_CDmax(k,cd0)
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        #print(f&#39;GetMaxRocJet: \nweight: {weight} \nwingarea: {wingarea}\n thrust: {thrust}\n dens: {dens}\n Alt: {alt}&#39;)
+        Z = 1 + np.sqrt(1 + (3/(np.power(ldmax,2) * np.power(thrust/weight,2))))
+
+        if RETURN_VEL:
+            V_rc = np.power((((thrust/weight) * (weight/wingarea))/(3 * dens * cd0)) * Z,0.5)
+            return V_rc.magnitude
+        
+        ST1 = np.power(((weight/wingarea)*Z)/(3 * dens * cd0 ),0.5)
+        ST2 = np.power(thrust/weight,3/2)
+        ST3 = 1 - (Z/6)- (3/(2 * np.power(thrust/weight,2) * np.power(ldmax,2) * Z))
+        rcmax = ST1 * ST2 * ST3
+        #print(&#34;RCMAX: &#34; + str(rcmax))
+        return rcmax.magnitude
+
+    #PART F
+    def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
+        &#34;&#34;&#34;Returns a plot of absolute Max rate of climb over the given altitude range, Also plots the Velocity requred to achive that RoC
+
+        Args:
+            alt_lower (_type_): Lower alt limit (meters)
+            alt_upper (_type_): Upper alt limit (meters)
+            numPoints (_type_): number of graph points
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            PLOT_CEILING (bool, optional): Plot where the ROC equals 100 ft/min. Defaults to False.
+
+        Returns:
+            _type_: _description_
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
+        Vel_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT,RETURN_VEL = True)
+
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,ROC_array, label = &#34; Max Rate of climb&#34;)
+        ax1 = ax.twinx()
+        ax1.plot(alt_array,Vel_array, label = &#34;Velocity&#34;,color=&#34;orange&#34;)
+        ax1.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Velocity m/s&#39;)
+
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;ROC (m/s)&#39;,title=&#39;Altitude vs Max RoC&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+        ax.hlines(0.508,alt_array[0],alt_array[len(alt_array) -1 ],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+        
+        if PLOT_CEILING:
+            minarr = np.absolute(ROC_array - 0.508)
+            locOfCelling = minarr.argmin()
+            ax.vlines(alt_array[locOfCelling],ROC_array.min(),ROC_array.max(),colors=&#34;Purple&#34;,linestyles=&#34;dotted&#34;,label=&#34;Service Ceiling&#34;)
+            textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN\n&#34; + &#34;Service Ceiling: &#34; + str(round(alt_array[locOfCelling],1)) + &#34;m&#34;
+        else:
+            textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN&#34;
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        return fig
+
+       
+
+if __name__ == &#34;__main__&#34;:
+        #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
+    OppaStoppa = Craft(&#34;OppaStoppa&#34;)
+    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,76,OppaStoppa.ur)
+    atmo = OppaStoppa.Atmosphere
+    ur = OppaStoppa.ur
+    OppaStoppa.weight_empty = 4450 * 9.81 *ur.newton
+    OppaStoppa.weight_takeoff = 5225 * 9.81 * ur.newton
+
+
+    &#34;&#34;&#34;Defining the draggy components of our craft&#34;&#34;&#34;
+    #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
+    MainWing = Wing3d(&#34;Oppa Main Wing&#34;,&#34;NACA 4312&#34;,34.87,25.26,9.14,1.76,-4,17,0.12,0.3,6.56,atmo)
+    HorizontalTail = Wing3d(&#34;HT&#34;,&#34;NACA 0012&#34;,26.57,4.58,2.44,0.915,0,15,0.12,0.3,0.12,atmo)
+    VerticalTail = Wing3d(&#34;VT&#34;,&#34;NACA 0012&#34;,26.57,4.58/2,2.44/2,0.915,0,15,0.12,0.3,0,atmo)
+
+    #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
+    MainFuselage = Fuselage(&#34;Oppa Fuselage&#34;,7.51,8.11,5.24,1.00,1.0,MainWing.Area,atmo)
+
+    #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
+    TailGear = FixedGear(&#34;Tail Gear&#34;,0.25,0.196129,MainWing.Area,1.2,atmo)
+
+    &#34;&#34;&#34;Defining our engines&#34;&#34;&#34;
+    #Engine defined: NAME, TSFC, BSFC, MaxThrust, MaxPower, efficency.
+    #Note that for a turbojet we dont really need BSFC or power
+    WilliamsFJ33 = Engine(&#34;Willams FJ33&#34;,13.77,0,8210,0,0.9,OppaStoppa.ur)
+    OppaStoppa.powertrain = [WilliamsFJ33,WilliamsFJ33]
+
+    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail,TailGear]
+    OppaStoppa.mainwing = MainWing
+
+    OppaStoppa.compute_components()
+
+
+    MyCraftStats = CraftStatistics(OppaStoppa)
+
+    MAXRoc = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,&#34;AVE&#34;,PLOT_CEILING=True)
+    #MAXRoc.legend()
+
+    powavr = MyCraftStats.graph_PowerAval_vs_PowerReq(0,12000,300,120,&#34;AVE&#34;,GRAPH_EXCESS=True)
+
+    ROC3d = MyCraftStats.graph_ROC_3d(0,12000,50,40,200,50,&#34;AVE&#34;)
+
+    ROC = MyCraftStats.graph_ROC(0,12000,100,120,&#34;AVE&#34;)
+
+    AOC = MyCraftStats.graph_angle_max_ANGLE_OF_CLIMB(0,12000,100,&#34;AVE&#34;)
+
+    THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
+
+    plt.show()
+    </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics"><code class="flex name class">
+<span>class <span class="ident">CraftStatistics</span></span>
+<span>(</span><span>Craft: craft.Craft)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>CraftStatistics serves as a layer to make graphing properties of the craft simple.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Craft</code></strong> :&ensp;<code>Craft</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CraftStatistics():
+    StatsCraft: Craft
+    Active_Atmosphere: Atmosphere
+
+    def __init__(self, Craft: Craft) -&gt; None:
+        &#34;&#34;&#34;CraftStatistics serves as a layer to make graphing properties of the craft simple.
+
+        Args:
+            Craft (Craft): _description_
+        &#34;&#34;&#34;        
+        self.StatsCraft = Craft
+        self.Active_Atmosphere = Craft.Atmosphere
+        self.ur = self.StatsCraft.ur
+
+        #print(&#34;Initalizing Statistics for Craft: &#34; + self.StatsCraft.name)
+        #print(&#34;CD0: &#34; + str(self.StatsCraft.Cd0))
+        #print(&#34;Ozwald: &#34; + str(self.StatsCraft.mainwing.OswaldE))
+
+    #PART F
+    def weight_from_str(self, WEIGHT:str)-&gt; float:
+        &#34;&#34;&#34;Gets the crafts weight from a string.
+
+        Args:
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            float: weight in Newtons
+        &#34;&#34;&#34;
+
+
+        if WEIGHT.upper() == &#34;TAKEOFF&#34;:
+            weight = self.StatsCraft.weight_takeoff
+        elif WEIGHT.upper() == &#34;EMPTY&#34;:
+            weight = self.StatsCraft.weight_empty
+        elif WEIGHT.upper() == &#34;AVE&#34;:
+            weight = (self.StatsCraft.weight_empty + self.StatsCraft.weight_takeoff)/2
+        else:
+            try:
+                weight = float(WEIGHT)
+            except:
+                weight = 0
+                print(&#34;Conversion to float failed: &#34; + WEIGHT)
+        return weight
+
+    #PART F
+    def get_ThrustAvailable_jet(self,alt):
+        &#34;&#34;&#34;Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
+        Assumes m = 1
+
+        Args:
+            alt (_type_): Altitude above sea level in meters
+        &#34;&#34;&#34;        
+        maxthurust = self.StatsCraft.get_max_thrust()
+        aval_thrust = self.Active_Atmosphere.jet_thrust_available_alt(maxthurust,alt,1)
+        return aval_thrust
+    
+    #PART F
+    def get_PowerAvailable_jet(self,alt,velocity):
+        &#34;&#34;&#34;Returns the power available from a jet at given alt
+
+        Args:
+            alt (_type_): Altiude 
+            velocity (_type_): Velocity of incoming air (m/s)
+
+        Returns:
+            _type_: Power available (watt)
+        &#34;&#34;&#34;        
+        return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
+    
+    #PART F
+    def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT):
+        &#34;&#34;&#34;Finds power requred for SLF at given conditions
+
+        Args:
+            alt (_type_): Altitude above sealevel
+            velocity (_type_): Velocity in m/s
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            Pr: Power requred 
+        &#34;&#34;&#34;        
+        if type(WEIGHT) == str:
+            weight = self.weight_from_str(WEIGHT)
+        else:
+            weight = WEIGHT
+    
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            alt = alt * self.ur.meters
+        if self.ur.get_dimensionality(velocity) != self.ur.get_dimensionality(1 * self.ur.m / self.ur.s):
+            velocity = velocity * self.ur.m / self.ur.seconds
+        
+
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        #print(f&#39;w: {weight}, dens: {dens}, K: {k}, alt: {alt}, vel: {velocity}&#39;)
+        Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
+        return Pr
+    
+    #PART F
+    def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
+        &#34;&#34;&#34;Returns a MPL figure of power requred and available vs alt
+
+        Args:
+            Alt_lower (_type_): Altitude above sealevel lower lim
+            Alt_upper : Alt upper lim
+            velocity (_type_): Velocity in m/s
+            WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+        Returns:
+            plt: Plot
+        &#34;&#34;&#34;     
+        weight = self.weight_from_str(WEIGHT)
+        
+        alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        prA_array = np.zeros(alt_array.shape)
+        prR_array = np.zeros(alt_array.shape)
+        for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+            #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
+            prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity).magnitude /1000 #need to strip units :(
+            prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
+
+        if GRAPH_EXCESS:
+            prEx_arr = prA_array - prR_array
+            if SENDRAW:
+                return [alt_array,prEx_arr]
+            fig, ax = plt.subplots()
+            ax.plot(alt_array,prEx_arr,linewidth=2,label=&#34;Power Excess (kW)&#34;)
+            ax.plot(alt_array,prA_array,linewidth=1,label=&#34;Power Available (kW)&#34;,linestyle=&#34;--&#34;)
+            ax.plot(alt_array,prR_array,linewidth=1,label=&#34;Power Required (kW)&#34;,linestyle=&#34;--&#34;)
+
+            strTitle = &#34;Altitude vs Excess power&#34;
+            ax.hlines(0,Alt_lower,Alt_upper,colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;Zero Excess&#34;)
+        else:
+            fig, ax = plt.subplots()
+            strTitle = &#34;Altitude vs Power Available &amp; Required&#34;
+            ax.plot(alt_array,prA_array,linewidth=2,label=&#34;Power Available (kW)&#34;)
+            ax.plot(alt_array,prR_array,linewidth=2,label=&#34;Power Required (kW)&#34;)
+
+
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Power (kW)&#39;,title=strTitle)
+        textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ThrustAvailable(self,Alt_lower_lim, Alt_upper_lim,numPoints)-&gt; plt:
+        &#34;&#34;&#34;Returns a Matplotlib plot of thrust available vs alt
+
+        Args:
+            Alt_lower_lim (_type_): Lower alt limit in meters above sea
+            Alt_upper_lim (_type_): Upper alt limit
+            numPoints (_type_): number of points
+
+        Returns:
+            plt: Plot containing Thrust available vs altitude
+        &#34;&#34;&#34;        
+        alt_array = np.linspace(Alt_lower_lim,Alt_upper_lim,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        dens_array = np.zeros(alt_array.shape)
+        thrust_array = np.zeros(alt_array.shape) #Make new array for thrust
+        temp_array = np.zeros(alt_array.shape) #Make new array for thrust
+
+        for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+            thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1]).magnitude
+            dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1]).magnitude
+            temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1]).magnitude
+
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,thrust_array,linewidth=2,label=&#34;Thrust Available (N)&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Thrust available(N)&#39;,title=&#39;Altitude vs Thrust Available&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+    
+    #PART F
+    def get_ROC_vel_alt(self,alt,vel,WEIGHT):
+        &#34;&#34;&#34;Gets the achivable ROC for a jet
+
+        Args:
+            alt (_type_): Altitude
+            vel (_type_): Velocity m/s
+            WEIGHT (_type_): Weight newtons
+
+        Returns:
+            _type_: Rate of climb (m/s)
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        powA = self.get_PowerAvailable_jet(alt,vel)
+        powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
+        #print(f&#39;Poweravil: {powA}&#39;)
+        #print(f&#39;power R: {powR}&#39;)
+        powEx = powA - powR
+        #print(powEx)
+        return ((powEx/weight).magnitude) #had to strip units for vecorization
+
+    #PART F
+    def get_angle_climb_jet(self,Alt, WEIGHT):
+        &#34;&#34;&#34;Returns the maximum angle of climb for a jet powered craft
+
+        Args:
+            Alt (_type_): Altitude
+            WEIGHT (_type_): Weight (newton)
+
+        Returns:
+            _type_: max angle of climb (rad)
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        thA = self.get_ThrustAvailable_jet(Alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
+        theta = np.arcsin(sintheta)
+        return theta
+
+    #PART F
+    def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
+        &#34;&#34;&#34;Gets the max angle of constant climb
+
+        Args:
+            alt_lower (_type_): _description_
+            alt_upper (_type_): _description_
+            numPoints (_type_): _description_
+            WEIGHT (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
+        aoad = (np.rad2deg(aoa_array))*self.ur.degrees
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,aoad, label = &#34;AOA&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Angle of attack&#39;,title=&#39;Altitude vs maxAOA&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ROC(self,alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt:
+        &#34;&#34;&#34;Graphs rate of climb vs Altitude for the given velocity and weight.
+
+        Args:
+            alt_Lower (_type_): Lower limit for altitude
+            Velocity (_type_): Velocity to be used in excess energy calculation (m/s)
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            INFEETMIN (bool, optional): Graph in ROC in feet/min rather than m/s Defaults to False.
+
+        Returns:
+            _type_: A plot of ROC vs Altitide
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+    
+        PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,GRAPH_EXCESS=True,SENDRAW=True)
+        &#34;&#34;&#34;About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
+        this is deviding every number in powercurve[1] (our excess power) by the weight. 
+        &#34;&#34;&#34;
+        if INFEETMIN:
+            PowerCurve = [PowerCurve[0], ((PowerCurve[1] * 1000)/weight) * 3.28084 * 60] # Convert from m/s to ft/min
+            if SENDRAW: #If we want, we can send back the data without graphing it.
+                return PowerCurve
+            
+            fig, ax = plt.subplots()
+            ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (ft / m)&#34;)
+            ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (ft/min)&#39;,title=&#39;Altitude vs RoC&#39;)
+            ax.hlines(100,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;100 ft/min&#34;)
+        else:
+            PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] #Convert to m/s
+            if SENDRAW:
+                return PowerCurve
+            
+            fig, ax = plt.subplots()
+            ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (m/s)&#34;)
+            ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (m/s)&#39;,title=&#39;Altitude vs RoC&#39;)
+            ax.hlines(0.508,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+        textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+        return fig
+
+    #PART F
+    def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt: # working post units
+        &#34;&#34;&#34;Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY
+
+        Args:
+            alt_Lower (_type_): lower alt limit
+            alt_Upper (_type_): upper alt limit
+            numPoints (_type_): number of altitude points
+            Velocity_min (_type_): lower velocity limit
+            Velocity_max (_type_): upper velocity limit
+            num_vel_points (_type_): number of velocity points
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            INFEETMIN (bool, optional): _description_. Defaults to False.
+            SENDRAW (bool, optional): _description_. Defaults to False.
+
+        Returns:
+            plt: 3d plot
+        &#34;&#34;&#34;
+        alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
+        vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
+
+        vectorized = np.vectorize(self.get_ROC_vel_alt) #Numpy magic
+
+        X, Y = np.meshgrid(vel_array, alt_array)
+        #print(f&#39;X: {X}, Y: {Y}&#39;)
+        Z = (vectorized(Y,X,WEIGHT))
+
+        fig = plt.figure()
+        ax = plt.axes(projection=&#39;3d&#39;,computed_zorder=False)
+        cs = ax.contour(X,Y,Z, levels=[0.508],cmap=cm.summer,offset=+0,zorder = 5)
+        surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False,alpha = 1,zorder = 1)
+        ax.set_xlabel(&#34;Velocity (m/s)&#34;)
+        ax.set_ylabel(&#34;Altitude (m)&#34;)
+        ax.set_zlabel(&#34;ROC (m/s)&#34;)
+        ax.view_init(elev=30, azim=120)
+
+        textstr = &#34;Green line: ROC = 100 ft/min&#34;
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0, 0,350, textstr, transform=ax.transAxes, fontsize=10,verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        ax.set_box_aspect(aspect=None, zoom=0.8)
+        fig.add_axes(ax)
+        return fig
+
+    #PART F
+    def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False): #working post units
+        &#34;&#34;&#34;Returns Max ROC for a jet
+
+        Args:
+            alt (_type_): Altitude (meters)
+            WEIGHT (_type_): weight (newtons)
+            RETURN_VEL (bool, optional): Return velcity of Max ROC rather than ROC. Defaults to False.
+
+        Returns:
+            _type_: Rate of climb (m/s)
+        &#34;&#34;&#34;        
+
+        if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+            #print(&#34;oof&#34;)
+            alt = alt * self.ur.meters        
+        weight = self.weight_from_str(WEIGHT)
+        wingarea = self.StatsCraft.mainwing.Area
+        cd0 = self.StatsCraft.Cd0
+        thrust = self.get_ThrustAvailable_jet(alt)
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        ldmax = calc_CL_CDmax(k,cd0)
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        #print(f&#39;GetMaxRocJet: \nweight: {weight} \nwingarea: {wingarea}\n thrust: {thrust}\n dens: {dens}\n Alt: {alt}&#39;)
+        Z = 1 + np.sqrt(1 + (3/(np.power(ldmax,2) * np.power(thrust/weight,2))))
+
+        if RETURN_VEL:
+            V_rc = np.power((((thrust/weight) * (weight/wingarea))/(3 * dens * cd0)) * Z,0.5)
+            return V_rc.magnitude
+        
+        ST1 = np.power(((weight/wingarea)*Z)/(3 * dens * cd0 ),0.5)
+        ST2 = np.power(thrust/weight,3/2)
+        ST3 = 1 - (Z/6)- (3/(2 * np.power(thrust/weight,2) * np.power(ldmax,2) * Z))
+        rcmax = ST1 * ST2 * ST3
+        #print(&#34;RCMAX: &#34; + str(rcmax))
+        return rcmax.magnitude
+
+    #PART F
+    def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
+        &#34;&#34;&#34;Returns a plot of absolute Max rate of climb over the given altitude range, Also plots the Velocity requred to achive that RoC
+
+        Args:
+            alt_lower (_type_): Lower alt limit (meters)
+            alt_upper (_type_): Upper alt limit (meters)
+            numPoints (_type_): number of graph points
+            WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+            PLOT_CEILING (bool, optional): Plot where the ROC equals 100 ft/min. Defaults to False.
+
+        Returns:
+            _type_: _description_
+        &#34;&#34;&#34;        
+        weight = self.weight_from_str(WEIGHT)
+        alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+        ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
+        Vel_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT,RETURN_VEL = True)
+
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,ROC_array, label = &#34; Max Rate of climb&#34;)
+        ax1 = ax.twinx()
+        ax1.plot(alt_array,Vel_array, label = &#34;Velocity&#34;,color=&#34;orange&#34;)
+        ax1.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Velocity m/s&#39;)
+
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;ROC (m/s)&#39;,title=&#39;Altitude vs Max RoC&#39;)
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+        ax.hlines(0.508,alt_array[0],alt_array[len(alt_array) -1 ],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+        
+        if PLOT_CEILING:
+            minarr = np.absolute(ROC_array - 0.508)
+            locOfCelling = minarr.argmin()
+            ax.vlines(alt_array[locOfCelling],ROC_array.min(),ROC_array.max(),colors=&#34;Purple&#34;,linestyles=&#34;dotted&#34;,label=&#34;Service Ceiling&#34;)
+            textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN\n&#34; + &#34;Service Ceiling: &#34; + str(round(alt_array[locOfCelling],1)) + &#34;m&#34;
+        else:
+            textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN&#34;
+        props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+        return fig</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.Active_Atmosphere"><code class="name">var <span class="ident">Active_Atmosphere</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.StatsCraft"><code class="name">var <span class="ident">StatsCraft</span> : craft.Craft</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_MAX_ROC_jet"><code class="name flex">
+<span>def <span class="ident">get_MAX_ROC_jet</span></span>(<span>self, alt, WEIGHT, RETURN_VEL: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns Max ROC for a jet</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude (meters)</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>weight (newtons)</dd>
+<dt><strong><code>RETURN_VEL</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Return velcity of Max ROC rather than ROC. Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Rate of climb (m/s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_MAX_ROC_jet(self,alt,WEIGHT,RETURN_VEL: bool = False): #working post units
+    &#34;&#34;&#34;Returns Max ROC for a jet
+
+    Args:
+        alt (_type_): Altitude (meters)
+        WEIGHT (_type_): weight (newtons)
+        RETURN_VEL (bool, optional): Return velcity of Max ROC rather than ROC. Defaults to False.
+
+    Returns:
+        _type_: Rate of climb (m/s)
+    &#34;&#34;&#34;        
+
+    if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+        #print(&#34;oof&#34;)
+        alt = alt * self.ur.meters        
+    weight = self.weight_from_str(WEIGHT)
+    wingarea = self.StatsCraft.mainwing.Area
+    cd0 = self.StatsCraft.Cd0
+    thrust = self.get_ThrustAvailable_jet(alt)
+    k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+    ldmax = calc_CL_CDmax(k,cd0)
+    dens = self.Active_Atmosphere.dens_trop_alt(alt)
+    #print(f&#39;GetMaxRocJet: \nweight: {weight} \nwingarea: {wingarea}\n thrust: {thrust}\n dens: {dens}\n Alt: {alt}&#39;)
+    Z = 1 + np.sqrt(1 + (3/(np.power(ldmax,2) * np.power(thrust/weight,2))))
+
+    if RETURN_VEL:
+        V_rc = np.power((((thrust/weight) * (weight/wingarea))/(3 * dens * cd0)) * Z,0.5)
+        return V_rc.magnitude
+    
+    ST1 = np.power(((weight/wingarea)*Z)/(3 * dens * cd0 ),0.5)
+    ST2 = np.power(thrust/weight,3/2)
+    ST3 = 1 - (Z/6)- (3/(2 * np.power(thrust/weight,2) * np.power(ldmax,2) * Z))
+    rcmax = ST1 * ST2 * ST3
+    #print(&#34;RCMAX: &#34; + str(rcmax))
+    return rcmax.magnitude</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerAvailable_jet"><code class="name flex">
+<span>def <span class="ident">get_PowerAvailable_jet</span></span>(<span>self, alt, velocity)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the power available from a jet at given alt</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altiude </dd>
+<dt><strong><code>velocity</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity of incoming air (m/s)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Power available (watt)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_PowerAvailable_jet(self,alt,velocity):
+    &#34;&#34;&#34;Returns the power available from a jet at given alt
+
+    Args:
+        alt (_type_): Altiude 
+        velocity (_type_): Velocity of incoming air (m/s)
+
+    Returns:
+        _type_: Power available (watt)
+    &#34;&#34;&#34;        
+    return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerRequired_alt_jet"><code class="name flex">
+<span>def <span class="ident">get_PowerRequired_alt_jet</span></span>(<span>self, alt, velocity, WEIGHT)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Finds power requred for SLF at given conditions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude above sealevel</dd>
+<dt><strong><code>velocity</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity in m/s</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pr</code></dt>
+<dd>Power requred</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT):
+    &#34;&#34;&#34;Finds power requred for SLF at given conditions
+
+    Args:
+        alt (_type_): Altitude above sealevel
+        velocity (_type_): Velocity in m/s
+        WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+    Returns:
+        Pr: Power requred 
+    &#34;&#34;&#34;        
+    if type(WEIGHT) == str:
+        weight = self.weight_from_str(WEIGHT)
+    else:
+        weight = WEIGHT
+
+
+    if(self.ur.get_dimensionality(alt) != self.ur.get_dimensionality( 1 * self.ur.meters)):
+        alt = alt * self.ur.meters
+    if self.ur.get_dimensionality(velocity) != self.ur.get_dimensionality(1 * self.ur.m / self.ur.s):
+        velocity = velocity * self.ur.m / self.ur.seconds
+    
+
+    dens = self.Active_Atmosphere.dens_trop_alt(alt)
+    k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+    #print(f&#39;w: {weight}, dens: {dens}, K: {k}, alt: {alt}, vel: {velocity}&#39;)
+    Pr = calc_PowerReq(dens,velocity,self.StatsCraft.mainwing.Area,self.StatsCraft.Cd0,k,weight)
+    return Pr</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_ROC_vel_alt"><code class="name flex">
+<span>def <span class="ident">get_ROC_vel_alt</span></span>(<span>self, alt, vel, WEIGHT)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the achivable ROC for a jet</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude</dd>
+<dt><strong><code>vel</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity m/s</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Weight newtons</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Rate of climb (m/s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ROC_vel_alt(self,alt,vel,WEIGHT):
+    &#34;&#34;&#34;Gets the achivable ROC for a jet
+
+    Args:
+        alt (_type_): Altitude
+        vel (_type_): Velocity m/s
+        WEIGHT (_type_): Weight newtons
+
+    Returns:
+        _type_: Rate of climb (m/s)
+    &#34;&#34;&#34;        
+    weight = self.weight_from_str(WEIGHT)
+    powA = self.get_PowerAvailable_jet(alt,vel)
+    powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
+    #print(f&#39;Poweravil: {powA}&#39;)
+    #print(f&#39;power R: {powR}&#39;)
+    powEx = powA - powR
+    #print(powEx)
+    return ((powEx/weight).magnitude) #had to strip units for vecorization</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_ThrustAvailable_jet"><code class="name flex">
+<span>def <span class="ident">get_ThrustAvailable_jet</span></span>(<span>self, alt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
+Assumes m = 1</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude above sea level in meters</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ThrustAvailable_jet(self,alt):
+    &#34;&#34;&#34;Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
+    Assumes m = 1
+
+    Args:
+        alt (_type_): Altitude above sea level in meters
+    &#34;&#34;&#34;        
+    maxthurust = self.StatsCraft.get_max_thrust()
+    aval_thrust = self.Active_Atmosphere.jet_thrust_available_alt(maxthurust,alt,1)
+    return aval_thrust</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.get_angle_climb_jet"><code class="name flex">
+<span>def <span class="ident">get_angle_climb_jet</span></span>(<span>self, Alt, WEIGHT)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the maximum angle of climb for a jet powered craft</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Alt</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Weight (newton)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>max angle of climb (rad)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_angle_climb_jet(self,Alt, WEIGHT):
+    &#34;&#34;&#34;Returns the maximum angle of climb for a jet powered craft
+
+    Args:
+        Alt (_type_): Altitude
+        WEIGHT (_type_): Weight (newton)
+
+    Returns:
+        _type_: max angle of climb (rad)
+    &#34;&#34;&#34;        
+    weight = self.weight_from_str(WEIGHT)
+    thA = self.get_ThrustAvailable_jet(Alt)
+    k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+    sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
+    theta = np.arcsin(sintheta)
+    return theta</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_MAX_ROC_JET"><code class="name flex">
+<span>def <span class="ident">graph_MAX_ROC_JET</span></span>(<span>self, alt_lower, alt_upper, numPoints, WEIGHT, PLOT_CEILING: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a plot of absolute Max rate of climb over the given altitude range, Also plots the Velocity requred to achive that RoC</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt_lower</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Lower alt limit (meters)</dd>
+<dt><strong><code>alt_upper</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Upper alt limit (meters)</dd>
+<dt><strong><code>numPoints</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>number of graph points</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+<dt><strong><code>PLOT_CEILING</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Plot where the ROC equals 100 ft/min. Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_MAX_ROC_JET(self,alt_lower,alt_upper,numPoints,WEIGHT,PLOT_CEILING: bool = False):
+    &#34;&#34;&#34;Returns a plot of absolute Max rate of climb over the given altitude range, Also plots the Velocity requred to achive that RoC
+
+    Args:
+        alt_lower (_type_): Lower alt limit (meters)
+        alt_upper (_type_): Upper alt limit (meters)
+        numPoints (_type_): number of graph points
+        WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+        PLOT_CEILING (bool, optional): Plot where the ROC equals 100 ft/min. Defaults to False.
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;        
+    weight = self.weight_from_str(WEIGHT)
+    alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+    ROC_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT)
+    Vel_array = np.vectorize(self.get_MAX_ROC_jet)(alt_array,WEIGHT,RETURN_VEL = True)
+
+    fig, ax = plt.subplots()
+    ax.plot(alt_array,ROC_array, label = &#34; Max Rate of climb&#34;)
+    ax1 = ax.twinx()
+    ax1.plot(alt_array,Vel_array, label = &#34;Velocity&#34;,color=&#34;orange&#34;)
+    ax1.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Velocity m/s&#39;)
+
+    ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;ROC (m/s)&#39;,title=&#39;Altitude vs Max RoC&#39;)
+    fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+    ax.hlines(0.508,alt_array[0],alt_array[len(alt_array) -1 ],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+    
+    if PLOT_CEILING:
+        minarr = np.absolute(ROC_array - 0.508)
+        locOfCelling = minarr.argmin()
+        ax.vlines(alt_array[locOfCelling],ROC_array.min(),ROC_array.max(),colors=&#34;Purple&#34;,linestyles=&#34;dotted&#34;,label=&#34;Service Ceiling&#34;)
+        textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN\n&#34; + &#34;Service Ceiling: &#34; + str(round(alt_array[locOfCelling],1)) + &#34;m&#34;
+    else:
+        textstr = &#34;weight =&#34; + str(round(weight / 1000,2)) + &#34;kN&#34;
+    props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+    # place a text box in upper left in axes coords
+    ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+    verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_PowerAval_vs_PowerReq"><code class="name flex">
+<span>def <span class="ident">graph_PowerAval_vs_PowerReq</span></span>(<span>self, Alt_lower, Alt_upper, numPoints, Velocity, WEIGHT, GRAPH_EXCESS: bool = False, SENDRAW: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a MPL figure of power requred and available vs alt</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Alt_lower</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Altitude above sealevel lower lim</dd>
+<dt>Alt_upper : Alt upper lim</dt>
+<dt><strong><code>velocity</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity in m/s</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>plt</code></dt>
+<dd>Plot</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_PowerAval_vs_PowerReq(self,Alt_lower, Alt_upper,numPoints, Velocity, WEIGHT,GRAPH_EXCESS: bool = False,SENDRAW: bool = False):
+    &#34;&#34;&#34;Returns a MPL figure of power requred and available vs alt
+
+    Args:
+        Alt_lower (_type_): Altitude above sealevel lower lim
+        Alt_upper : Alt upper lim
+        velocity (_type_): Velocity in m/s
+        WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+    Returns:
+        plt: Plot
+    &#34;&#34;&#34;     
+    weight = self.weight_from_str(WEIGHT)
+    
+    alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+    prA_array = np.zeros(alt_array.shape)
+    prR_array = np.zeros(alt_array.shape)
+    for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+        #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
+        prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity).magnitude /1000 #need to strip units :(
+        prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
+
+    if GRAPH_EXCESS:
+        prEx_arr = prA_array - prR_array
+        if SENDRAW:
+            return [alt_array,prEx_arr]
+        fig, ax = plt.subplots()
+        ax.plot(alt_array,prEx_arr,linewidth=2,label=&#34;Power Excess (kW)&#34;)
+        ax.plot(alt_array,prA_array,linewidth=1,label=&#34;Power Available (kW)&#34;,linestyle=&#34;--&#34;)
+        ax.plot(alt_array,prR_array,linewidth=1,label=&#34;Power Required (kW)&#34;,linestyle=&#34;--&#34;)
+
+        strTitle = &#34;Altitude vs Excess power&#34;
+        ax.hlines(0,Alt_lower,Alt_upper,colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;Zero Excess&#34;)
+    else:
+        fig, ax = plt.subplots()
+        strTitle = &#34;Altitude vs Power Available &amp; Required&#34;
+        ax.plot(alt_array,prA_array,linewidth=2,label=&#34;Power Available (kW)&#34;)
+        ax.plot(alt_array,prR_array,linewidth=2,label=&#34;Power Required (kW)&#34;)
+
+
+    ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Power (kW)&#39;,title=strTitle)
+    textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+    props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+    # place a text box in upper left in axes coords
+    ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+    verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+    fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC"><code class="name flex">
+<span>def <span class="ident">graph_ROC</span></span>(<span>self, alt_Lower, alt_Upper, numPoints, Velocity, WEIGHT, INFEETMIN: bool = False, SENDRAW: bool = False) ‑> <module 'matplotlib.pyplot' from 'c:\\users\\daniel m\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\matplotlib\\pyplot.py'></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Graphs rate of climb vs Altitude for the given velocity and weight.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt_Lower</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Lower limit for altitude</dd>
+<dt><strong><code>Velocity</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity to be used in excess energy calculation (m/s)</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+<dt><strong><code>INFEETMIN</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Graph in ROC in feet/min rather than m/s Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>A plot of ROC vs Altitide</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_ROC(self,alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt:
+    &#34;&#34;&#34;Graphs rate of climb vs Altitude for the given velocity and weight.
+
+    Args:
+        alt_Lower (_type_): Lower limit for altitude
+        Velocity (_type_): Velocity to be used in excess energy calculation (m/s)
+        WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+        INFEETMIN (bool, optional): Graph in ROC in feet/min rather than m/s Defaults to False.
+
+    Returns:
+        _type_: A plot of ROC vs Altitide
+    &#34;&#34;&#34;        
+    weight = self.weight_from_str(WEIGHT)
+
+    PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,GRAPH_EXCESS=True,SENDRAW=True)
+    &#34;&#34;&#34;About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
+    this is deviding every number in powercurve[1] (our excess power) by the weight. 
+    &#34;&#34;&#34;
+    if INFEETMIN:
+        PowerCurve = [PowerCurve[0], ((PowerCurve[1] * 1000)/weight) * 3.28084 * 60] # Convert from m/s to ft/min
+        if SENDRAW: #If we want, we can send back the data without graphing it.
+            return PowerCurve
+        
+        fig, ax = plt.subplots()
+        ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (ft / m)&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (ft/min)&#39;,title=&#39;Altitude vs RoC&#39;)
+        ax.hlines(100,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;100 ft/min&#34;)
+    else:
+        PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] #Convert to m/s
+        if SENDRAW:
+            return PowerCurve
+        
+        fig, ax = plt.subplots()
+        ax.plot(PowerCurve[0],PowerCurve[1],linewidth=2,label=&#34;Rate of Climb (m/s)&#34;)
+        ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Rate of Climb (m/s)&#39;,title=&#39;Altitude vs RoC&#39;)
+        ax.hlines(0.508,PowerCurve[0][0],PowerCurve[0][len(PowerCurve[0]) - 1],colors=&#34;red&#34;,linestyles=&#34;dotted&#34;,label=&#34;0.508 m/s&#34;)
+    textstr = &#34;$V_\infty = $&#34; + str(Velocity) + &#34;$\dfrac{m}{s}$&#34; +&#34;\nweight =&#34; + str(round(weight.to(&#34;kilonewton&#34;),2))
+    props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+    # place a text box in upper left in axes coords
+    ax.text(0.85, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+    verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+    fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC_3d"><code class="name flex">
+<span>def <span class="ident">graph_ROC_3d</span></span>(<span>self, alt_Lower, alt_Upper, numPoints, Velocity_min, Velocity_max, num_vel_points, WEIGHT, INFEETMIN: bool = False, SENDRAW: bool = False) ‑> <module 'matplotlib.pyplot' from 'c:\\users\\daniel m\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\matplotlib\\pyplot.py'></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt_Lower</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>lower alt limit</dd>
+<dt><strong><code>alt_Upper</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>upper alt limit</dd>
+<dt><strong><code>numPoints</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>number of altitude points</dd>
+<dt><strong><code>Velocity_min</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>lower velocity limit</dd>
+<dt><strong><code>Velocity_max</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>upper velocity limit</dd>
+<dt><strong><code>num_vel_points</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>number of velocity points</dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+<dt><strong><code>INFEETMIN</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd><em>description</em>. Defaults to False.</dd>
+<dt><strong><code>SENDRAW</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd><em>description</em>. Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>plt</code></dt>
+<dd>3d plot</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_ROC_3d(self,alt_Lower,alt_Upper,numPoints,Velocity_min,Velocity_max,num_vel_points,WEIGHT,INFEETMIN: bool = False,SENDRAW: bool = False)-&gt; plt: # working post units
+    &#34;&#34;&#34;Returns a 3d plot of RATE OF CLIMB over ALTUDUDE and VELOCITY
+
+    Args:
+        alt_Lower (_type_): lower alt limit
+        alt_Upper (_type_): upper alt limit
+        numPoints (_type_): number of altitude points
+        Velocity_min (_type_): lower velocity limit
+        Velocity_max (_type_): upper velocity limit
+        num_vel_points (_type_): number of velocity points
+        WEIGHT (_type_): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (newtons) (ie: 10.1). When a float is provided it will be cast from string to the float.
+        INFEETMIN (bool, optional): _description_. Defaults to False.
+        SENDRAW (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        plt: 3d plot
+    &#34;&#34;&#34;
+    alt_array = np.linspace(alt_Lower,alt_Upper,num=numPoints) #y
+    vel_array = np.linspace(Velocity_min,Velocity_max,num=num_vel_points)#x
+
+    vectorized = np.vectorize(self.get_ROC_vel_alt) #Numpy magic
+
+    X, Y = np.meshgrid(vel_array, alt_array)
+    #print(f&#39;X: {X}, Y: {Y}&#39;)
+    Z = (vectorized(Y,X,WEIGHT))
+
+    fig = plt.figure()
+    ax = plt.axes(projection=&#39;3d&#39;,computed_zorder=False)
+    cs = ax.contour(X,Y,Z, levels=[0.508],cmap=cm.summer,offset=+0,zorder = 5)
+    surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,linewidth=0, antialiased=False,alpha = 1,zorder = 1)
+    ax.set_xlabel(&#34;Velocity (m/s)&#34;)
+    ax.set_ylabel(&#34;Altitude (m)&#34;)
+    ax.set_zlabel(&#34;ROC (m/s)&#34;)
+    ax.view_init(elev=30, azim=120)
+
+    textstr = &#34;Green line: ROC = 100 ft/min&#34;
+    props = dict(boxstyle=&#39;round&#39;, facecolor=&#39;wheat&#39;, alpha=0.5)
+    # place a text box in upper left in axes coords
+    ax.text(0, 0,350, textstr, transform=ax.transAxes, fontsize=10,verticalalignment=&#39;top&#39;,horizontalalignment=&#39;center&#39;, bbox=props)
+    ax.set_box_aspect(aspect=None, zoom=0.8)
+    fig.add_axes(ax)
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ThrustAvailable"><code class="name flex">
+<span>def <span class="ident">graph_ThrustAvailable</span></span>(<span>self, Alt_lower_lim, Alt_upper_lim, numPoints) ‑> <module 'matplotlib.pyplot' from 'c:\\users\\daniel m\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\matplotlib\\pyplot.py'></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a Matplotlib plot of thrust available vs alt</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Alt_lower_lim</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Lower alt limit in meters above sea</dd>
+<dt><strong><code>Alt_upper_lim</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Upper alt limit</dd>
+<dt><strong><code>numPoints</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>number of points</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>plt</code></dt>
+<dd>Plot containing Thrust available vs altitude</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_ThrustAvailable(self,Alt_lower_lim, Alt_upper_lim,numPoints)-&gt; plt:
+    &#34;&#34;&#34;Returns a Matplotlib plot of thrust available vs alt
+
+    Args:
+        Alt_lower_lim (_type_): Lower alt limit in meters above sea
+        Alt_upper_lim (_type_): Upper alt limit
+        numPoints (_type_): number of points
+
+    Returns:
+        plt: Plot containing Thrust available vs altitude
+    &#34;&#34;&#34;        
+    alt_array = np.linspace(Alt_lower_lim,Alt_upper_lim,num=numPoints) #Array of numbers between lower and upper (inclusive)
+    dens_array = np.zeros(alt_array.shape)
+    thrust_array = np.zeros(alt_array.shape) #Make new array for thrust
+    temp_array = np.zeros(alt_array.shape) #Make new array for thrust
+
+    for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
+        thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1]).magnitude
+        dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1]).magnitude
+        temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1]).magnitude
+
+    fig, ax = plt.subplots()
+    ax.plot(alt_array,thrust_array,linewidth=2,label=&#34;Thrust Available (N)&#34;)
+    ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Thrust available(N)&#39;,title=&#39;Altitude vs Thrust Available&#39;)
+    fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_angle_max_ANGLE_OF_CLIMB"><code class="name flex">
+<span>def <span class="ident">graph_angle_max_ANGLE_OF_CLIMB</span></span>(<span>self, alt_lower, alt_upper, numPoints, WEIGHT)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the max angle of constant climb</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>alt_lower</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>alt_upper</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>numPoints</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graph_angle_max_ANGLE_OF_CLIMB(self, alt_lower,alt_upper,numPoints, WEIGHT):
+    &#34;&#34;&#34;Gets the max angle of constant climb
+
+    Args:
+        alt_lower (_type_): _description_
+        alt_upper (_type_): _description_
+        numPoints (_type_): _description_
+        WEIGHT (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;        
+    weight = self.weight_from_str(WEIGHT)
+    alt_array = np.linspace(alt_lower,alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
+    aoa_array = np.vectorize(self.get_angle_climb_jet)(alt_array,WEIGHT)
+    aoad = (np.rad2deg(aoa_array))*self.ur.degrees
+    fig, ax = plt.subplots()
+    ax.plot(alt_array,aoad, label = &#34;AOA&#34;)
+    ax.set(xlabel=&#39;Altitude (meters)&#39;, ylabel=&#39;Angle of attack&#39;,title=&#39;Altitude vs maxAOA&#39;)
+    fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment=&#34;center&#34;,fontsize = 10)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.CraftStatistics.CraftStatistics.weight_from_str"><code class="name flex">
+<span>def <span class="ident">weight_from_str</span></span>(<span>self, WEIGHT: str) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the crafts weight from a string.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>WEIGHT</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either "TAKEOFF" for the provided crafts takeoff weight, "EMPTY" for empty weight , "AVE" average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>weight in Newtons</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def weight_from_str(self, WEIGHT:str)-&gt; float:
+    &#34;&#34;&#34;Gets the crafts weight from a string.
+
+    Args:
+        WEIGHT (str): Either &#34;TAKEOFF&#34; for the provided crafts takeoff weight, &#34;EMPTY&#34; for empty weight , &#34;AVE&#34; average the TOW and EW, or a float (ie: 10.1). When a float is provided it will be cast from string to the float.
+
+    Returns:
+        float: weight in Newtons
+    &#34;&#34;&#34;
+
+
+    if WEIGHT.upper() == &#34;TAKEOFF&#34;:
+        weight = self.StatsCraft.weight_takeoff
+    elif WEIGHT.upper() == &#34;EMPTY&#34;:
+        weight = self.StatsCraft.weight_empty
+    elif WEIGHT.upper() == &#34;AVE&#34;:
+        weight = (self.StatsCraft.weight_empty + self.StatsCraft.weight_takeoff)/2
+    else:
+        try:
+            weight = float(WEIGHT)
+        except:
+            weight = 0
+            print(&#34;Conversion to float failed: &#34; + WEIGHT)
+    return weight</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Dragbuilduppy" href="index.html">Dragbuilduppy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics" href="#Dragbuilduppy.CraftStatistics.CraftStatistics">CraftStatistics</a></code></h4>
+<ul class="">
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.Active_Atmosphere" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.Active_Atmosphere">Active_Atmosphere</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.StatsCraft" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.StatsCraft">StatsCraft</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_MAX_ROC_jet" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_MAX_ROC_jet">get_MAX_ROC_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerAvailable_jet" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerAvailable_jet">get_PowerAvailable_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerRequired_alt_jet" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_PowerRequired_alt_jet">get_PowerRequired_alt_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_ROC_vel_alt" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_ROC_vel_alt">get_ROC_vel_alt</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_ThrustAvailable_jet" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_ThrustAvailable_jet">get_ThrustAvailable_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.get_angle_climb_jet" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.get_angle_climb_jet">get_angle_climb_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_MAX_ROC_JET" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_MAX_ROC_JET">graph_MAX_ROC_JET</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_PowerAval_vs_PowerReq" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_PowerAval_vs_PowerReq">graph_PowerAval_vs_PowerReq</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC">graph_ROC</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC_3d" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ROC_3d">graph_ROC_3d</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ThrustAvailable" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_ThrustAvailable">graph_ThrustAvailable</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.graph_angle_max_ANGLE_OF_CLIMB" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.graph_angle_max_ANGLE_OF_CLIMB">graph_angle_max_ANGLE_OF_CLIMB</a></code></li>
+<li><code><a title="Dragbuilduppy.CraftStatistics.CraftStatistics.weight_from_str" href="#Dragbuilduppy.CraftStatistics.CraftStatistics.weight_from_str">weight_from_str</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

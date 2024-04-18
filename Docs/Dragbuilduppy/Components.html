@@ -1,0 +1,1553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Dragbuilduppy.Components API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Dragbuilduppy.Components</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import math
+import numpy
+from Atmosphere import Atmosphere
+import Drag as DragClass
+import pint
+
+class DragyComponent:
+    Name = &#34;&#34;
+    Atmos: Atmosphere
+    def __init__(self,Atmosphere) -&gt; None:
+        self.Atmos = Atmosphere
+        self.ur = Atmosphere.ur
+        self.Drag = DragClass.Drag(self.ur)
+
+    def compute():
+        pass
+
+    def getCD0() -&gt; float:
+        pass
+
+    def printStats():
+        pass
+
+class Wing3d(DragyComponent):
+    Name = &#34;&#34;
+    AR = .0
+    OswaldE = .0
+    WingSweep = .0
+    Area = .0
+    AreaObs = .0
+    Span = 1.0
+    Chord = .1
+    A_zero_lift = .0
+    A_Stall = .0
+    TC = 0.12
+    XC = 0.3
+    Vinf = .0
+    Interf_Factor = 1
+    CLmax = 0
+    CLmin = 0
+    ##To be computed later
+    dyn_vc = .0
+    rey_nm = .0
+    mach = .0
+    FPSF = .0
+    FormFactor = .0
+    Swet = .0
+    CD0_wing = .0
+    airfoil = &#34;&#34;
+
+    def __init__(self,name,Airfoil,Sweep,Area,Span,Chord,Azerolift,Astall,TC,XC, AwingObscured,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new 3D wing. Units added during creation of wing, do not pass in quantites with demensions
+
+        Args:
+            name: Name to be usef for this wing.
+            Airfoil: Airfoil used for wing.
+            Sweep: Sweep angle in degrees.
+            Area: Planform area of wing in square meters.
+            Span: Wingspan in meters.
+            Chord: Chord length in meters.
+            Azerolift: Angle of zero lift in degrees.
+            Astall: Stall angle of wing in degrees.
+            TC: Thickness Ratio.
+            XC: Chordwise location of the maximum thickness.
+            AwingObscured: Planform area that is obsucred in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(atmos)
+        #print(self.Drag)
+        self.Name = name
+        self.airfoil = Airfoil
+        self.Chord = Chord * self.ur.meters
+        self.WingSweep = Sweep
+        self.AR = (numpy.power(Span, 2))/Area
+        self.OswaldE = self.Drag.calc_oswald_any(self.AR,self.WingSweep)
+        self.WingSweep = Sweep
+        self.Area = Area * self.ur.meters **2
+        self.Span = Span * self.ur.meters
+        self.A_zero_lift = Azerolift
+        self.A_Stall = Astall
+        self.TC = TC
+        self.XC = XC
+        self.AreaObs = AwingObscured * self.ur.meters **2
+
+
+    def compute(self):
+        self.AR = (numpy.power(self.Span, 2))/self.Area
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Chord,self.dyn_vc)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        self.FormFactor = self.Drag.calc_formfactorwing(self.XC,self.TC,self.mach,self.WingSweep)
+        self.Swet = self.Drag.calc_wetted_area_wing(self.TC,(self.Area-self.AreaObs))
+        self.CD0_wing = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.Area)
+
+    def getCD0(self):
+        return(float(self.CD0_wing))
+
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Airfoil: &#34; + str(self.airfoil))
+        print(&#34;├Span: &#34; + str(self.Span)  + &#34; m&#34;)
+        print(&#34;├Area: &#34; + str(self.Area) + &#34; m^2&#34;)
+        print(&#34;├Aspect Ratio: &#34; + str(self.AR))
+        print(&#34;├Chord: &#34; + str(self.Chord)+ &#34; m&#34;)
+        print(&#34;├Sweep: &#34; + str(self.WingSweep)+ &#34; deg&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;├Oswald Eff: &#34; + str(self.OswaldE))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+        print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+        print(&#34; ├Wetted Area: &#34; + str(self.Swet))
+        print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+        print(&#34; └CD0_Wing: &#34; + str(self.CD0_wing))
+
+class Nacelle(DragyComponent):
+    Name = &#34;&#34;
+    Length = .0
+    CrossSectionArea = .0
+    InterfFactor = 1
+    CD0C = .0
+    FPSFC = .0
+    FF = .0
+    SWet = .0
+    SWing = .0
+
+    def __init__(self,name,len,CrossArea,InterFactor,SWet,SWing,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new Nacelle
+
+        Args:
+            name (string): Name of nacelle
+            len (float): Length in meters
+            CrossArea (float): Max cross-sectional area in square meters
+            InterFactor (float): Interferance factor
+            SWet (float): Wetted surface area in square meters
+            SWing (float): Wing area in square meters
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.Length = len * self.ur.meters
+        self.CrossSectionArea = CrossArea * self.ur.meters **2
+        self.InterfFactor = InterFactor
+        self.SWet = SWet * self.ur.meters **2
+        self.SWing =SWing* self.ur.meters **2
+
+    def compute(self):
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        print(f&#39;Dynamic Viscosity: {self.dyn_vc}&#39;)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Length,self.dyn_vc)
+        print(f&#39;Reynolds Num: {self.rey_nm}&#39;)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        print(f&#39;Mach: {self.mach}&#39;)
+        self.FPSFC = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        print(f&#39;FlatPlateSF: {self.FPSFC}&#39;)
+        self.FF = self.Drag.calc_formfactornacelle(self.Length,self.CrossSectionArea)
+        self.CD0C = self.Drag.calc_cd0(self.FPSFC,self.FF,self.InterfFactor,self.SWet,self.SWing)
+
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Length: &#34; + str(self.Length)+ &#34; m&#34;)
+        print(&#34;├CrossArea: &#34; + str(self.CrossSectionArea)+&#34; m^2&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSFC))
+        print(&#34; ├Form Factor: &#34; + str(self.FF))
+        print(&#34; ├Wetted Area: &#34; + str(self.SWet))
+        print(&#34; ├Interf factor: &#34; + str(self.InterfFactor))
+        print(&#34; └CD0_nac: &#34; + str(self.CD0C))
+
+    def getCD0(self):
+        return(float(self.CD0C))
+    
+class FixedGear(DragyComponent):
+    Name = &#34;&#34;
+    CDC = 0
+    S_Frontal = 0
+    S_Wing = 0
+    interfFactor = 0
+    CDC0 = 0
+    def __init__(self,name,CDC,SFrontal,SWing,InterfFactor,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new fixed gear
+
+        Args:
+            name (string): Name for gear.
+            CDC (float): Estimated Cd for gear.
+            SFrontal (float): Frontal area in square meters.
+            SWing (float): Area of main wing in square meters
+            InterfFactor (float): Interference factor
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.CDC = CDC
+        self.S_Frontal= SFrontal * self.ur.meters **2
+        self.S_Wing = SWing #* self.ur.meters **2 Already has units. (most of the time :())
+        self.interfFactor = InterfFactor
+
+    def compute(self):
+        self.CDC0 = self.Drag.calc_cd0_gear(self.CDC,self.S_Frontal,self.S_Wing,self.interfFactor)
+    
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Frontal Area: &#34; + str(self.S_Frontal) + &#34; m^2&#34;)
+        print(&#34; ├ref Wing Area: &#34; + str(self.S_Wing) + &#34; m^2&#34;)
+        print(&#34; ├CD Comp: &#34; + str(self.CDC))
+        print(&#34; ├Interf factor: &#34; + str(self.interfFactor))
+        print(&#34; └CD0_gear: &#34; + str(self.CDC0))
+
+    def getCD0(self) -&gt; float:
+        return(self.CDC0)
+    
+class Fuselage(DragyComponent):
+    Name = &#34;&#34;
+    CDC0 = 0
+    length = 1.0
+    dyn_vc = 1.0
+    FPSF = 1.0
+    FormFactor = 1.0
+    Swet = 1.0
+    atop =1.0
+    aside = 1.0
+    Interf_Factor =1.0
+    maxcross = 1.0
+    refwing_area = 1.0
+    dyn_vc = 1.0
+    rey_nm = 1.0
+    mach = 1.0
+    def __init__(self,name,length,area_top,area_side,maxcross,interf_factor,refrence_wing_area,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new fuselage
+
+        Args:
+            name (string): Name for the fuselage.
+            length (float): Length of the fuselage in meters.
+            area_top (float): Area of the fuselage from top view in square meters.
+            area_side (float): Area of the side of the fuslage in square meters.
+            maxcross (float): Max cross-section area in square meters.
+            interf_factor (float): interference factor.
+            refrence_wing_area (float): Area of the main wing as refernce in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.length = length * self.ur.meters
+        self.atop = area_top * self.ur.meters**2
+        self.aside = area_side * self.ur.meters**2
+        self.Interf_Factor = interf_factor
+        self.maxcross = maxcross * self.ur.meters**2
+        self.refwing_area = refrence_wing_area #* self.ur.meters**2 already has units
+
+    def compute(self):
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.length,self.dyn_vc)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        self.FormFactor = self.Drag.calc_formfactorfuse(self.length,self.maxcross)
+        self.Swet = self.Drag.calc_wetted_area_fuse(self.atop,self.aside)
+        self.CDC0 = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.refwing_area)
+
+    
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Length: &#34; + str(self.length)+ &#34; m&#34;)
+        print(&#34;├Top Area: &#34; + str(self.atop)+&#34; m^2&#34;)
+        print(&#34;├Side Area: &#34; + str(self.aside)+&#34; m^2&#34;)
+        print(&#34;├CrossArea: &#34; + str(self.maxcross)+&#34; m^2&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+        print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+        print(&#34; ├Wetted Area: &#34; + str(self.Swet) + &#34; m^2&#34;)
+        print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+        print(&#34; └CD0_fuse: &#34; + str(self.CDC0))
+
+    def getCD0(self) -&gt; float:
+        return(self.CDC0)
+
+class Engine():
+    BSFC = 0
+    TSFC = 0
+    MaxThrust = 0
+    MaxPower =0
+    Effic = 0
+    Name = &#34;&#34;
+    
+    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic,UnitReg) -&gt; None:
+        self.ur: pint.UnitRegistry = UnitReg
+        self.Name = Name
+        self.TSFC = TSFC #Idealy in g/kN/s
+        self.BSFC = BSFC
+        self.MaxThrust = MAX_Thrust * self.ur.newton
+        self.MaxPower = MAX_Power * self.ur.watt
+        self.Effic = Effic
+
+    def calc_fuelrate_from_thrust(self,Thrust):
+        &#34;&#34;&#34;_summary_
+
+        Args:
+            Thrust (_type_): Required Thrust in Newtons
+
+        Returns:
+            _type_: Fuel consumption(g) per second
+        &#34;&#34;&#34;        
+        fr = self.TSFC * Thrust/1000
+        return fr
+    
+
+if __name__ == &#34;__main__&#34;:
+    pass</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Dragbuilduppy.Components.DragyComponent"><code class="flex name class">
+<span>class <span class="ident">DragyComponent</span></span>
+<span>(</span><span>Atmosphere)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DragyComponent:
+    Name = &#34;&#34;
+    Atmos: Atmosphere
+    def __init__(self,Atmosphere) -&gt; None:
+        self.Atmos = Atmosphere
+        self.ur = Atmosphere.ur
+        self.Drag = DragClass.Drag(self.ur)
+
+    def compute():
+        pass
+
+    def getCD0() -&gt; float:
+        pass
+
+    def printStats():
+        pass</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="Dragbuilduppy.Components.FixedGear" href="#Dragbuilduppy.Components.FixedGear">FixedGear</a></li>
+<li><a title="Dragbuilduppy.Components.Fuselage" href="#Dragbuilduppy.Components.Fuselage">Fuselage</a></li>
+<li><a title="Dragbuilduppy.Components.Nacelle" href="#Dragbuilduppy.Components.Nacelle">Nacelle</a></li>
+<li><a title="Dragbuilduppy.Components.Wing3d" href="#Dragbuilduppy.Components.Wing3d">Wing3d</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.DragyComponent.Atmos"><code class="name">var <span class="ident">Atmos</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.DragyComponent.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.DragyComponent.compute"><code class="name flex">
+<span>def <span class="ident">compute</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute():
+    pass</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.DragyComponent.getCD0"><code class="name flex">
+<span>def <span class="ident">getCD0</span></span>(<span>) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCD0() -&gt; float:
+    pass</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.DragyComponent.printStats"><code class="name flex">
+<span>def <span class="ident">printStats</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStats():
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine"><code class="flex name class">
+<span>class <span class="ident">Engine</span></span>
+<span>(</span><span>Name, TSFC, BSFC, MAX_Thrust, MAX_Power, Effic, UnitReg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Engine():
+    BSFC = 0
+    TSFC = 0
+    MaxThrust = 0
+    MaxPower =0
+    Effic = 0
+    Name = &#34;&#34;
+    
+    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic,UnitReg) -&gt; None:
+        self.ur: pint.UnitRegistry = UnitReg
+        self.Name = Name
+        self.TSFC = TSFC #Idealy in g/kN/s
+        self.BSFC = BSFC
+        self.MaxThrust = MAX_Thrust * self.ur.newton
+        self.MaxPower = MAX_Power * self.ur.watt
+        self.Effic = Effic
+
+    def calc_fuelrate_from_thrust(self,Thrust):
+        &#34;&#34;&#34;_summary_
+
+        Args:
+            Thrust (_type_): Required Thrust in Newtons
+
+        Returns:
+            _type_: Fuel consumption(g) per second
+        &#34;&#34;&#34;        
+        fr = self.TSFC * Thrust/1000
+        return fr</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Engine.BSFC"><code class="name">var <span class="ident">BSFC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine.Effic"><code class="name">var <span class="ident">Effic</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine.MaxPower"><code class="name">var <span class="ident">MaxPower</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine.MaxThrust"><code class="name">var <span class="ident">MaxThrust</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Engine.TSFC"><code class="name">var <span class="ident">TSFC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Engine.calc_fuelrate_from_thrust"><code class="name flex">
+<span>def <span class="ident">calc_fuelrate_from_thrust</span></span>(<span>self, Thrust)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Thrust</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Required Thrust in Newtons</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Fuel consumption(g) per second</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_fuelrate_from_thrust(self,Thrust):
+    &#34;&#34;&#34;_summary_
+
+    Args:
+        Thrust (_type_): Required Thrust in Newtons
+
+    Returns:
+        _type_: Fuel consumption(g) per second
+    &#34;&#34;&#34;        
+    fr = self.TSFC * Thrust/1000
+    return fr</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear"><code class="flex name class">
+<span>class <span class="ident">FixedGear</span></span>
+<span>(</span><span>name, CDC, SFrontal, SWing, InterfFactor, atmos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new fixed gear</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name for gear.</dd>
+<dt><strong><code>CDC</code></strong> :&ensp;<code>float</code></dt>
+<dd>Estimated Cd for gear.</dd>
+<dt><strong><code>SFrontal</code></strong> :&ensp;<code>float</code></dt>
+<dd>Frontal area in square meters.</dd>
+<dt><strong><code>SWing</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of main wing in square meters</dd>
+<dt><strong><code>InterfFactor</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interference factor</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FixedGear(DragyComponent):
+    Name = &#34;&#34;
+    CDC = 0
+    S_Frontal = 0
+    S_Wing = 0
+    interfFactor = 0
+    CDC0 = 0
+    def __init__(self,name,CDC,SFrontal,SWing,InterfFactor,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new fixed gear
+
+        Args:
+            name (string): Name for gear.
+            CDC (float): Estimated Cd for gear.
+            SFrontal (float): Frontal area in square meters.
+            SWing (float): Area of main wing in square meters
+            InterfFactor (float): Interference factor
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.CDC = CDC
+        self.S_Frontal= SFrontal * self.ur.meters **2
+        self.S_Wing = SWing #* self.ur.meters **2 Already has units. (most of the time :())
+        self.interfFactor = InterfFactor
+
+    def compute(self):
+        self.CDC0 = self.Drag.calc_cd0_gear(self.CDC,self.S_Frontal,self.S_Wing,self.interfFactor)
+    
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Frontal Area: &#34; + str(self.S_Frontal) + &#34; m^2&#34;)
+        print(&#34; ├ref Wing Area: &#34; + str(self.S_Wing) + &#34; m^2&#34;)
+        print(&#34; ├CD Comp: &#34; + str(self.CDC))
+        print(&#34; ├Interf factor: &#34; + str(self.interfFactor))
+        print(&#34; └CD0_gear: &#34; + str(self.CDC0))
+
+    def getCD0(self) -&gt; float:
+        return(self.CDC0)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Dragbuilduppy.Components.DragyComponent" href="#Dragbuilduppy.Components.DragyComponent">DragyComponent</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.FixedGear.Atmos"><code class="name">var <span class="ident">Atmos</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.CDC"><code class="name">var <span class="ident">CDC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.CDC0"><code class="name">var <span class="ident">CDC0</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.S_Frontal"><code class="name">var <span class="ident">S_Frontal</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.S_Wing"><code class="name">var <span class="ident">S_Wing</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.interfFactor"><code class="name">var <span class="ident">interfFactor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.FixedGear.compute"><code class="name flex">
+<span>def <span class="ident">compute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute(self):
+    self.CDC0 = self.Drag.calc_cd0_gear(self.CDC,self.S_Frontal,self.S_Wing,self.interfFactor)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.getCD0"><code class="name flex">
+<span>def <span class="ident">getCD0</span></span>(<span>self) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCD0(self) -&gt; float:
+    return(self.CDC0)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.FixedGear.printStats"><code class="name flex">
+<span>def <span class="ident">printStats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStats(self):
+    print(&#34;Stats for:&#34; + self.Name )
+    print(&#34;└DRAG BUILDUP&#34;)
+    print(&#34; ├Frontal Area: &#34; + str(self.S_Frontal) + &#34; m^2&#34;)
+    print(&#34; ├ref Wing Area: &#34; + str(self.S_Wing) + &#34; m^2&#34;)
+    print(&#34; ├CD Comp: &#34; + str(self.CDC))
+    print(&#34; ├Interf factor: &#34; + str(self.interfFactor))
+    print(&#34; └CD0_gear: &#34; + str(self.CDC0))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage"><code class="flex name class">
+<span>class <span class="ident">Fuselage</span></span>
+<span>(</span><span>name, length, area_top, area_side, maxcross, interf_factor, refrence_wing_area, atmos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new fuselage</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name for the fuselage.</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of the fuselage in meters.</dd>
+<dt><strong><code>area_top</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of the fuselage from top view in square meters.</dd>
+<dt><strong><code>area_side</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of the side of the fuslage in square meters.</dd>
+<dt><strong><code>maxcross</code></strong> :&ensp;<code>float</code></dt>
+<dd>Max cross-section area in square meters.</dd>
+<dt><strong><code>interf_factor</code></strong> :&ensp;<code>float</code></dt>
+<dd>interference factor.</dd>
+<dt><strong><code>refrence_wing_area</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of the main wing as refernce in square meters.</dd>
+<dt><strong><code>atmos</code></strong> :&ensp;<code>Atmosphere</code></dt>
+<dd>Atmosphere to be used in calculations</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Fuselage(DragyComponent):
+    Name = &#34;&#34;
+    CDC0 = 0
+    length = 1.0
+    dyn_vc = 1.0
+    FPSF = 1.0
+    FormFactor = 1.0
+    Swet = 1.0
+    atop =1.0
+    aside = 1.0
+    Interf_Factor =1.0
+    maxcross = 1.0
+    refwing_area = 1.0
+    dyn_vc = 1.0
+    rey_nm = 1.0
+    mach = 1.0
+    def __init__(self,name,length,area_top,area_side,maxcross,interf_factor,refrence_wing_area,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new fuselage
+
+        Args:
+            name (string): Name for the fuselage.
+            length (float): Length of the fuselage in meters.
+            area_top (float): Area of the fuselage from top view in square meters.
+            area_side (float): Area of the side of the fuslage in square meters.
+            maxcross (float): Max cross-section area in square meters.
+            interf_factor (float): interference factor.
+            refrence_wing_area (float): Area of the main wing as refernce in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.length = length * self.ur.meters
+        self.atop = area_top * self.ur.meters**2
+        self.aside = area_side * self.ur.meters**2
+        self.Interf_Factor = interf_factor
+        self.maxcross = maxcross * self.ur.meters**2
+        self.refwing_area = refrence_wing_area #* self.ur.meters**2 already has units
+
+    def compute(self):
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.length,self.dyn_vc)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        self.FormFactor = self.Drag.calc_formfactorfuse(self.length,self.maxcross)
+        self.Swet = self.Drag.calc_wetted_area_fuse(self.atop,self.aside)
+        self.CDC0 = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.refwing_area)
+
+    
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Length: &#34; + str(self.length)+ &#34; m&#34;)
+        print(&#34;├Top Area: &#34; + str(self.atop)+&#34; m^2&#34;)
+        print(&#34;├Side Area: &#34; + str(self.aside)+&#34; m^2&#34;)
+        print(&#34;├CrossArea: &#34; + str(self.maxcross)+&#34; m^2&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+        print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+        print(&#34; ├Wetted Area: &#34; + str(self.Swet) + &#34; m^2&#34;)
+        print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+        print(&#34; └CD0_fuse: &#34; + str(self.CDC0))
+
+    def getCD0(self) -&gt; float:
+        return(self.CDC0)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Dragbuilduppy.Components.DragyComponent" href="#Dragbuilduppy.Components.DragyComponent">DragyComponent</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Fuselage.Atmos"><code class="name">var <span class="ident">Atmos</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.CDC0"><code class="name">var <span class="ident">CDC0</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.FPSF"><code class="name">var <span class="ident">FPSF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.FormFactor"><code class="name">var <span class="ident">FormFactor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.Interf_Factor"><code class="name">var <span class="ident">Interf_Factor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.Swet"><code class="name">var <span class="ident">Swet</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.aside"><code class="name">var <span class="ident">aside</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.atop"><code class="name">var <span class="ident">atop</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.dyn_vc"><code class="name">var <span class="ident">dyn_vc</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.length"><code class="name">var <span class="ident">length</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.mach"><code class="name">var <span class="ident">mach</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.maxcross"><code class="name">var <span class="ident">maxcross</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.refwing_area"><code class="name">var <span class="ident">refwing_area</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.rey_nm"><code class="name">var <span class="ident">rey_nm</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Fuselage.compute"><code class="name flex">
+<span>def <span class="ident">compute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute(self):
+    self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+    self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.length,self.dyn_vc)
+    self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+    self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+    self.FormFactor = self.Drag.calc_formfactorfuse(self.length,self.maxcross)
+    self.Swet = self.Drag.calc_wetted_area_fuse(self.atop,self.aside)
+    self.CDC0 = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.refwing_area)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.getCD0"><code class="name flex">
+<span>def <span class="ident">getCD0</span></span>(<span>self) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCD0(self) -&gt; float:
+    return(self.CDC0)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Fuselage.printStats"><code class="name flex">
+<span>def <span class="ident">printStats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStats(self):
+    print(&#34;Stats for:&#34; + self.Name )
+    print(&#34;├Length: &#34; + str(self.length)+ &#34; m&#34;)
+    print(&#34;├Top Area: &#34; + str(self.atop)+&#34; m^2&#34;)
+    print(&#34;├Side Area: &#34; + str(self.aside)+&#34; m^2&#34;)
+    print(&#34;├CrossArea: &#34; + str(self.maxcross)+&#34; m^2&#34;)
+    print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+    print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+    print(&#34;├Mach: &#34; + str(self.mach))
+    print(&#34;└DRAG BUILDUP&#34;)
+    print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+    print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+    print(&#34; ├Wetted Area: &#34; + str(self.Swet) + &#34; m^2&#34;)
+    print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+    print(&#34; └CD0_fuse: &#34; + str(self.CDC0))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle"><code class="flex name class">
+<span>class <span class="ident">Nacelle</span></span>
+<span>(</span><span>name, len, CrossArea, InterFactor, SWet, SWing, atmos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new Nacelle</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of nacelle</dd>
+<dt><strong><code>len</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length in meters</dd>
+<dt><strong><code>CrossArea</code></strong> :&ensp;<code>float</code></dt>
+<dd>Max cross-sectional area in square meters</dd>
+<dt><strong><code>InterFactor</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interferance factor</dd>
+<dt><strong><code>SWet</code></strong> :&ensp;<code>float</code></dt>
+<dd>Wetted surface area in square meters</dd>
+<dt><strong><code>SWing</code></strong> :&ensp;<code>float</code></dt>
+<dd>Wing area in square meters</dd>
+<dt><strong><code>atmos</code></strong> :&ensp;<code>Atmosphere</code></dt>
+<dd>Atmosphere to be used in calculations</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Nacelle(DragyComponent):
+    Name = &#34;&#34;
+    Length = .0
+    CrossSectionArea = .0
+    InterfFactor = 1
+    CD0C = .0
+    FPSFC = .0
+    FF = .0
+    SWet = .0
+    SWing = .0
+
+    def __init__(self,name,len,CrossArea,InterFactor,SWet,SWing,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new Nacelle
+
+        Args:
+            name (string): Name of nacelle
+            len (float): Length in meters
+            CrossArea (float): Max cross-sectional area in square meters
+            InterFactor (float): Interferance factor
+            SWet (float): Wetted surface area in square meters
+            SWing (float): Wing area in square meters
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(Atmosphere=atmos)
+        self.Name = name
+        self.Length = len * self.ur.meters
+        self.CrossSectionArea = CrossArea * self.ur.meters **2
+        self.InterfFactor = InterFactor
+        self.SWet = SWet * self.ur.meters **2
+        self.SWing =SWing* self.ur.meters **2
+
+    def compute(self):
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        print(f&#39;Dynamic Viscosity: {self.dyn_vc}&#39;)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Length,self.dyn_vc)
+        print(f&#39;Reynolds Num: {self.rey_nm}&#39;)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        print(f&#39;Mach: {self.mach}&#39;)
+        self.FPSFC = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        print(f&#39;FlatPlateSF: {self.FPSFC}&#39;)
+        self.FF = self.Drag.calc_formfactornacelle(self.Length,self.CrossSectionArea)
+        self.CD0C = self.Drag.calc_cd0(self.FPSFC,self.FF,self.InterfFactor,self.SWet,self.SWing)
+
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Length: &#34; + str(self.Length)+ &#34; m&#34;)
+        print(&#34;├CrossArea: &#34; + str(self.CrossSectionArea)+&#34; m^2&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSFC))
+        print(&#34; ├Form Factor: &#34; + str(self.FF))
+        print(&#34; ├Wetted Area: &#34; + str(self.SWet))
+        print(&#34; ├Interf factor: &#34; + str(self.InterfFactor))
+        print(&#34; └CD0_nac: &#34; + str(self.CD0C))
+
+    def getCD0(self):
+        return(float(self.CD0C))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Dragbuilduppy.Components.DragyComponent" href="#Dragbuilduppy.Components.DragyComponent">DragyComponent</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Nacelle.Atmos"><code class="name">var <span class="ident">Atmos</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.CD0C"><code class="name">var <span class="ident">CD0C</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.CrossSectionArea"><code class="name">var <span class="ident">CrossSectionArea</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.FF"><code class="name">var <span class="ident">FF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.FPSFC"><code class="name">var <span class="ident">FPSFC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.InterfFactor"><code class="name">var <span class="ident">InterfFactor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.Length"><code class="name">var <span class="ident">Length</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.SWet"><code class="name">var <span class="ident">SWet</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.SWing"><code class="name">var <span class="ident">SWing</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Nacelle.compute"><code class="name flex">
+<span>def <span class="ident">compute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute(self):
+    self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+    print(f&#39;Dynamic Viscosity: {self.dyn_vc}&#39;)
+    self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Length,self.dyn_vc)
+    print(f&#39;Reynolds Num: {self.rey_nm}&#39;)
+    self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+    print(f&#39;Mach: {self.mach}&#39;)
+    self.FPSFC = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+    print(f&#39;FlatPlateSF: {self.FPSFC}&#39;)
+    self.FF = self.Drag.calc_formfactornacelle(self.Length,self.CrossSectionArea)
+    self.CD0C = self.Drag.calc_cd0(self.FPSFC,self.FF,self.InterfFactor,self.SWet,self.SWing)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.getCD0"><code class="name flex">
+<span>def <span class="ident">getCD0</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCD0(self):
+    return(float(self.CD0C))</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Nacelle.printStats"><code class="name flex">
+<span>def <span class="ident">printStats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStats(self):
+    print(&#34;Stats for:&#34; + self.Name )
+    print(&#34;├Length: &#34; + str(self.Length)+ &#34; m&#34;)
+    print(&#34;├CrossArea: &#34; + str(self.CrossSectionArea)+&#34; m^2&#34;)
+    print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+    print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+    print(&#34;├Mach: &#34; + str(self.mach))
+    print(&#34;└DRAG BUILDUP&#34;)
+    print(&#34; ├Skin Friction: &#34; + str(self.FPSFC))
+    print(&#34; ├Form Factor: &#34; + str(self.FF))
+    print(&#34; ├Wetted Area: &#34; + str(self.SWet))
+    print(&#34; ├Interf factor: &#34; + str(self.InterfFactor))
+    print(&#34; └CD0_nac: &#34; + str(self.CD0C))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d"><code class="flex name class">
+<span>class <span class="ident">Wing3d</span></span>
+<span>(</span><span>name, Airfoil, Sweep, Area, Span, Chord, Azerolift, Astall, TC, XC, AwingObscured, atmos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new 3D wing. Units added during creation of wing, do not pass in quantites with demensions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong></dt>
+<dd>Name to be usef for this wing.</dd>
+<dt><strong><code>Airfoil</code></strong></dt>
+<dd>Airfoil used for wing.</dd>
+<dt><strong><code>Sweep</code></strong></dt>
+<dd>Sweep angle in degrees.</dd>
+<dt><strong><code>Area</code></strong></dt>
+<dd>Planform area of wing in square meters.</dd>
+<dt><strong><code>Span</code></strong></dt>
+<dd>Wingspan in meters.</dd>
+<dt><strong><code>Chord</code></strong></dt>
+<dd>Chord length in meters.</dd>
+<dt><strong><code>Azerolift</code></strong></dt>
+<dd>Angle of zero lift in degrees.</dd>
+<dt><strong><code>Astall</code></strong></dt>
+<dd>Stall angle of wing in degrees.</dd>
+<dt><strong><code>TC</code></strong></dt>
+<dd>Thickness Ratio.</dd>
+<dt><strong><code>XC</code></strong></dt>
+<dd>Chordwise location of the maximum thickness.</dd>
+<dt><strong><code>AwingObscured</code></strong></dt>
+<dd>Planform area that is obsucred in square meters.</dd>
+<dt><strong><code>atmos</code></strong> :&ensp;<code>Atmosphere</code></dt>
+<dd>Atmosphere to be used in calculations</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Wing3d(DragyComponent):
+    Name = &#34;&#34;
+    AR = .0
+    OswaldE = .0
+    WingSweep = .0
+    Area = .0
+    AreaObs = .0
+    Span = 1.0
+    Chord = .1
+    A_zero_lift = .0
+    A_Stall = .0
+    TC = 0.12
+    XC = 0.3
+    Vinf = .0
+    Interf_Factor = 1
+    CLmax = 0
+    CLmin = 0
+    ##To be computed later
+    dyn_vc = .0
+    rey_nm = .0
+    mach = .0
+    FPSF = .0
+    FormFactor = .0
+    Swet = .0
+    CD0_wing = .0
+    airfoil = &#34;&#34;
+
+    def __init__(self,name,Airfoil,Sweep,Area,Span,Chord,Azerolift,Astall,TC,XC, AwingObscured,atmos) -&gt; None:
+        &#34;&#34;&#34;Creates a new 3D wing. Units added during creation of wing, do not pass in quantites with demensions
+
+        Args:
+            name: Name to be usef for this wing.
+            Airfoil: Airfoil used for wing.
+            Sweep: Sweep angle in degrees.
+            Area: Planform area of wing in square meters.
+            Span: Wingspan in meters.
+            Chord: Chord length in meters.
+            Azerolift: Angle of zero lift in degrees.
+            Astall: Stall angle of wing in degrees.
+            TC: Thickness Ratio.
+            XC: Chordwise location of the maximum thickness.
+            AwingObscured: Planform area that is obsucred in square meters.
+            atmos (Atmosphere): Atmosphere to be used in calculations
+        &#34;&#34;&#34;
+        super().__init__(atmos)
+        #print(self.Drag)
+        self.Name = name
+        self.airfoil = Airfoil
+        self.Chord = Chord * self.ur.meters
+        self.WingSweep = Sweep
+        self.AR = (numpy.power(Span, 2))/Area
+        self.OswaldE = self.Drag.calc_oswald_any(self.AR,self.WingSweep)
+        self.WingSweep = Sweep
+        self.Area = Area * self.ur.meters **2
+        self.Span = Span * self.ur.meters
+        self.A_zero_lift = Azerolift
+        self.A_Stall = Astall
+        self.TC = TC
+        self.XC = XC
+        self.AreaObs = AwingObscured * self.ur.meters **2
+
+
+    def compute(self):
+        self.AR = (numpy.power(self.Span, 2))/self.Area
+        self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+        self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Chord,self.dyn_vc)
+        self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+        self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+        self.FormFactor = self.Drag.calc_formfactorwing(self.XC,self.TC,self.mach,self.WingSweep)
+        self.Swet = self.Drag.calc_wetted_area_wing(self.TC,(self.Area-self.AreaObs))
+        self.CD0_wing = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.Area)
+
+    def getCD0(self):
+        return(float(self.CD0_wing))
+
+    def printStats(self):
+        print(&#34;Stats for:&#34; + self.Name )
+        print(&#34;├Airfoil: &#34; + str(self.airfoil))
+        print(&#34;├Span: &#34; + str(self.Span)  + &#34; m&#34;)
+        print(&#34;├Area: &#34; + str(self.Area) + &#34; m^2&#34;)
+        print(&#34;├Aspect Ratio: &#34; + str(self.AR))
+        print(&#34;├Chord: &#34; + str(self.Chord)+ &#34; m&#34;)
+        print(&#34;├Sweep: &#34; + str(self.WingSweep)+ &#34; deg&#34;)
+        print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+        print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+        print(&#34;├Mach: &#34; + str(self.mach))
+        print(&#34;├Oswald Eff: &#34; + str(self.OswaldE))
+        print(&#34;└DRAG BUILDUP&#34;)
+        print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+        print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+        print(&#34; ├Wetted Area: &#34; + str(self.Swet))
+        print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+        print(&#34; └CD0_Wing: &#34; + str(self.CD0_wing))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Dragbuilduppy.Components.DragyComponent" href="#Dragbuilduppy.Components.DragyComponent">DragyComponent</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Wing3d.AR"><code class="name">var <span class="ident">AR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.A_Stall"><code class="name">var <span class="ident">A_Stall</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.A_zero_lift"><code class="name">var <span class="ident">A_zero_lift</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Area"><code class="name">var <span class="ident">Area</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.AreaObs"><code class="name">var <span class="ident">AreaObs</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Atmos"><code class="name">var <span class="ident">Atmos</span> : Atmosphere.Atmosphere</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.CD0_wing"><code class="name">var <span class="ident">CD0_wing</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.CLmax"><code class="name">var <span class="ident">CLmax</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.CLmin"><code class="name">var <span class="ident">CLmin</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Chord"><code class="name">var <span class="ident">Chord</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.FPSF"><code class="name">var <span class="ident">FPSF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.FormFactor"><code class="name">var <span class="ident">FormFactor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Interf_Factor"><code class="name">var <span class="ident">Interf_Factor</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Name"><code class="name">var <span class="ident">Name</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.OswaldE"><code class="name">var <span class="ident">OswaldE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Span"><code class="name">var <span class="ident">Span</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Swet"><code class="name">var <span class="ident">Swet</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.TC"><code class="name">var <span class="ident">TC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.Vinf"><code class="name">var <span class="ident">Vinf</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.WingSweep"><code class="name">var <span class="ident">WingSweep</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.XC"><code class="name">var <span class="ident">XC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.airfoil"><code class="name">var <span class="ident">airfoil</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.dyn_vc"><code class="name">var <span class="ident">dyn_vc</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.mach"><code class="name">var <span class="ident">mach</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.rey_nm"><code class="name">var <span class="ident">rey_nm</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="Dragbuilduppy.Components.Wing3d.compute"><code class="name flex">
+<span>def <span class="ident">compute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute(self):
+    self.AR = (numpy.power(self.Span, 2))/self.Area
+    self.dyn_vc = self.Drag.calc_dynamicviscosity(self.Atmos.Temp)
+    self.rey_nm = self.Drag.calc_reynolds(self.Atmos.Density,self.Atmos.Vinfinity,self.Chord,self.dyn_vc)
+    self.mach = self.Drag.calc_mach(self.Atmos.Vinfinity, self.Atmos.Temp)
+    self.FPSF = self.Drag.calc_flatplateskinfriction(self.rey_nm,self.mach)
+    self.FormFactor = self.Drag.calc_formfactorwing(self.XC,self.TC,self.mach,self.WingSweep)
+    self.Swet = self.Drag.calc_wetted_area_wing(self.TC,(self.Area-self.AreaObs))
+    self.CD0_wing = self.Drag.calc_cd0(self.FPSF,self.FormFactor,self.Interf_Factor,self.Swet,self.Area)</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.getCD0"><code class="name flex">
+<span>def <span class="ident">getCD0</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCD0(self):
+    return(float(self.CD0_wing))</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.Components.Wing3d.printStats"><code class="name flex">
+<span>def <span class="ident">printStats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStats(self):
+    print(&#34;Stats for:&#34; + self.Name )
+    print(&#34;├Airfoil: &#34; + str(self.airfoil))
+    print(&#34;├Span: &#34; + str(self.Span)  + &#34; m&#34;)
+    print(&#34;├Area: &#34; + str(self.Area) + &#34; m^2&#34;)
+    print(&#34;├Aspect Ratio: &#34; + str(self.AR))
+    print(&#34;├Chord: &#34; + str(self.Chord)+ &#34; m&#34;)
+    print(&#34;├Sweep: &#34; + str(self.WingSweep)+ &#34; deg&#34;)
+    print(&#34;├Dyn Viscosity: &#34; + str(self.dyn_vc))
+    print(&#34;├Reynolds: &#34; + str(self.rey_nm))
+    print(&#34;├Mach: &#34; + str(self.mach))
+    print(&#34;├Oswald Eff: &#34; + str(self.OswaldE))
+    print(&#34;└DRAG BUILDUP&#34;)
+    print(&#34; ├Skin Friction: &#34; + str(self.FPSF))
+    print(&#34; ├Form Factor: &#34; + str(self.FormFactor))
+    print(&#34; ├Wetted Area: &#34; + str(self.Swet))
+    print(&#34; ├Interf factor: &#34; + str(self.Interf_Factor))
+    print(&#34; └CD0_Wing: &#34; + str(self.CD0_wing))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Dragbuilduppy" href="index.html">Dragbuilduppy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.DragyComponent" href="#Dragbuilduppy.Components.DragyComponent">DragyComponent</a></code></h4>
+<ul class="">
+<li><code><a title="Dragbuilduppy.Components.DragyComponent.Atmos" href="#Dragbuilduppy.Components.DragyComponent.Atmos">Atmos</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.DragyComponent.Name" href="#Dragbuilduppy.Components.DragyComponent.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.DragyComponent.compute" href="#Dragbuilduppy.Components.DragyComponent.compute">compute</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.DragyComponent.getCD0" href="#Dragbuilduppy.Components.DragyComponent.getCD0">getCD0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.DragyComponent.printStats" href="#Dragbuilduppy.Components.DragyComponent.printStats">printStats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.Engine" href="#Dragbuilduppy.Components.Engine">Engine</a></code></h4>
+<ul class="">
+<li><code><a title="Dragbuilduppy.Components.Engine.BSFC" href="#Dragbuilduppy.Components.Engine.BSFC">BSFC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.Effic" href="#Dragbuilduppy.Components.Engine.Effic">Effic</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.MaxPower" href="#Dragbuilduppy.Components.Engine.MaxPower">MaxPower</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.MaxThrust" href="#Dragbuilduppy.Components.Engine.MaxThrust">MaxThrust</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.Name" href="#Dragbuilduppy.Components.Engine.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.TSFC" href="#Dragbuilduppy.Components.Engine.TSFC">TSFC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Engine.calc_fuelrate_from_thrust" href="#Dragbuilduppy.Components.Engine.calc_fuelrate_from_thrust">calc_fuelrate_from_thrust</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.FixedGear" href="#Dragbuilduppy.Components.FixedGear">FixedGear</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Dragbuilduppy.Components.FixedGear.Atmos" href="#Dragbuilduppy.Components.FixedGear.Atmos">Atmos</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.CDC" href="#Dragbuilduppy.Components.FixedGear.CDC">CDC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.CDC0" href="#Dragbuilduppy.Components.FixedGear.CDC0">CDC0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.Name" href="#Dragbuilduppy.Components.FixedGear.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.S_Frontal" href="#Dragbuilduppy.Components.FixedGear.S_Frontal">S_Frontal</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.S_Wing" href="#Dragbuilduppy.Components.FixedGear.S_Wing">S_Wing</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.compute" href="#Dragbuilduppy.Components.FixedGear.compute">compute</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.getCD0" href="#Dragbuilduppy.Components.FixedGear.getCD0">getCD0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.interfFactor" href="#Dragbuilduppy.Components.FixedGear.interfFactor">interfFactor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.FixedGear.printStats" href="#Dragbuilduppy.Components.FixedGear.printStats">printStats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.Fuselage" href="#Dragbuilduppy.Components.Fuselage">Fuselage</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Dragbuilduppy.Components.Fuselage.Atmos" href="#Dragbuilduppy.Components.Fuselage.Atmos">Atmos</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.CDC0" href="#Dragbuilduppy.Components.Fuselage.CDC0">CDC0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.FPSF" href="#Dragbuilduppy.Components.Fuselage.FPSF">FPSF</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.FormFactor" href="#Dragbuilduppy.Components.Fuselage.FormFactor">FormFactor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.Interf_Factor" href="#Dragbuilduppy.Components.Fuselage.Interf_Factor">Interf_Factor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.Name" href="#Dragbuilduppy.Components.Fuselage.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.Swet" href="#Dragbuilduppy.Components.Fuselage.Swet">Swet</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.aside" href="#Dragbuilduppy.Components.Fuselage.aside">aside</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.atop" href="#Dragbuilduppy.Components.Fuselage.atop">atop</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.compute" href="#Dragbuilduppy.Components.Fuselage.compute">compute</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.dyn_vc" href="#Dragbuilduppy.Components.Fuselage.dyn_vc">dyn_vc</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.getCD0" href="#Dragbuilduppy.Components.Fuselage.getCD0">getCD0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.length" href="#Dragbuilduppy.Components.Fuselage.length">length</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.mach" href="#Dragbuilduppy.Components.Fuselage.mach">mach</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.maxcross" href="#Dragbuilduppy.Components.Fuselage.maxcross">maxcross</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.printStats" href="#Dragbuilduppy.Components.Fuselage.printStats">printStats</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.refwing_area" href="#Dragbuilduppy.Components.Fuselage.refwing_area">refwing_area</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Fuselage.rey_nm" href="#Dragbuilduppy.Components.Fuselage.rey_nm">rey_nm</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.Nacelle" href="#Dragbuilduppy.Components.Nacelle">Nacelle</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Dragbuilduppy.Components.Nacelle.Atmos" href="#Dragbuilduppy.Components.Nacelle.Atmos">Atmos</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.CD0C" href="#Dragbuilduppy.Components.Nacelle.CD0C">CD0C</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.CrossSectionArea" href="#Dragbuilduppy.Components.Nacelle.CrossSectionArea">CrossSectionArea</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.FF" href="#Dragbuilduppy.Components.Nacelle.FF">FF</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.FPSFC" href="#Dragbuilduppy.Components.Nacelle.FPSFC">FPSFC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.InterfFactor" href="#Dragbuilduppy.Components.Nacelle.InterfFactor">InterfFactor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.Length" href="#Dragbuilduppy.Components.Nacelle.Length">Length</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.Name" href="#Dragbuilduppy.Components.Nacelle.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.SWet" href="#Dragbuilduppy.Components.Nacelle.SWet">SWet</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.SWing" href="#Dragbuilduppy.Components.Nacelle.SWing">SWing</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.compute" href="#Dragbuilduppy.Components.Nacelle.compute">compute</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.getCD0" href="#Dragbuilduppy.Components.Nacelle.getCD0">getCD0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Nacelle.printStats" href="#Dragbuilduppy.Components.Nacelle.printStats">printStats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Dragbuilduppy.Components.Wing3d" href="#Dragbuilduppy.Components.Wing3d">Wing3d</a></code></h4>
+<ul class="two-column">
+<li><code><a title="Dragbuilduppy.Components.Wing3d.AR" href="#Dragbuilduppy.Components.Wing3d.AR">AR</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.A_Stall" href="#Dragbuilduppy.Components.Wing3d.A_Stall">A_Stall</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.A_zero_lift" href="#Dragbuilduppy.Components.Wing3d.A_zero_lift">A_zero_lift</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Area" href="#Dragbuilduppy.Components.Wing3d.Area">Area</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.AreaObs" href="#Dragbuilduppy.Components.Wing3d.AreaObs">AreaObs</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Atmos" href="#Dragbuilduppy.Components.Wing3d.Atmos">Atmos</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.CD0_wing" href="#Dragbuilduppy.Components.Wing3d.CD0_wing">CD0_wing</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.CLmax" href="#Dragbuilduppy.Components.Wing3d.CLmax">CLmax</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.CLmin" href="#Dragbuilduppy.Components.Wing3d.CLmin">CLmin</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Chord" href="#Dragbuilduppy.Components.Wing3d.Chord">Chord</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.FPSF" href="#Dragbuilduppy.Components.Wing3d.FPSF">FPSF</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.FormFactor" href="#Dragbuilduppy.Components.Wing3d.FormFactor">FormFactor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Interf_Factor" href="#Dragbuilduppy.Components.Wing3d.Interf_Factor">Interf_Factor</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Name" href="#Dragbuilduppy.Components.Wing3d.Name">Name</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.OswaldE" href="#Dragbuilduppy.Components.Wing3d.OswaldE">OswaldE</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Span" href="#Dragbuilduppy.Components.Wing3d.Span">Span</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Swet" href="#Dragbuilduppy.Components.Wing3d.Swet">Swet</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.TC" href="#Dragbuilduppy.Components.Wing3d.TC">TC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.Vinf" href="#Dragbuilduppy.Components.Wing3d.Vinf">Vinf</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.WingSweep" href="#Dragbuilduppy.Components.Wing3d.WingSweep">WingSweep</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.XC" href="#Dragbuilduppy.Components.Wing3d.XC">XC</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.airfoil" href="#Dragbuilduppy.Components.Wing3d.airfoil">airfoil</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.compute" href="#Dragbuilduppy.Components.Wing3d.compute">compute</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.dyn_vc" href="#Dragbuilduppy.Components.Wing3d.dyn_vc">dyn_vc</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.getCD0" href="#Dragbuilduppy.Components.Wing3d.getCD0">getCD0</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.mach" href="#Dragbuilduppy.Components.Wing3d.mach">mach</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.printStats" href="#Dragbuilduppy.Components.Wing3d.printStats">printStats</a></code></li>
+<li><code><a title="Dragbuilduppy.Components.Wing3d.rey_nm" href="#Dragbuilduppy.Components.Wing3d.rey_nm">rey_nm</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

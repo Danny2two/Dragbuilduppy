@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Dragbuilduppy.StFl API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Dragbuilduppy.StFl</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import math
+import numpy
+import pint
+
+def calc_req_CL(weight, Q_inf, wingarea):
+    &#34;&#34;&#34;Calculates requred CL for steady level flight
+
+    Args:
+        weight (_type_): weight of craft in newton
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): Main wing area
+
+    Returns:
+        _type_: Estimated CL
+    &#34;&#34;&#34;    
+    CL = (weight/(Q_inf * wingarea))
+    return CL
+
+def calc_ThrustReq(Q_inf, wingarea,CD_0,K,weight):
+    &#34;&#34;&#34;Calculates requred thrust for SLF
+
+    Args:
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): mainwing area
+        CD_0 (_type_): CD_0 for craft
+        K (_type_): K coef
+        weight (_type_): Craft weight in newtons
+
+    Returns:
+        _type_: thrust requred in newtons
+    &#34;&#34;&#34;    
+    Thrust = Q_inf * wingarea * CD_0 + ((K*numpy.power(weight,2))/(Q_inf*wingarea))
+    return Thrust
+
+def calc_Vstall(P_inf, weight,wingarea,CL_max):
+    &#34;&#34;&#34;Calculates the stall velocity of the craft
+
+    Args:
+        P_inf (_type_): Density of air
+        weight (_type_): weight of craft in newton
+        wingarea (_type_): wing area in square meters
+        CL_max (_type_): Max CL
+
+    Returns:
+        _type_: Stall Velocity
+    &#34;&#34;&#34;    
+    #print(f&#39;pinf: {P_inf}, w: {weight}, Wingarea: {wingarea}&#39;)
+    vstall = numpy.sqrt((2/P_inf) * (weight/wingarea) * (1/CL_max))
+    return vstall
+
+def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight:float):
+    &#34;&#34;&#34;Calculates power requred for flight 
+
+    Args:
+        P_inf (_type_): Atmospheric density (kg/m^3)
+        V_inf (_type_): Velocity @ infinity
+        wingarea (_type_): Wing planform area
+        CD_0 (_type_): Crafts Cd_0
+        K (_type_): k value
+        weight (_type_): craft weight (N)
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    #print(f&#39;pinf: {P_inf}, vinf: {V_inf}, warea: {wingarea}, weight: {weight}&#39;)
+    pr = 0.5*P_inf*numpy.power(V_inf,3)*wingarea*CD_0 + ((2*K*numpy.power(weight,2))/(P_inf*V_inf*wingarea))
+    return pr
+
+def calc_dynpressure(P_inf,V_inf):
+    &#34;&#34;&#34;Calculates dynamic pressure
+
+    Args:
+        P_inf (_type_): Density (kg/m^3)
+        V_inf (_type_): Velocity m/s
+
+    Returns:
+        _type_: Dynamic pressure
+    &#34;&#34;&#34;    
+    dynpress = 0.5*P_inf*numpy.power(V_inf,2)
+    return dynpress
+
+def calc_K_value(OswaldEff,AspectRatio):
+    &#34;&#34;&#34;Calculates K value
+
+    Args:
+        OswaldEff (_type_): Oswalds efficany
+        AspectRatio (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    k= 1/(OswaldEff * math.pi * AspectRatio)
+    return k
+
+def calc_CL_CDmax(K, CD0):
+    &#34;&#34;&#34;Finds (CL/CD)max given K and CDO usefull for:
+    PROP: max range
+    JET: max endurace, Velocity of climb at ROC max
+
+    Args:
+        K (_type_): K value
+        CD0 (_type_): C_D0
+
+    Returns:
+        Float: Ratio = (CL/CD)max
+    &#34;&#34;&#34;    
+    clcd = numpy.sqrt(1/(4*K*CD0))
+    return clcd
+
+def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
+    &#34;&#34;&#34;Calculates V_Inf to achieve max endurance with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max endurance (m/s)
+    &#34;&#34;&#34;    
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt(K/Cd_0))
+    return vinf
+
+def calc_Vinf_MaxJetRange(P_inf,weight,wingArea,Cd_0,K):
+    &#34;&#34;&#34;Calculates V_Inf to achieve max range with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max range (m/s)
+    &#34;&#34;&#34;    
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt((3*K)/Cd_0))
+    return vinf
+
+def calc_CL_CDmaxRangeJet(K,CD_0):
+    &#34;&#34;&#34;Calculates Cl^1/2 / CD max usefull for max range of jets
+
+    Args:
+        K (_type_): K value
+        CD_0 (_type_): CD_0 value
+
+    Returns:
+        _type_: (Cl^1/2 / CD)max
+    &#34;&#34;&#34;
+    clcd = (3/4) * numpy.power((1/(3 * K * numpy.power(CD_0,3))),(1/4))
+    return clcd
+
+
+def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
+    &#34;&#34;&#34;Calculates Enduance for a turbojet with the provided characteristitcs
+
+    Args:
+        TSFC (g/N/s): Thrust Specific fuel Consumption *IN N fuel / sec / N thrust*
+        Cl_Cd (Coeff): Cl / Cd max
+        weightTO (N): Takeoff weight
+        weightEm (N): Empty weight
+
+    Returns:
+        float: Endurance (hours)
+    &#34;&#34;&#34;    
+    endur =(1/TSFC) * Cl_Cd * (math.log((weightTO/weightEm),math.e))
+    return endur
+
+def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
+    &#34;&#34;&#34;Calculates range for a turbojet at a given parameters
+
+    Args:
+        p_inf (_type_): Atmospheric Density (kg/m^3)
+        wingarea (_type_): _description_
+        TSFC (_type_): Thrust specific fuel consumption *IN N fuel / sec / N thrust*
+        clcd (_type_): Cl/Cd ratio (Cl^1/2 / Cd for max range)
+        weighttakeoff (_type_): Craft weight at takeoff (N)
+        weightempty (_type_): Craft empty weight (N)
+
+    Returns:
+        _type_: Range
+    &#34;&#34;&#34;    
+    range = (2/1) * numpy.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (numpy.sqrt(weighttakeoff) - numpy.sqrt(weightempty))
+    return range
+
+def calc_Lift(CL,V_inf,Wingarea,dens):
+    &#34;&#34;&#34;Calculates Lift at given conditions
+
+    Args:
+        CL (_type_): Coefficent of lift
+        V_inf (_type_): Incoming airstream velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Air density 
+
+    Returns:
+        _type_: Lift in newtons
+    &#34;&#34;&#34;    
+    Lift = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * CL
+    return Lift
+
+def calc_Drag(CD0,V_inf,Wingarea,dens,K,CL):
+    &#34;&#34;&#34;Calculates Drag for given conditions
+
+    Args:
+        CD0 (_type_): Crafts CD_0
+        V_inf (_type_): Incoming air velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Density of air
+        K (_type_): K coeff
+        CL (_type_): CL at curent conditions
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    Drag = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * (CD0 + (K * numpy.power(CL,2)))
+    return Drag</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="Dragbuilduppy.StFl.calc_CL_CDmax"><code class="name flex">
+<span>def <span class="ident">calc_CL_CDmax</span></span>(<span>K, CD0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Finds (CL/CD)max given K and CDO usefull for:
+PROP: max range
+JET: max endurace, Velocity of climb at ROC max</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>K value</dd>
+<dt><strong><code>CD0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>C_D0</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Float</code></dt>
+<dd>Ratio = (CL/CD)max</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_CL_CDmax(K, CD0):
+    &#34;&#34;&#34;Finds (CL/CD)max given K and CDO usefull for:
+    PROP: max range
+    JET: max endurace, Velocity of climb at ROC max
+
+    Args:
+        K (_type_): K value
+        CD0 (_type_): C_D0
+
+    Returns:
+        Float: Ratio = (CL/CD)max
+    &#34;&#34;&#34;    
+    clcd = numpy.sqrt(1/(4*K*CD0))
+    return clcd</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_CL_CDmaxRangeJet"><code class="name flex">
+<span>def <span class="ident">calc_CL_CDmaxRangeJet</span></span>(<span>K, CD_0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates Cl^1/2 / CD max usefull for max range of jets</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>K value</dd>
+<dt><strong><code>CD_0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>CD_0 value</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>(Cl^1/2 / CD)max</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_CL_CDmaxRangeJet(K,CD_0):
+    &#34;&#34;&#34;Calculates Cl^1/2 / CD max usefull for max range of jets
+
+    Args:
+        K (_type_): K value
+        CD_0 (_type_): CD_0 value
+
+    Returns:
+        _type_: (Cl^1/2 / CD)max
+    &#34;&#34;&#34;
+    clcd = (3/4) * numpy.power((1/(3 * K * numpy.power(CD_0,3))),(1/4))
+    return clcd</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_Drag"><code class="name flex">
+<span>def <span class="ident">calc_Drag</span></span>(<span>CD0, V_inf, Wingarea, dens, K, CL)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates Drag for given conditions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>CD0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Crafts CD_0</dd>
+<dt><strong><code>V_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Incoming air velocity</dd>
+<dt><strong><code>Wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Manwing area</dd>
+<dt><strong><code>dens</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Density of air</dd>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>K coeff</dd>
+<dt><strong><code>CL</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>CL at curent conditions</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_Drag(CD0,V_inf,Wingarea,dens,K,CL):
+    &#34;&#34;&#34;Calculates Drag for given conditions
+
+    Args:
+        CD0 (_type_): Crafts CD_0
+        V_inf (_type_): Incoming air velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Density of air
+        K (_type_): K coeff
+        CL (_type_): CL at curent conditions
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    Drag = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * (CD0 + (K * numpy.power(CL,2)))
+    return Drag</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_K_value"><code class="name flex">
+<span>def <span class="ident">calc_K_value</span></span>(<span>OswaldEff, AspectRatio)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates K value</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>OswaldEff</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Oswalds efficany</dd>
+<dt><strong><code>AspectRatio</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_K_value(OswaldEff,AspectRatio):
+    &#34;&#34;&#34;Calculates K value
+
+    Args:
+        OswaldEff (_type_): Oswalds efficany
+        AspectRatio (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    k= 1/(OswaldEff * math.pi * AspectRatio)
+    return k</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_Lift"><code class="name flex">
+<span>def <span class="ident">calc_Lift</span></span>(<span>CL, V_inf, Wingarea, dens)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates Lift at given conditions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>CL</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Coefficent of lift</dd>
+<dt><strong><code>V_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Incoming airstream velocity</dd>
+<dt><strong><code>Wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Manwing area</dd>
+<dt><strong><code>dens</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Air density </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Lift in newtons</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_Lift(CL,V_inf,Wingarea,dens):
+    &#34;&#34;&#34;Calculates Lift at given conditions
+
+    Args:
+        CL (_type_): Coefficent of lift
+        V_inf (_type_): Incoming airstream velocity
+        Wingarea (_type_): Manwing area
+        dens (_type_): Air density 
+
+    Returns:
+        _type_: Lift in newtons
+    &#34;&#34;&#34;    
+    Lift = 0.5 * dens * numpy.power(V_inf,2) * Wingarea * CL
+    return Lift</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_PowerReq"><code class="name flex">
+<span>def <span class="ident">calc_PowerReq</span></span>(<span>P_inf, V_inf, wingarea, CD_0, K, weight: float)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates power requred for flight </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>P_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Atmospheric density (kg/m^3)</dd>
+<dt><strong><code>V_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity @ infinity</dd>
+<dt><strong><code>wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Wing planform area</dd>
+<dt><strong><code>CD_0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Crafts Cd_0</dd>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>k value</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>craft weight (N)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_PowerReq(P_inf,V_inf,wingarea,CD_0,K,weight:float):
+    &#34;&#34;&#34;Calculates power requred for flight 
+
+    Args:
+        P_inf (_type_): Atmospheric density (kg/m^3)
+        V_inf (_type_): Velocity @ infinity
+        wingarea (_type_): Wing planform area
+        CD_0 (_type_): Crafts Cd_0
+        K (_type_): k value
+        weight (_type_): craft weight (N)
+
+    Returns:
+        _type_: _description_
+    &#34;&#34;&#34;    
+    #print(f&#39;pinf: {P_inf}, vinf: {V_inf}, warea: {wingarea}, weight: {weight}&#39;)
+    pr = 0.5*P_inf*numpy.power(V_inf,3)*wingarea*CD_0 + ((2*K*numpy.power(weight,2))/(P_inf*V_inf*wingarea))
+    return pr</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_ThrustReq"><code class="name flex">
+<span>def <span class="ident">calc_ThrustReq</span></span>(<span>Q_inf, wingarea, CD_0, K, weight)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates requred thrust for SLF</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>Q_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Dynamic pressure</dd>
+<dt><strong><code>wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>mainwing area</dd>
+<dt><strong><code>CD_0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>CD_0 for craft</dd>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>K coef</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Craft weight in newtons</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>thrust requred in newtons</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_ThrustReq(Q_inf, wingarea,CD_0,K,weight):
+    &#34;&#34;&#34;Calculates requred thrust for SLF
+
+    Args:
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): mainwing area
+        CD_0 (_type_): CD_0 for craft
+        K (_type_): K coef
+        weight (_type_): Craft weight in newtons
+
+    Returns:
+        _type_: thrust requred in newtons
+    &#34;&#34;&#34;    
+    Thrust = Q_inf * wingarea * CD_0 + ((K*numpy.power(weight,2))/(Q_inf*wingarea))
+    return Thrust</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_Vinf_MaxJetEndurance"><code class="name flex">
+<span>def <span class="ident">calc_Vinf_MaxJetEndurance</span></span>(<span>P_inf, weight, wingArea, Cd_0, K)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates V_Inf to achieve max endurance with a jet</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>P_inf</code></strong> :&ensp;<code>float</code></dt>
+<dd>Atmospheric Density (kg/m^3)</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>float</code></dt>
+<dd>weight of craft (N)</dd>
+<dt><strong><code>wingArea</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of wing (m^2)</dd>
+<dt><strong><code>Cd_0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>V infinity to get max endurance (m/s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
+    &#34;&#34;&#34;Calculates V_Inf to achieve max endurance with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max endurance (m/s)
+    &#34;&#34;&#34;    
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt(K/Cd_0))
+    return vinf</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_Vinf_MaxJetRange"><code class="name flex">
+<span>def <span class="ident">calc_Vinf_MaxJetRange</span></span>(<span>P_inf, weight, wingArea, Cd_0, K)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates V_Inf to achieve max range with a jet</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>P_inf</code></strong> :&ensp;<code>float</code></dt>
+<dd>Atmospheric Density (kg/m^3)</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>float</code></dt>
+<dd>weight of craft (N)</dd>
+<dt><strong><code>wingArea</code></strong> :&ensp;<code>float</code></dt>
+<dd>Area of wing (m^2)</dd>
+<dt><strong><code>Cd_0</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>K</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>V infinity to get max range (m/s)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_Vinf_MaxJetRange(P_inf,weight,wingArea,Cd_0,K):
+    &#34;&#34;&#34;Calculates V_Inf to achieve max range with a jet
+
+    Args:
+        P_inf (float): Atmospheric Density (kg/m^3)
+        weight (float): weight of craft (N)
+        wingArea (float): Area of wing (m^2)
+        Cd_0 (_type_): _description_
+        K (_type_): _description_
+
+    Returns:
+        float: V infinity to get max range (m/s)
+    &#34;&#34;&#34;    
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingArea)* numpy.sqrt((3*K)/Cd_0))
+    return vinf</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_Vstall"><code class="name flex">
+<span>def <span class="ident">calc_Vstall</span></span>(<span>P_inf, weight, wingarea, CL_max)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the stall velocity of the craft</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>P_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Density of air</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>weight of craft in newton</dd>
+<dt><strong><code>wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>wing area in square meters</dd>
+<dt><strong><code>CL_max</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Max CL</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Stall Velocity</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_Vstall(P_inf, weight,wingarea,CL_max):
+    &#34;&#34;&#34;Calculates the stall velocity of the craft
+
+    Args:
+        P_inf (_type_): Density of air
+        weight (_type_): weight of craft in newton
+        wingarea (_type_): wing area in square meters
+        CL_max (_type_): Max CL
+
+    Returns:
+        _type_: Stall Velocity
+    &#34;&#34;&#34;    
+    #print(f&#39;pinf: {P_inf}, w: {weight}, Wingarea: {wingarea}&#39;)
+    vstall = numpy.sqrt((2/P_inf) * (weight/wingarea) * (1/CL_max))
+    return vstall</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_dynpressure"><code class="name flex">
+<span>def <span class="ident">calc_dynpressure</span></span>(<span>P_inf, V_inf)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates dynamic pressure</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>P_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Density (kg/m^3)</dd>
+<dt><strong><code>V_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Velocity m/s</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Dynamic pressure</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_dynpressure(P_inf,V_inf):
+    &#34;&#34;&#34;Calculates dynamic pressure
+
+    Args:
+        P_inf (_type_): Density (kg/m^3)
+        V_inf (_type_): Velocity m/s
+
+    Returns:
+        _type_: Dynamic pressure
+    &#34;&#34;&#34;    
+    dynpress = 0.5*P_inf*numpy.power(V_inf,2)
+    return dynpress</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_endurance_turbojet"><code class="name flex">
+<span>def <span class="ident">calc_endurance_turbojet</span></span>(<span>TSFC, Cl_Cd, weightTO, weightEm)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates Enduance for a turbojet with the provided characteristitcs</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>TSFC (g/N/s): Thrust Specific fuel Consumption <em>IN N fuel / sec / N thrust</em></dt>
+<dt><strong><code>Cl_Cd</code></strong> :&ensp;<code>Coeff</code></dt>
+<dd>Cl / Cd max</dd>
+<dt><strong><code>weightTO</code></strong> :&ensp;<code>N</code></dt>
+<dd>Takeoff weight</dd>
+<dt><strong><code>weightEm</code></strong> :&ensp;<code>N</code></dt>
+<dd>Empty weight</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>Endurance (hours)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
+    &#34;&#34;&#34;Calculates Enduance for a turbojet with the provided characteristitcs
+
+    Args:
+        TSFC (g/N/s): Thrust Specific fuel Consumption *IN N fuel / sec / N thrust*
+        Cl_Cd (Coeff): Cl / Cd max
+        weightTO (N): Takeoff weight
+        weightEm (N): Empty weight
+
+    Returns:
+        float: Endurance (hours)
+    &#34;&#34;&#34;    
+    endur =(1/TSFC) * Cl_Cd * (math.log((weightTO/weightEm),math.e))
+    return endur</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_max_range_jet"><code class="name flex">
+<span>def <span class="ident">calc_max_range_jet</span></span>(<span>p_inf, wingarea, TSFC, clcd, weighttakeoff, weightempty)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates range for a turbojet at a given parameters</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>p_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Atmospheric Density (kg/m^3)</dd>
+<dt><strong><code>wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>TSFC</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Thrust specific fuel consumption <em>IN N fuel / sec / N thrust</em></dd>
+<dt><strong><code>clcd</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Cl/Cd ratio (Cl^1/2 / Cd for max range)</dd>
+<dt><strong><code>weighttakeoff</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Craft weight at takeoff (N)</dd>
+<dt><strong><code>weightempty</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Craft empty weight (N)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Range</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
+    &#34;&#34;&#34;Calculates range for a turbojet at a given parameters
+
+    Args:
+        p_inf (_type_): Atmospheric Density (kg/m^3)
+        wingarea (_type_): _description_
+        TSFC (_type_): Thrust specific fuel consumption *IN N fuel / sec / N thrust*
+        clcd (_type_): Cl/Cd ratio (Cl^1/2 / Cd for max range)
+        weighttakeoff (_type_): Craft weight at takeoff (N)
+        weightempty (_type_): Craft empty weight (N)
+
+    Returns:
+        _type_: Range
+    &#34;&#34;&#34;    
+    range = (2/1) * numpy.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (numpy.sqrt(weighttakeoff) - numpy.sqrt(weightempty))
+    return range</code></pre>
+</details>
+</dd>
+<dt id="Dragbuilduppy.StFl.calc_req_CL"><code class="name flex">
+<span>def <span class="ident">calc_req_CL</span></span>(<span>weight, Q_inf, wingarea)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates requred CL for steady level flight</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>weight</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>weight of craft in newton</dd>
+<dt><strong><code>Q_inf</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Dynamic pressure</dd>
+<dt><strong><code>wingarea</code></strong> :&ensp;<code>_type_</code></dt>
+<dd>Main wing area</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Estimated CL</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_req_CL(weight, Q_inf, wingarea):
+    &#34;&#34;&#34;Calculates requred CL for steady level flight
+
+    Args:
+        weight (_type_): weight of craft in newton
+        Q_inf (_type_): Dynamic pressure
+        wingarea (_type_): Main wing area
+
+    Returns:
+        _type_: Estimated CL
+    &#34;&#34;&#34;    
+    CL = (weight/(Q_inf * wingarea))
+    return CL</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Dragbuilduppy" href="index.html">Dragbuilduppy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="Dragbuilduppy.StFl.calc_CL_CDmax" href="#Dragbuilduppy.StFl.calc_CL_CDmax">calc_CL_CDmax</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_CL_CDmaxRangeJet" href="#Dragbuilduppy.StFl.calc_CL_CDmaxRangeJet">calc_CL_CDmaxRangeJet</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_Drag" href="#Dragbuilduppy.StFl.calc_Drag">calc_Drag</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_K_value" href="#Dragbuilduppy.StFl.calc_K_value">calc_K_value</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_Lift" href="#Dragbuilduppy.StFl.calc_Lift">calc_Lift</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_PowerReq" href="#Dragbuilduppy.StFl.calc_PowerReq">calc_PowerReq</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_ThrustReq" href="#Dragbuilduppy.StFl.calc_ThrustReq">calc_ThrustReq</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_Vinf_MaxJetEndurance" href="#Dragbuilduppy.StFl.calc_Vinf_MaxJetEndurance">calc_Vinf_MaxJetEndurance</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_Vinf_MaxJetRange" href="#Dragbuilduppy.StFl.calc_Vinf_MaxJetRange">calc_Vinf_MaxJetRange</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_Vstall" href="#Dragbuilduppy.StFl.calc_Vstall">calc_Vstall</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_dynpressure" href="#Dragbuilduppy.StFl.calc_dynpressure">calc_dynpressure</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_endurance_turbojet" href="#Dragbuilduppy.StFl.calc_endurance_turbojet">calc_endurance_turbojet</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_max_range_jet" href="#Dragbuilduppy.StFl.calc_max_range_jet">calc_max_range_jet</a></code></li>
+<li><code><a title="Dragbuilduppy.StFl.calc_req_CL" href="#Dragbuilduppy.StFl.calc_req_CL">calc_req_CL</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
