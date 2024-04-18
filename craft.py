@@ -25,13 +25,34 @@ class Craft():
     mainwing: Wing3d
 
     def __init__(self,name) -> None:
+        """Sets of a bare craft, USer should them manually assign:
+
+            Atmosphere: Atmosphere to use
+            weight_empty:  * ur.newton
+            weight_takeoff:   * ur.newton 
+            CLmax: Max CL
+            CLrolling: CL while rolling on ground
+            PosStruturalNlimit: Positve structural limit
+            NegStruturalNlimit: Negative structural limit
+            dragcomponents: DragyComponent = []#List of of components of drag
+            powertrain = [] #list of engines
+            mainwing: Wing3d
+
+
+        Args:
+            name (_type_): Name of craft
+        """        
         self.name = name
 
     def list_components(self):
+        """Lists the crafts draggy components
+        """        
         for i in self.dragcomponents:
             print(i.Name)
 
     def compute_components(self):
+        """Computes crafts CD0 by adding up all components CD0
+        """        
         self.Cd0 = 0
         for i in self.dragcomponents:
             i.compute()
@@ -41,16 +62,25 @@ class Craft():
         self.K = calc_K_value(self.mainwing.OswaldE,self.mainwing.AR)
 
     def print_stats_components(self):
+        """Prints the stats of each Draggy compenent
+        """        
         for i in self.dragcomponents:
             i.printStats()
 
     def get_max_thrust(self):
+        """Gets max thrust
+
+        Returns:
+            _type_: Trust max output, does not take into account any elivation. 
+        """        
         thr = 0
         for i in self.powertrain:
             thr += i.MaxThrust
         return thr
 
 if __name__ == "__main__":
+        #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
+
     OppaStoppa = Craft("OpptaStoppa")
     OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774/4,1.19,76,OppaStoppa.ur)
     ur = OppaStoppa.ur

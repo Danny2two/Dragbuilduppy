@@ -9,7 +9,16 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Arc
 
 class Takeoff:
-    def __init__(self, Craft:Craft,Alt,n_takeoff,climbangle) -> None:
+    def __init__(self, Craft:Craft,Alt,n_takeoff,climbangle,REPLACEWEIGHT = 0) -> None:
+        """This class takes in an aircraft and conditons about takeoff and then is able to determine the length of takeoff
+
+        Args:
+            Craft (Craft): The craft to use for takeoff
+            Alt (_type_): Altitide of takeoff (airport elevation)
+            n_takeoff (_type_): The n limit for the aircraft
+            climbangle (_type_): Climb angle of takeoff (degrees)
+            REPLACEWEIGHT : Weight to use for takeoff. Defaults to 0, meaning the crafts takeoffwieght varable is used. 
+        """        
         self.Craft = Craft
         self.CraftStats = CraftStatistics.CraftStatistics(Craft)
         self.LoadFactor = LoadFactor.LoadFactor(Craft)
@@ -20,13 +29,21 @@ class Takeoff:
         self.Alt = Alt * self.ur.m
         self.g = 9.81 * self.ur.m /self.ur.second**2
         self.RollFricCoe = 0.04
-        self.weight = Craft.weight_takeoff
+        if REPLACEWEIGHT == 0:
+            self.weight = Craft.weight_takeoff
+        else:
+            self.weight = REPLACEWEIGHT
         self.V_LO = 1.2 * StFl.calc_Vstall(self.ActiveAtmospere.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
         self.n_to = n_takeoff
         self.height_Obs = 10.668 * self.ur.m #35 ft
         self.climbAngle = climbangle
     
     def GroundRoll(self):
+        """Calculates ground roll distance
+
+        Returns:
+            _type_: Rolling distance in meters
+        """        
         weight = self.weight
         wingArea = self.Craft.mainwing.Area
         dens = self.ActiveAtmospere.dens_trop_alt(self.Alt)
@@ -41,6 +58,11 @@ class Takeoff:
         return (RollDist)
     
     def Transition(self):
+        """Calculates the transiton period of the takeoff
+
+        Returns:
+            Array of transition distance and height [horizontal distance, vertical distance]
+        """        
         radius = self.LoadFactor.getRadiusPullUp(self.n_to,self.V_LO)
         Str = radius * numpy.sin(numpy.deg2rad(self.climbAngle))
         htr = radius - (radius * numpy.cos(numpy.deg2rad(self.climbAngle)))
@@ -49,12 +71,22 @@ class Takeoff:
         return([Str,htr])
     
     def AirDist(self,remainingObsH):
+        """Calculates the in air section of the takeoff
+
+        Args:
+            remainingObsH (_type_): How much remaining height to clear the takeoff obsticle height 
+
+        Returns:
+            _type_: Horzontal distance of air section
+        """        
         Sa = remainingObsH / numpy.tan(numpy.deg2rad(self.climbAngle))
         #print(Sa)
         #print(f'Air Distance of {Sa.to("meter")}')
         return Sa
     
     def DoTakeoff(self):
+        """Performs the entire takeoff and prints the results.
+        """        
         ToD = 0
         remainingH = self.height_Obs
 
@@ -119,6 +151,15 @@ class Takeoff:
     
 class Landing:
     def __init__(self, Craft: Craft, Alt,n_flare,ApproachAngle,weight) -> None:
+        """Takes in a craft and info about Landing to calculate its length
+
+        Args:
+            Craft (Craft): Craft to Land
+            Alt (_type_): Altitude (Elevation of airport)
+            n_flare (_type_): n value to use for flare
+            ApproachAngle (_type_): Apprach angle (glide angle)
+            weight (_type_): wight to use at takeoff (newtons)
+        """        
         self.Craft = Craft
         self.CraftStats = CraftStatistics.CraftStatistics(Craft)
         self.LoadFactor = LoadFactor.LoadFactor(Craft)
@@ -137,6 +178,11 @@ class Landing:
         pass
 
     def Flare(self):
+        """Calcualtes flare distance
+
+        Returns:
+            The horizontal and vertical components of the flare [horiz, vertical]
+        """        
         radius = self.LoadFactor.getRadiusPullUp(self.n_flare,self.V_F)
         Str = radius * numpy.sin(numpy.deg2rad(self.apprachA))
         htr = radius - (radius * numpy.cos(numpy.deg2rad(self.apprachA)))
@@ -146,11 +192,24 @@ class Landing:
         return([Str,htr])
     
     def Approach(self,ROH):
+        """Simulates approach 
+
+        Args:
+            ROH (_type_): How much of the landing obsticle height is not taken up by our flare (meter)
+
+        Returns:
+            _type_: Distance of Apprach
+        """        
         Sa = ROH / numpy.tan(numpy.deg2rad(self.apprachA))
         #print(f'Approach distance {Sa} as V_app: {self.V_A}')
         return Sa
 
     def GroundRoll(self):
+        """Simulates ground roll
+
+        Returns:
+            _type_: Ground roll distance. 
+        """        
         weight = self.weight
         wingArea = self.Craft.mainwing.Area
         dens = self.Atmos.dens_trop_alt(self.Alt)
@@ -164,6 +223,8 @@ class Landing:
         return (RollDist)
     
     def DoLanding(self):
+        """Performs all the parts of a landing and prints the results.
+        """        
         ToD = 0
         remainingH = self.obsH
 
@@ -181,7 +242,12 @@ class Landing:
         ToD += approach
         return(ToD)
     
-    def Graph(self):
+    def Graph(self)->plt:
+        """Performs a landing and outputs a graph of the landing
+
+        Returns:
+            plt: matplotlib figure of landing
+        """        
         fig, ax = plt.subplots()
         ax.set_aspect(10)
 
@@ -220,6 +286,7 @@ class Landing:
         return fig
 
 if __name__ == "__main__":
+    #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
     OppaStoppa.Atmosphere = Atmosphere.Atmosphere(300,286.21, 9.77774,1.19,170,OppaStoppa.ur)
     ur = OppaStoppa.ur

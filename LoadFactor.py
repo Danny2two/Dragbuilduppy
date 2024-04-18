@@ -195,6 +195,7 @@ class LoadFactor():
  
 
 if __name__ == "__main__":
+        #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
     OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,170,OppaStoppa.ur)
     ur = OppaStoppa.ur

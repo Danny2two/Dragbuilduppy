@@ -419,6 +419,7 @@ class CraftStatistics():
        
 
 if __name__ == "__main__":
+        #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
     OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,76,OppaStoppa.ur)
     atmo = OppaStoppa.Atmosphere

@@ -5,6 +5,11 @@ import pint
 
 class Drag :
     def __init__(self,ur: pint.UnitRegistry) -> None:
+        """The Drag class serves as a hub for calculations around Cd0
+
+        Args:
+            ur (pint.UnitRegistry): Unitregestry, Should be a refrence to the Crafts Unit reg
+        """        
         self.ur = ur
 
     def calc_reynolds(self,Density: float,V_inf: float,Chord,DynamicViscosity:float)->float:
@@ -140,11 +145,27 @@ class Drag :
         return(M)
 
     def calc_cd0_gear(self,CD0, S_Frontal, S_wing, Q):
+        """Calcualts Cd0 of landing gear
+
+        Args:
+            CD0 (_type_): _description_
+            S_Frontal (_type_): Frontal surface area 
+            S_wing (_type_): main wing surface area
+            Q (_type_): Interf factor
+        """        
         cd = CD0 * (S_Frontal/S_wing) * Q
         return(cd)
 
     def calc_cd0(self,Skin_Friction_Coefficient, Form_Factor, Interference_Factor, Swet, Swing):
+        """Calculates Cd0 for components that have standard CDO buildup
 
+        Args:
+            Skin_Friction_Coefficient (_type_): Flatplate skin friction coeff
+            Form_Factor (_type_): Formfactor 
+            Interference_Factor (_type_): Interference factor 
+            Swet (_type_): Wetted area
+            Swing (_type_): Mainwing area
+        """        
         Cd0 = (Skin_Friction_Coefficient * Form_Factor * Interference_Factor * (Swet/Swing))
         #print(f'CD0 Units: FPSF:{Skin_Friction_Coefficient}:, Formfactor: {Form_Factor}: InterfFactor: {Interference_Factor}: Swet: {Swet}: Swing: {Swing}')
         return(Cd0)
