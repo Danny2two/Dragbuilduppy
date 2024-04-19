@@ -25,18 +25,25 @@ class Craft():
     mainwing: Wing3d
 
     def __init__(self,name) -> None:
-        """Sets of a bare craft, USer should them manually assign:
+        """Sets up a bare craft
 
-            Atmosphere: Atmosphere to use
-            weight_empty:  * ur.newton
-            weight_takeoff:   * ur.newton 
-            CLmax: Max CL
-            CLrolling: CL while rolling on ground
-            PosStruturalNlimit: Positve structural limit
-            NegStruturalNlimit: Negative structural limit
-            dragcomponents: DragyComponent = []#List of of components of drag
-            powertrain = [] #list of engines
-            mainwing: Wing3d
+        About:
+            The Craft is what will be refrenced when doing calculations with other classes. It serves as a centeral locantion for physical properties to be defined.
+            Crafts are how information is stored and passed between other helper classes. Some classes are called from whithin Craft like Drag
+            Other classes take a Craft as an imput. For example Takeoff is a class that takes in a Craft and uses the crafts properties to simulate a takeoff
+            When components are changed be sure to call compute_components() so that the crafts C_(D0) will be updated. 
+
+            The following variables should be set after a Craft is created.
+                Atmosphere: Atmosphere to use
+                weight_empty:  
+                weight_takeoff:  
+                CLmax: Max CL
+                CLrolling: CL while rolling on ground
+                PosStruturalNlimit: Positve structural limit
+                NegStruturalNlimit: Negative structural limit
+                dragcomponents: DragyComponent = []#List of of components of drag
+                powertrain = [] #list of engines
+                mainwing: Wing3d
 
 
         Args:

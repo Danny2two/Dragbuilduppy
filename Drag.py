@@ -130,9 +130,11 @@ class Drag :
         return (e0)
     
     def calc_mach(self,V_inf, Temp):
-        """Calculate Mach
-        @V_inf: Velocity in m/s
-        @Temp: Temperature
+        """Calculates Mach
+
+        Args:
+            V_inf (_type_): Velocity
+            Temp (_type_): Temperature (K)
         """
         ur = self.ur
         gasconst = 287 * ur.m**2 / (ur.s**2 * ur.kelvin)

@@ -8,14 +8,26 @@ class DragyComponent:
     Name = ""
     Atmos: Atmosphere
     def __init__(self,Atmosphere) -> None:
+        """DraggyComponents are parts the aircraft that contribute to its CD0 build up.
+
+        Args:
+            Atmosphere (_type_): Atmosphere object to be used in calcualtions.
+        """        
         self.Atmos = Atmosphere
         self.ur = Atmosphere.ur
         self.Drag = DragClass.Drag(self.ur)
 
     def compute():
+        """Computes the components CD0
+        """        
         pass
 
     def getCD0() -> float:
+        """Returns the components CD0
+
+        Returns:
+            float: CD0
+        """        
         pass
 
     def printStats():
