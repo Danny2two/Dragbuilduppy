@@ -14,10 +14,15 @@ class Drag :
 
     def calc_reynolds(self,Density: float,V_inf: float,Chord,DynamicViscosity:float)->float:
         """Calculates the Reynolds number for an airfoil at given conditions.
-        @Density: Density in kg/m^3
-        @V_inf: Velocity of incoming flow in m/s
-        @Chord: Chord length in meters, or characteristic length.
-        @DynamicViscosity: μ value
+
+        Args:
+            Density: Density in kg/m^3
+            V_inf: Velocity of incoming flow in m/s
+            Chord: Chord length in meters, or characteristic length.
+            DynamicViscosity: μ value
+
+        Returns:
+            Re: Reynolds number
         """
         #print(f'Density: {Density}')
         #print(f'Velocity: {V_inf}')
@@ -29,7 +34,12 @@ class Drag :
 
     def calc_dynamicviscosity(self,temperature: float)->float:
         """Calculates dynamic viscosity for a given temperature
-        @temperature: Temperature in kelvin.
+
+        Args:
+            temperature: Temperature in kelvin.
+        
+        Returns:
+            Dy: Dynamic Viscosity
         """
         𝜇0 = 1.716e-5 #Constant
         𝑆𝜇 = 113 * self.ur.kelvin# Constant
@@ -50,18 +60,28 @@ class Drag :
 
     def calc_formfactorwing(self,XC, TC, mach: float, sweepback)->float:
         """Calculates Form Factor for wings, tails, struts and pylons.
-        @XC: (x/c)m is the chordwise location of the maximum thickness point.
-        @TC: (t/c)m is the thickness ratio. 
-        @mach: mach number.
-        @sweepback: Sweepback of max thickness line (degrees).
+
+        Args:
+            XC: (x/c)m is the chordwise location of the maximum thickness point.
+            TC: (t/c)m is the thickness ratio. 
+            mach: mach number.
+            sweepback: Sweepback of max thickness line (degrees).
+
+        Returns:
+            FF: Form Factor
         """
         FF = (1 + (0.6/XC)*TC + 100*numpy.power(TC,4))*((1.34*numpy.power(mach,(0.18)))*numpy.power((numpy.cos(numpy.deg2rad(sweepback))),(0.28)))
         return(FF)
     
     def calc_formfactorfuse(self,Len,A_max):
-        """Calculates Form Factor for Fuselage
-        @Len: Length of component
-        @A_max: maximum cross-sectional area
+        """Calcualtes for factor for a Fuselage
+
+        Args:
+            Len (_type_): Length
+            A_max (_type_): Max Cross section area
+
+        Returns:
+            FF: Form Factor 
         """
         f= Len/numpy.sqrt((4/math.pi)*A_max)
         FF = (0.9 + (5/numpy.power(f,1.5)) + (f/400))
@@ -69,9 +89,14 @@ class Drag :
         return(FF)
     
     def calc_formfactornacelle(self,Len,A_max):
-        """Calculates Form Factor for Fuselage
-        @Len: Length of component
-        @A_max: maximum cross-sectional area
+        """Calcualtes for factor for a Nacelle
+
+        Args:
+            Len (_type_): Length
+            A_max (_type_): Max Cross section area
+
+        Returns:
+            FF: Form Factor 
         """
         f= Len/numpy.sqrt((4/math.pi)*A_max)
         FF = 1 + (0.35/f)
@@ -79,9 +104,14 @@ class Drag :
         return(FF)
 
     def calc_wetted_area_wing(self,TC, Area):
-        """Estimates wetted area
-        @TC: (t/c)m is the thickness ratio.
-        @Aera: area of wing
+        """Calculates the wetted area of a wing
+
+        Args:
+            TC (_type_): Thicness ratio
+            Area (_type_): Area of wing
+
+        Returns:
+            Swet: Wetted area
         """
         if (TC > 0.05):
             Swet = (1.977+0.52*TC)*Area
@@ -90,33 +120,40 @@ class Drag :
         return(Swet)
     
     def calc_wetted_area_fuse(self,Atop,Aside):
-        """Estimates wetted area of fuselage
-        @Atop: area of top view of fuse
-        @Aside: side area
+        """Estimates the wetted area of a fuselage
+
+        Args:
+            Atop (_type_): Area of top (m^2)
+            Aside (_type_): Area of side (m^2)
+
+        Returns:
+            _type_: Estimate of wetted area
         """
         swet = 3.4*((Atop + Aside)/2)
         #print(f'Fuselage Swet: {swet}')
         return (swet)
     
     def calc_oswald_swept(self,AR, ALe):
-        """Calculate the Oswald efficiency factor for a swept wing (ALE >= 30).
-        @AR: Aspect Ratio
-        @ALe: Angle of sweepback
+        """Calculate the Oswald efficiency factor for a swept wing (ALE >= 30). (USE OSWALD_ANY)
         """
         e0 = 4.61 * (1-0.045*(numpy.power(AR,0.68))) * numpy.power(numpy.cos(numpy.deg2rad(ALe)),0.15) - 3.1
         return(e0)
     
     def calc_oswald_straight(self,AR):
-        """Calculate the Oswald efficiency factor for a straight wing.
-        @AR: Aspect Ratio
+        """Calculate the Oswald efficiency factor for a straight wing. (USE OSWALD_ANY)
         """
         e0 = (1.78*(1-0.045*numpy.power(AR,0.68))) - 0.64
         return(e0)
     
     def calc_oswald_any(self,AR, ALE):
-        """Calculate the Oswald efficiency factor for either swept or straight wings.
-        @AR: Aspect Ratio
-        @ALe: Angle of sweepback
+        """Calculates Oswald efficiency
+
+        Args:
+            AR (_type_): Aspect Ratio of wing
+            ALE (_type_): Angle of leading edge
+
+        Returns:
+            _type_: Oswald e
         """
         if ALE == 0:
             e0 = self.calc_oswald_straight(AR)

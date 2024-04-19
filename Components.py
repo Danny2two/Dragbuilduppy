@@ -301,7 +301,18 @@ class Engine():
     Effic = 0
     Name = ""
     
-    def __init__(self,Name,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic,UnitReg) -> None:
+    def __init__(self,Name:str,TSFC,BSFC,MAX_Thrust,MAX_Power,Effic,UnitReg:pint.UnitRegistry) -> None:
+        """The engine class is meant to be a Prop or jet engine, However much of the prop/reciprocating engine functionality is not yet implemented.
+
+        Args:
+            Name (str): Name of the engine being made
+            TSFC (_type_): Thrust specific fuel consumption
+            BSFC (_type_): Brake specifif fuel consumption
+            MAX_Thrust (_type_): Max thrust (newtons)
+            MAX_Power (_type_): Max power (watt)
+            Effic (_type_): efficency for props
+            UnitReg (pint.UnitRegistry): Unit regestry
+        """        
         self.ur: pint.UnitRegistry = UnitReg
         self.Name = Name
         self.TSFC = TSFC #Idealy in g/kN/s
@@ -321,6 +332,16 @@ class Engine():
         """        
         fr = self.TSFC * Thrust/1000
         return fr
+    
+class ElectricMotor():
+    def __init__(self,Name:str,UnitReg: pint.UnitRegistry) -> None:
+        """PlaceHolder for the future Electric motor class
+
+        Args:
+            Name (str): Name
+            UnitReg (pint.UnitRegistry): UnitReg
+        """        
+        pass
     
 
 if __name__ == "__main__":

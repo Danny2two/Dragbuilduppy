@@ -20,6 +20,8 @@ class Atmosphere:
     def __init__(self,Altitude, Temp, Pressure, Density, Vinf,UNITREG:pint.UnitRegistry) -> None:
         """Variables for the atmosphere
             GIVE UNITLESS QUANITIES, UNITS ASIGNED BY ATMOSPHERE CLASS
+            The Atmospere class serves as a hub for atmosphere related functions and information.
+            Atmosphere has variables that represent the Atmosphere at one specific altitude, but has functions that can be used to get information across the entire troposhere.
 
         Args:
             Altitude (_type_): Altitude (meters)
