@@ -28,7 +28,7 @@ class Craft():
         """Sets up a bare craft
 
         About:
-            The Craft is what will be refrenced when doing calculations with other classes. It serves as a centeral locantion for physical properties to be defined.
+            The Craft is what will be refrenced when doing calculations with other classes. It serves as a centeral location for physical properties to be defined.
             Crafts are how information is stored and passed between other helper classes. Some classes are called from whithin Craft like Drag
             Other classes take a Craft as an imput. For example Takeoff is a class that takes in a Craft and uses the crafts properties to simulate a takeoff
             When components are changed be sure to call compute_components() so that the crafts C_(D0) will be updated. 
