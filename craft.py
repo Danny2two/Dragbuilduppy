@@ -9,6 +9,7 @@ from StFl import *
 class Craft():
     ur = pint.UnitRegistry()
     ur.setup_matplotlib()
+    ur.default_format = "~P"
     Atmosphere: Atmosphere
     name = "" #Name for craft 
     mass = 0.0 * ur.m

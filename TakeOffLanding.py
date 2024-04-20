@@ -145,6 +145,19 @@ class Takeoff:
         ax.set_xlabel("Distance from start (meters)")
         ax.set_ylabel("Height (meters)")
         ax.set_title("Takeoff Diagram")
+
+        #Annotate for Vel
+        bbox = dict(boxstyle="round", fc="0.8")
+        arrowprops = dict(arrowstyle="->",connectionstyle="angle,angleA=15,angleB=-30,rad=10")
+        VelLO = r'$V_{LO}$ ' + str(round(self.V_LO,1))
+        ax.annotate(VelLO,(GroundRoll,0),arrowprops=arrowprops,bbox=bbox,xytext=(-45,15), textcoords='offset points')
+
+        #InfoBox
+        textstr = f'Takeoff Parameters \n Altitude: {self.Alt} \n ClimbAng: {self.climbAngle}° \n Obstacle: {self.height_Obs}'
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.05, 1.2, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
+
         return fig
     
 
@@ -247,8 +260,10 @@ class Landing:
 
         Returns:
             plt: matplotlib figure of landing
-        """        
+        """    
+        #plt.rcParams['text.usetex'] = True   
         fig, ax = plt.subplots()
+        
         ax.set_aspect(10)
 
         ToD = 0
@@ -283,6 +298,25 @@ class Landing:
         ax.set_xlabel("Distance from stop (meters)")
         ax.set_ylabel("Height (meters)")
         ax.set_title("Landing Diagram")
+
+        #Adding annotations to indicate velocity 
+        bbox = dict(boxstyle="round", fc="0.8")
+        arrowprops = dict(arrowstyle="->",connectionstyle="angle,angleA=15,angleB=-30,rad=10")
+        VelApprach = r'$V_A$ ' + str(round(self.V_A,1))
+        ax.annotate(VelApprach,(numpy.average(airtime),numpy.average(height)),arrowprops=arrowprops,bbox=bbox,xytext=(-45,15), textcoords='offset points')
+
+        VelFlare = r'$V_F$ ' + str(round(self.V_F,1))
+        ax.annotate(VelFlare,(GroundRoll.magnitude + radius*numpy.sin(numpy.deg2rad(self.apprachA/2)),radius - radius*numpy.cos(numpy.deg2rad(self.apprachA/2))),arrowprops=arrowprops,bbox=bbox,xytext=(-40,20), textcoords='offset points')
+
+        VelTouch = r'$V_{TD}$ ' + str(round(self.V_TD,1))
+        ax.annotate(VelTouch,(GroundRoll.magnitude,0),arrowprops=arrowprops,bbox=bbox,xytext=(-100,20), textcoords='offset points')
+
+        #Add info box
+        textstr = f'Landing Parameters \n Altitude: {self.Alt} \n ClimbAng: {self.apprachA}° \n Obstacle: {self.obsH}'
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.05, 1.2, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
+
         return fig
 
 if __name__ == "__main__":
@@ -330,10 +364,10 @@ if __name__ == "__main__":
     Landing = Landing(OppaStoppa,300,1.1,3,OppaStoppa.weight_takeoff)
     print("Landing " + str(Landing.DoLanding().to("meter")))
 
-    #TOG = Takeoff.Graph()
-    #TOG.legend()
+    TOG = Takeoff.Graph()
+    TOG.legend()
     #plt.show()
 
     LOG = Landing.Graph()
-    plt.legend()
+    #LOG.legend()
     plt.show()
