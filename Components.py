@@ -342,7 +342,22 @@ class ElectricMotor():
             MaxPower: Max motor power consumption
             Effic: Motor Effic
             UnitReg (pint.UnitRegistry): UnitReg
-        """        
+        """       
+        self.Name = Name
+        self.MaxPower = MaxPower
+        self.effic = Effic
+        self.ur = UnitReg 
+
+    def calc_power_consumption_from_output(self,Output_power):
+        return (Output_power / self.effic)
+    
+class Battery():
+    def __init__(self,EnergyDensity, mass,MaxEnergy, CurrentEnergy) -> None:
+        self.density = EnergyDensity
+        self.mass = mass
+        self.MaxEnergy = MaxEnergy
+        self.CurrentEnergy = CurrentEnergy
+
         pass
     
 

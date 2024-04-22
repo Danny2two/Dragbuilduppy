@@ -24,6 +24,7 @@ class Craft():
     dragcomponents: DragyComponent = []#List of of components of drag
     powertrain = [] #list of engines
     mainwing: Wing3d
+    battery :Battery
 
     def __init__(self,name) -> None:
         """Sets up a bare craft
