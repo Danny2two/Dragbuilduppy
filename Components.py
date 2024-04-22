@@ -352,11 +352,13 @@ class ElectricMotor():
         return (Output_power / self.effic)
     
 class Battery():
-    def __init__(self,EnergyDensity, mass,voltage, EnergyCapacity, CurrentEnergy) -> None:
+    def __init__(self,EnergyDensity, mass,voltage, CurrentEnergy,UnitReg: pint.UnitRegistry) -> None:
+        self.ur = UnitReg
         self.density = EnergyDensity
         self.mass = mass* self.ur.kilogram
         self.voltage = voltage *self.ur.volt
-        self.MaxEnergy = EnergyCapacity * self.ur.joule
+        self.maxCapacity = EnergyDensity * mass * self.ur.watt * self.ur.hours
+        self.MaxEnergy = self.maxCapacity * (3600 * self.ur.joules / (self.ur.watt * self.ur.hours))
         self.CurrentEnergy = CurrentEnergy * self.ur.joule
 
         pass
