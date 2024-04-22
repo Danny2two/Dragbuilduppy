@@ -352,13 +352,24 @@ class ElectricMotor():
         return (Output_power / self.effic)
     
 class Battery():
-    def __init__(self,EnergyDensity, mass,MaxEnergy, CurrentEnergy) -> None:
+    def __init__(self,EnergyDensity, mass,voltage, EnergyCapacity, CurrentEnergy) -> None:
         self.density = EnergyDensity
-        self.mass = mass
-        self.MaxEnergy = MaxEnergy
-        self.CurrentEnergy = CurrentEnergy
+        self.mass = mass* self.ur.kilogram
+        self.voltage = voltage *self.ur.volt
+        self.MaxEnergy = EnergyCapacity * self.ur.joule
+        self.CurrentEnergy = CurrentEnergy * self.ur.joule
 
         pass
+
+    def discharge(self,current, voltage, time):
+        self.CurrentEnergy -= (voltage * current * time)
+        if self.CurrentEnergy < 0:
+            print("Battery over drawn! We are now breaking the laws of physics!")
+        else:
+            print(f'Used {voltage * current * time} of energy. \n Current State of charge: {self.CurrentEnergy}')
+
+    def get_energy(self):
+        return self.CurrentEnergy
     
 
 if __name__ == "__main__":
