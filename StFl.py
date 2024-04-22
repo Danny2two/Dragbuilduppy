@@ -107,8 +107,24 @@ def calc_CL_CDmax(K, CD0):
     clcd = numpy.sqrt(1/(4*K*CD0))
     return clcd
 
+def calc_Vinf_MaxPropEndurance(P_inf,weight,wingarea,CD0,K):
+    """Calculates Vinf of max indurance for a prop
+
+    Args:
+        P_inf (_type_): Atmosphere pressure
+        weight (_type_): craft weight
+        wingarea (_type_): mainwing area
+        CD0 (_type_): CD0
+        K (_type_): K
+
+    Returns:
+        _type_: V infinity m/s
+    """    
+    vinf = numpy.sqrt((2/P_inf) * (weight/wingarea) * numpy.sqrt(K/(3 * CD0)))
+    return vinf
+
 def calc_Vinf_MaxJetEndurance(P_inf,weight,wingArea,Cd_0,K):
-    """Calculates V_Inf to achieve max endurance with a jet
+    """Calculates V_Inf to achieve max endurance with a jet OR range with a Prop
 
     Args:
         P_inf (float): Atmospheric Density (kg/m^3)
