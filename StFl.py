@@ -152,6 +152,19 @@ def calc_CL_CDmaxRangeJet(K,CD_0):
     clcd = (3/4) * numpy.power((1/(3 * K * numpy.power(CD_0,3))),(1/4))
     return clcd
 
+def calc_CL_CDmaxenduranceProp(K,CD0):
+    """Calulates CL^3/2 / CD for Max endurace Prop
+
+    Args:
+        K (_type_): K value
+        CD0 (_type_): Crafts CD0
+
+    Returns:
+        _type_: _description_
+    """    
+    CLCD = (1/4) * numpy.power((3/(K * numpy.power(CD0, (1/3)))),(3/4))
+    return CLCD
+
 
 def calc_endurance_turbojet(TSFC,Cl_Cd,weightTO,weightEm):
     """Calculates Enduance for a turbojet with the provided characteristitcs
