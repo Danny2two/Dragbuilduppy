@@ -185,6 +185,41 @@ def calc_max_range_jet(p_inf,wingarea,TSFC,clcd,weighttakeoff,weightempty):
     range = (2/1) * numpy.sqrt(2/(p_inf*wingarea)) * (1/TSFC) * clcd * (numpy.sqrt(weighttakeoff) - numpy.sqrt(weightempty))
     return range
 
+def calc_endurance_electric_prop(Batt_Energy,Motor_eff,Prop_eff,p_inf,wingarea, weight,CLCD):
+    """Calcualtes Endurance for a Electric Prop power train
+
+    Args:
+        Batt_Energy (_type_): Total energy in battery (joules)
+        Motor_eff (_type_): Motor Effic
+        Prop_eff (_type_): Prop Effic
+        p_inf (_type_): Atmosphereic density
+        wingarea (_type_): Mainwing area (m^2)
+        weight (_type_): Craft Weight (N)
+        CLCD (_type_): CL^(3/2) / CD max
+
+    Returns:
+        _type_: Endurace in seconds 
+    """    
+    Endurance = ((Batt_Energy * Motor_eff * Prop_eff * numpy.sqrt(p_inf * wingarea))/(numpy.sqrt(2)* numpy.power(weight,3/2))) * CLCD
+    return Endurance
+
+def calc_range_electric_prop(Batt_Energy,Motor_eff,Prop_eff,weight,CLCD):
+    """Calcualtes Range of an electric prop power trian
+
+    Args:
+        Batt_Energy (_type_): Total Battery energy (joules)
+        Motor_eff (_type_): Motor eff
+        Prop_eff (_type_): Prop eff
+        weight (_type_): Craft weight (N)
+        CLCD (_type_): CL/CD max
+
+    Returns:
+        _type_: _description_
+    """    
+    Range = ((Batt_Energy * Motor_eff * Prop_eff)/weight) * CLCD
+    return Range
+    
+
 def calc_Lift(CL,V_inf,Wingarea,dens):
     """Calculates Lift at given conditions
 
