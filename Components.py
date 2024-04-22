@@ -352,23 +352,28 @@ class ElectricMotor():
         return (Output_power / self.effic)
     
 class Battery():
-    def __init__(self,EnergyDensity, mass,voltage, CurrentEnergy,UnitReg: pint.UnitRegistry) -> None:
+    def __init__(self,EnergyDensity, mass,voltage,UnitReg: pint.UnitRegistry,currentEnergy = -1) -> None:
         self.ur = UnitReg
         self.density = EnergyDensity
         self.mass = mass* self.ur.kilogram
         self.voltage = voltage *self.ur.volt
         self.maxCapacity = EnergyDensity * mass * self.ur.watt * self.ur.hours
         self.MaxEnergy = self.maxCapacity * (3600 * self.ur.joules / (self.ur.watt * self.ur.hours))
-        self.CurrentEnergy = CurrentEnergy * self.ur.joule
-
-        pass
+        if currentEnergy != -1:
+            self.CurrentEnergy = currentEnergy * self.ur.joule
+        else:
+            currentEnergy = self.MaxEnergy
 
     def discharge(self,current, voltage, time):
         self.CurrentEnergy -= (voltage * current * time)
         if self.CurrentEnergy < 0:
             print("Battery over drawn! We are now breaking the laws of physics!")
         else:
-            print(f'Used {voltage * current * time} of energy. \n Current State of charge: {self.CurrentEnergy}')
+            print(f'Used {voltage * current * time} of energy. \n Current remaing energy: {self.CurrentEnergy}')
+
+    def print_state(self):
+        print("Battery Status")
+        print(f' Current Energy stored {self.CurrentEnergy}. \n Max Energy {self.MaxEnergy}. \n Voltage {self.voltage}. \n State of Charge {self.CurrentEnergy/self.MaxEnergy}')
 
     def get_energy(self):
         return self.CurrentEnergy
