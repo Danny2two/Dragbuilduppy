@@ -362,7 +362,7 @@ class Battery():
         if currentEnergy != -1:
             self.CurrentEnergy = currentEnergy * self.ur.joule
         else:
-            currentEnergy = self.MaxEnergy
+            self.CurrentEnergy = self.MaxEnergy
 
     def discharge(self,current, voltage, time):
         self.CurrentEnergy -= (voltage * current * time)
