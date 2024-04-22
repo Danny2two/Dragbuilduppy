@@ -334,11 +334,13 @@ class Engine():
         return fr
     
 class ElectricMotor():
-    def __init__(self,Name:str,MaxPower,UnitReg: pint.UnitRegistry) -> None:
+    def __init__(self,Name:str,MaxPower,Effic,UnitReg: pint.UnitRegistry) -> None:
         """PlaceHolder for the future Electric motor class
 
         Args:
             Name (str): Name
+            MaxPower: Max motor power consumption
+            Effic: Motor Effic
             UnitReg (pint.UnitRegistry): UnitReg
         """        
         pass
