@@ -49,10 +49,10 @@ class Atmosphere:
         """Prints the state of the atmosphere
         """        
         print(f"Atmosphere State:\n ALT: {self.Altitude:P}")
-        print(f"Temp: {self.Temp:P}") 
-        print(f"Pressure: {self.Pressure:P}") 
-        print(f"Density: {self.Density:P}")
-        print(f"V_inf: {self.Vinfinity:P}")        
+        print(f"    Temp: {self.Temp:P}") 
+        print(f"    Pressure: {self.Pressure:P}") 
+        print(f"    Density: {self.Density:P}")
+        print(f"    V_inf: {self.Vinfinity:P}")        
 
     def temp_trop(self, altitude):
         """Calculates temperature from altitude in troposphere

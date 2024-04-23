@@ -74,6 +74,17 @@ class CraftStatistics():
         """        
         return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
     
+    def get_PowerAvailable_Elec(self,alt,vel):
+        """Gets the power avalible from Electric motors
+
+        Returns:
+            _type_: Power avalible in watts
+        """        
+        PA = 0
+        for motor in self.StatsCraft.powertrain:
+            PA += motor.MaxPower
+        return PA
+    
     #PART F
     def get_PowerRequired_alt_jet(self,alt,velocity,WEIGHT):
         """Finds power requred for SLF at given conditions
@@ -122,9 +133,16 @@ class CraftStatistics():
         alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         prA_array = np.zeros(alt_array.shape)
         prR_array = np.zeros(alt_array.shape)
+
+        CraftTypePower = self.get_PowerAvailable_jet
+        print(type(self.StatsCraft.powertrain[0]).__name__)
+        if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
+            CraftTypePower = self.get_PowerAvailable_Elec
+        else:
+            CraftTypePower = self.get_PowerAvailable_jet
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
             #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
-            prA_array[i[0]]= self.get_PowerAvailable_jet(i[1],Velocity).magnitude /1000 #need to strip units :(
+            prA_array[i[0]]= CraftTypePower(i[1],Velocity).magnitude /1000 #need to strip units :(
             prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
 
         if GRAPH_EXCESS:
