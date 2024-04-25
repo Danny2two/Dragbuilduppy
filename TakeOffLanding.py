@@ -47,7 +47,8 @@ class Takeoff:
         weight = self.weight
         wingArea = self.Craft.mainwing.Area
         dens = self.ActiveAtmospere.dens_trop_alt(self.Alt)
-        thrust = self.CraftStats.get_ThrustAvailable_jet(self.Alt)
+        thrust = self.CraftStats.get_thrustAvailable(self.Alt,0*ur.m / ur.s)
+        #print("THRUST: " + str(thrust.to("newton")))
         Lift = StFl.calc_Lift(self.Craft.CLrolling,0.7 * self.V_LO,wingArea,dens).to("newton")
         Drag = StFl.calc_Drag(self.Craft.Cd0,0.7 * self.V_LO,wingArea,dens,self.Craft.K,self.Craft.CLrolling)
 
@@ -156,7 +157,7 @@ class Takeoff:
         textstr = f'Takeoff Parameters \n Altitude: {self.Alt} \n ClimbAng: {self.climbAngle}° \n Obstacle: {self.height_Obs}'
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
-        ax.text(0.05, 1.2, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
+        ax.text(0.05, 1.1, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
 
         return fig
     
@@ -322,43 +323,69 @@ class Landing:
 if __name__ == "__main__":
     #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
-    OppaStoppa.Atmosphere = Atmosphere.Atmosphere(300,286.21, 9.77774,1.19,170,OppaStoppa.ur)
     ur = OppaStoppa.ur
+    OppaStoppa.Atmosphere = Atmosphere.Atmosphere(300,286.21, 9.77774,1.19,15,ur)
     atmo = OppaStoppa.Atmosphere
-    OppaStoppa.weight_empty = 4450 * 9.81 * ur.newton
-    OppaStoppa.weight_takeoff = 5225 * 9.81 * ur.newton
-
+    OppaStoppa.weight_empty = 28 * 9.81 * ur.newtons
+    OppaStoppa.weight_takeoff = 28 * 9.81 * ur.newtons
     OppaStoppa.CLmax = 1.45
     OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
 
+
     """Defining the draggy components of our craft"""
     #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
-    N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",34.87,25.26,9.14,1.76,-4,17,0.12,0.3,6.56,atmo)
-
+    N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",34.83,1.29,2.34,.532,-1,15,.12,.3,.02,atmo)
     MainWing = N4312Wing
 
-    HorizontalTail = Wing3d("HT","NACA 0012",26.57,4.58,2.44,0.915,0,15,0.12,0.3,0.12,atmo)
-    VerticalTail = Wing3d("VT","NACA 0012",26.57,4.58/2,2.44/2,0.915,0,15,0.12,0.3,0,atmo)
+    HorizontalTail = Wing3d("HT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
+    VerticalTail = Wing3d("VT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
 
     #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
-    MainFuselage = Fuselage("Oppa Fuselage",7.51,8.11,5.24,1.00,1.0,MainWing.Area,atmo)
+    MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,.02,MainWing.Area,atmo)
 
     #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
-    TailGear = FixedGear("Tail Gear",0.25,0.196129,MainWing.Area,1.2,atmo)
+    TailGear = FixedGear("Tail Gear",0.25,0.002,MainWing.Area,1.2,atmo)
 
     """Defining our engines"""
-    #Engine defined: NAME, TSFC, BSFC, MaxThrust, MaxPower, efficency.
-    #Note that for a turbojet we dont really need BSFC or power
-    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9,ur)
-    OppaStoppa.powertrain = [WilliamsFJ33,WilliamsFJ33]
+
+    
+
+    #Define Prop
+    prop = Propeller("16X8",0.4064,8,ur)
+    def thrustproppoly(advr):
+        try:
+            advr  = advr.magnitude
+        except:
+            advr = advr
+        thr = 0.122 - (0.0138 * advr) + (0.0709* advr**2) - (0.287 * advr**3) + (0.137 * advr**4)
+        return thr
+    prop.thrust_polynomal_func = thrustproppoly
+
+    def powerproppoly(advr):
+        try:
+            advr  = advr.magnitude
+        except:
+            advr = advr
+        pwr = 0.0583 + (0.0127 * advr) + (0.23* advr**2) - (0.416 * advr**3) + (0.151 * advr**4)
+        return pwr
+    prop.power_polynomal_func = powerproppoly
+
+    Motor = ElectricMotor("V804 KV170",5200,0.90,8000,prop,ur)
+
+    Battery = Battery(139.76,4.32 * 2,45,ur)
+    #Battery.print_state()
+
+    OppaStoppa.powertrain = [Motor,Motor]
     OppaStoppa.mainwing = MainWing
 
-    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail,TailGear]
-    OppaStoppa.PosStruturalNlimit = 5 #Set Structual N limits
-    OppaStoppa.NegStruturalNlimit = 2
-    OppaStoppa.compute_components()
+    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail]
 
-    Takeoff = Takeoff(OppaStoppa, 300,1.15,5)
+    OppaStoppa.compute_components()
+    OppaStoppa.PosStruturalNlimit = 5
+    OppaStoppa.NegStruturalNlimit = -3
+
+
+    Takeoff = Takeoff(OppaStoppa, 300,1.5,5)
     print("Total Takeoff: " + str(Takeoff.DoTakeoff().to("meter")))
     print()
     Landing = Landing(OppaStoppa,300,1.1,3,OppaStoppa.weight_takeoff)

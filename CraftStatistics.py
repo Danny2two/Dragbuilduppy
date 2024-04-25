@@ -50,7 +50,7 @@ class CraftStatistics():
         return weight
 
     #PART F
-    def get_ThrustAvailable_jet(self,alt):
+    def get_ThrustAvailable_jet(self,alt,vel=0):
         """Taking into consideration all sources of thrust on the craft, finds the thrust available at the given altitude.
         Assumes m = 1
 
@@ -61,6 +61,39 @@ class CraftStatistics():
         aval_thrust = self.Active_Atmosphere.jet_thrust_available_alt(maxthurust,alt,1)
         return aval_thrust
     
+    def get_ThrustAvailable_Elec(self,alt,vel):
+        motor:ElectricMotor = self.StatsCraft.powertrain[0] #gets one of our motors
+        prop:Propeller = motor.prop # get the prop on the motor 
+        propDia = prop.diameter
+        rpm = motor.maxRPM #we want max power avail so max RPM
+        RPS = rpm.to("rad/sec")
+        advr = prop.calc_advance_ratio(vel,RPS) #determine advance ratio
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        CT = prop.thrust_polynomal_func(advr)
+        Thrust = CT * dens * numpy.power(RPS /(2 * np.pi),2) * numpy.power(propDia, 4)
+
+        Thrust = Thrust * len(self.StatsCraft.powertrain)
+        return Thrust
+
+    
+    def get_thrustAvailable(self,alt,vel):
+        #print(type(self.StatsCraft.powertrain[0]).__name__)
+        if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
+            CraftTypeThrust = self.get_ThrustAvailable_Elec
+        else:
+            CraftTypeThrust = self.get_ThrustAvailable_jet
+
+        return (CraftTypeThrust(alt,vel))
+
+    def get_Power(self,alt,vel):
+        #print(type(self.StatsCraft.powertrain[0]).__name__)
+        if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
+            CraftTypePower = self.get_PowerAvailable_Elec
+        else:
+            CraftTypePower = self.get_PowerAvailable_jet
+
+        return(CraftTypePower(alt,vel))
+
     #PART F
     def get_PowerAvailable_jet(self,alt,velocity):
         """Returns the power available from a jet at given alt
@@ -72,17 +105,28 @@ class CraftStatistics():
         Returns:
             _type_: Power available (watt)
         """        
-        return ((self.get_ThrustAvailable_jet(alt) * velocity).magnitude * self.ur.watt)
+        return ((self.get_thrustAvailable(alt,velocity) * velocity).magnitude * self.ur.watt)
     
     def get_PowerAvailable_Elec(self,alt,vel):
         """Gets the power avalible from Electric motors
 
         Returns:
             _type_: Power avalible in watts
-        """        
+        """   
+        motor:ElectricMotor = self.StatsCraft.powertrain[0] #gets one of our motors
+        prop:Propeller = motor.prop # get the prop on the motor 
+        rpm = motor.maxRPM #we want max power avail so max RPM
+        RPS = rpm.to("rad/sec")
+        advr = prop.calc_advance_ratio(vel,RPS) #determine advance ratio
+        CT = prop.thrust_polynomal_func(advr)
+        CP = prop.power_polynomal_func(advr)
+        Eff = (CT*advr)/CP
         PA = 0
-        for motor in self.StatsCraft.powertrain:
+        for motor in self.StatsCraft.powertrain: #total up all power availible 
             PA += motor.MaxPower
+
+        PA = PA * motor.effic # take into account motor effic
+        PA = PA * Eff # take into account Prop effic
         return PA
     
     #PART F
@@ -129,20 +173,15 @@ class CraftStatistics():
             plt: Plot
         """     
         weight = self.weight_from_str(WEIGHT)
+        Velocity = Velocity * ur.m / ur.s
         
         alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         prA_array = np.zeros(alt_array.shape)
         prR_array = np.zeros(alt_array.shape)
 
-        CraftTypePower = self.get_PowerAvailable_jet
-        print(type(self.StatsCraft.powertrain[0]).__name__)
-        if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
-            CraftTypePower = self.get_PowerAvailable_Elec
-        else:
-            CraftTypePower = self.get_PowerAvailable_jet
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
             #print(self.get_PowerAvailable_jet(i[1],Velocity*self.ur.m/self.ur.s))
-            prA_array[i[0]]= CraftTypePower(i[1],Velocity).magnitude /1000 #need to strip units :(
+            prA_array[i[0]]= self.get_Power(i[1],Velocity).magnitude /1000 #need to strip units :(
             prR_array[i[0]]= self.get_PowerRequired_alt_jet(i[1],Velocity,WEIGHT).magnitude /1000
 
         if GRAPH_EXCESS:
@@ -191,7 +230,7 @@ class CraftStatistics():
         temp_array = np.zeros(alt_array.shape) #Make new array for thrust
 
         for i in enumerate(alt_array): #Iterate over altitude and calculate Thrust
-            thrust_array[i[0]] = self.get_ThrustAvailable_jet(i[1]).magnitude
+            thrust_array[i[0]] = self.get_thrustAvailable(i[1],self.Active_Atmosphere.Vinfinity).magnitude
             dens_array[i[0]] = self.Active_Atmosphere.dens_trop_alt(i[1]).magnitude
             temp_array[i[0]] = self.Active_Atmosphere.temp_trop(i[1]).magnitude
 
@@ -215,7 +254,7 @@ class CraftStatistics():
             _type_: Rate of climb (m/s)
         """        
         weight = self.weight_from_str(WEIGHT)
-        powA = self.get_PowerAvailable_jet(alt,vel)
+        powA = self.get_Power(alt,vel)
         powR = self.get_PowerRequired_alt_jet(alt,vel,weight)
         #print(f'Poweravil: {powA}')
         #print(f'power R: {powR}')
@@ -235,7 +274,7 @@ class CraftStatistics():
             _type_: max angle of climb (rad)
         """        
         weight = self.weight_from_str(WEIGHT)
-        thA = self.get_ThrustAvailable_jet(Alt)
+        thA = self.get_thrustAvailable(Alt,self.Active_Atmosphere.Vinfinity)
         k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
         sintheta = (thA / weight) - (1/calc_CL_CDmax(k,self.StatsCraft.Cd0))
         theta = np.arcsin(sintheta)
@@ -279,6 +318,7 @@ class CraftStatistics():
             _type_: A plot of ROC vs Altitide
         """        
         weight = self.weight_from_str(WEIGHT)
+        #Velocity = Velocity * ur.m /ur.s
     
         PowerCurve = self.graph_PowerAval_vs_PowerReq(alt_Lower,alt_Upper,numPoints,Velocity,WEIGHT,GRAPH_EXCESS=True,SENDRAW=True)
         """About  PowerCurve = [PowerCurve[0], (PowerCurve[1] * 1000)/weight] 
@@ -374,7 +414,7 @@ class CraftStatistics():
         weight = self.weight_from_str(WEIGHT)
         wingarea = self.StatsCraft.mainwing.Area
         cd0 = self.StatsCraft.Cd0
-        thrust = self.get_ThrustAvailable_jet(alt)
+        thrust = self.get_thrustAvailable(alt,self.Active_Atmosphere.Vinfinity)
         k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
         ldmax = calc_CL_CDmax(k,cd0)
         dens = self.Active_Atmosphere.dens_trop_alt(alt)
@@ -433,57 +473,172 @@ class CraftStatistics():
         ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
         verticalalignment='top',horizontalalignment='center', bbox=props)
         return fig
+    
+    def graph_prop_effic_advr(self,vmin,vmax):
+        motor:ElectricMotor = self.StatsCraft.powertrain[0]
+        prop= motor.prop
+        velarr = np.linspace(vmin,vmax)
+        advrarr = np.zeros(velarr.shape)
+        effarr = np.zeros(velarr.shape)
+        powerarr = np.zeros(velarr.shape)
+        Thrustarr = np.zeros(velarr.shape)
+        rpm = motor.maxRPM #we want max power avail so max RPM
+        RPS = rpm.to("rad/sec")
+        alt = self.Active_Atmosphere.Altitude
+
+        idx = 0
+        for i in velarr:
+            advrarr[idx] = prop.calc_advance_ratio(i,RPS)
+            effarr[idx] = prop.get_effic_from_advr(advrarr[idx])
+            powerarr[idx] = self.get_Power(alt,(i*self.ur.m / self.ur.s)).magnitude
+            Thrustarr[idx] = self.get_thrustAvailable(alt,i*self.ur.m / self.ur.s).magnitude
+            idx += 1
+
+        fig, ax = plt.subplots()
+        ax.plot(velarr,powerarr / 100,label = "Power hW")
+        ax.plot(velarr,Thrustarr,label = "Thrust N")
+        
+        ax2 = ax.twinx()
+        ax2.plot(velarr,advrarr, label = "adv ratio", color="grey", linestyle= "--")
+        ax2.plot(velarr,effarr, label = "Effic", color = "green", linestyle = "--")
+
+        ax2.axes.set_ylabel("Ratio")
+        ax2.legend(loc="upper right")
+        ax.legend(loc="upper left")
+        ax.axes.set_xlabel("Velocity m/s")
+        ax.set_title("Prop Efficiency Model")
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
+        #print(effarr)
+
+        return fig
+    
+    def graph_MAX_ROC_PROP(self,alt_lower,alt_upper,numpoints,WEIGHT):
+        weight = self.weight_from_str(WEIGHT)
+        motor:ElectricMotor = self.StatsCraft.powertrain[0]
+        prop:Propeller = motor.prop 
+        wing = self.StatsCraft.mainwing
+        k = calc_K_value(wing.OswaldE,wing.AR)
+        LDmax = calc_CL_CDmax(k,self.StatsCraft.Cd0)
+        alt_lower = alt_lower * self.ur.m 
+        alt_upper = alt_upper * self.ur.m
+
+        altarr = np.linspace(alt_lower,alt_upper,numpoints)
+        velarr = np.zeros(altarr.shape)
+        rcarr = np.zeros(altarr.shape)
+
+        idx = 0
+        for i in altarr:
+            dens = self.Active_Atmosphere.dens_trop_alt(i)
+            vel = np.sqrt((2/dens) * np.sqrt(k/(3*self.StatsCraft.Cd0)) * (weight/wing.Area))
+            velarr[idx] = vel.magnitude
+            adv = prop.calc_advance_ratio(vel,motor.maxRPM.to("rad/sec"))
+            #print(f'Adv: {adv}, eff: {prop.get_effic_from_advr(adv)}, Rad/s: {motor.maxRPM.to("rad/sec")}')
+            rc = (( motor.MaxPower * motor.effic)/weight) - vel * (1.155/LDmax)
+            rcarr[idx] = rc.magnitude
+            idx +=1
+
+        fig, ax = plt.subplots()
+        fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
+        ax.plot(altarr,velarr, label = "Velocity")
+        ax.plot(altarr,rcarr,label="Rate of climb")
+        ax.axes.set_ylabel("Meters per Second")
+        ax.axes.set_xlabel("Altitude (Meters)")
+        ax.set_title("Rate of Climb vs Altitude")
+
+
+        return fig
+
+
+
 
        
 
 if __name__ == "__main__":
+        
         #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
-    OppaStoppa = Craft("OppaStoppa")
-    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,76,OppaStoppa.ur)
-    atmo = OppaStoppa.Atmosphere
-    ur = OppaStoppa.ur
-    OppaStoppa.weight_empty = 4450 * 9.81 *ur.newton
-    OppaStoppa.weight_takeoff = 5225 * 9.81 * ur.newton
+        OppaStoppa = Craft("OppaStoppa")
+        ur = OppaStoppa.ur
+        OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,15,ur)
+        atmo = OppaStoppa.Atmosphere
+        OppaStoppa.weight_empty = 28 * 9.81 * ur.newtons
+        OppaStoppa.weight_takeoff = 28 * 9.81 * ur.newtons
+        OppaStoppa.CLmax = 1.45
+        OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
 
 
-    """Defining the draggy components of our craft"""
-    #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
-    MainWing = Wing3d("Oppa Main Wing","NACA 4312",34.87,25.26,9.14,1.76,-4,17,0.12,0.3,6.56,atmo)
-    HorizontalTail = Wing3d("HT","NACA 0012",26.57,4.58,2.44,0.915,0,15,0.12,0.3,0.12,atmo)
-    VerticalTail = Wing3d("VT","NACA 0012",26.57,4.58/2,2.44/2,0.915,0,15,0.12,0.3,0,atmo)
+        """Defining the draggy components of our craft"""
+        #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
+        N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",34.83,1.29,2.34,.532,-1,15,.12,.3,.02,atmo)
+        MainWing = N4312Wing
 
-    #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
-    MainFuselage = Fuselage("Oppa Fuselage",7.51,8.11,5.24,1.00,1.0,MainWing.Area,atmo)
+        HorizontalTail = Wing3d("HT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
+        VerticalTail = Wing3d("VT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
 
-    #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
-    TailGear = FixedGear("Tail Gear",0.25,0.196129,MainWing.Area,1.2,atmo)
+        #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
+        MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,.02,MainWing.Area,atmo)
 
-    """Defining our engines"""
-    #Engine defined: NAME, TSFC, BSFC, MaxThrust, MaxPower, efficency.
-    #Note that for a turbojet we dont really need BSFC or power
-    WilliamsFJ33 = Engine("Willams FJ33",13.77,0,8210,0,0.9,OppaStoppa.ur)
-    OppaStoppa.powertrain = [WilliamsFJ33,WilliamsFJ33]
+        #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
+        TailGear = FixedGear("Tail Gear",0.25,0.002,MainWing.Area,1.2,atmo)
 
-    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail,TailGear]
-    OppaStoppa.mainwing = MainWing
+        """Defining our engines"""
 
-    OppaStoppa.compute_components()
+        
+
+        #Define Prop
+        prop = Propeller("16X8",0.4064,8,ur)
+        def thrustproppoly(advr):
+            try:
+                advr  = advr.magnitude
+            except:
+                advr = advr
+            thr = 0.122 - (0.0138 * advr) + (0.0709* advr**2) - (0.287 * advr**3) + (0.137 * advr**4)
+            return thr
+        prop.thrust_polynomal_func = thrustproppoly
+
+        def powerproppoly(advr):
+            try:
+                advr  = advr.magnitude
+            except:
+                advr = advr
+            pwr = 0.0583 + (0.0127 * advr) + (0.23* advr**2) - (0.416 * advr**3) + (0.151 * advr**4)
+            return pwr
+        prop.power_polynomal_func = powerproppoly
+
+        Motor = ElectricMotor("V804 KV170",5200,0.90,8000,prop,ur)
+
+        Battery = Battery(139.76,4.32 * 2,45,ur)
+        #Battery.print_state()
+
+        OppaStoppa.powertrain = [Motor,Motor]
+        OppaStoppa.mainwing = MainWing
+
+        OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail]
+
+        OppaStoppa.compute_components()
+
+        MyCraftStats = CraftStatistics(OppaStoppa)
+
+        MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,12000,300,"AVE")
+        MAXRoc.legend()
 
 
-    MyCraftStats = CraftStatistics(OppaStoppa)
 
-    MAXRoc = MyCraftStats.graph_MAX_ROC_JET(0,12000,1000,"AVE",PLOT_CEILING=True)
-    #MAXRoc.legend()
+        #powavr = MyCraftStats.graph_PowerAval_vs_PowerReq(0,12000,300,50,"AVE",GRAPH_EXCESS=True)
+        #powavr.legend()
 
-    powavr = MyCraftStats.graph_PowerAval_vs_PowerReq(0,12000,300,120,"AVE",GRAPH_EXCESS=True)
+        #ROC3d = MyCraftStats.graph_ROC_3d(0,12000,50,15,50,50,"AVE")
 
-    ROC3d = MyCraftStats.graph_ROC_3d(0,12000,50,40,200,50,"AVE")
+        ROC = MyCraftStats.graph_ROC(0,12000,100,40,"AVE")
 
-    ROC = MyCraftStats.graph_ROC(0,12000,100,120,"AVE")
+        #AOC = MyCraftStats.graph_angle_max_ANGLE_OF_CLIMB(0,12000,200,"AVE")
 
-    AOC = MyCraftStats.graph_angle_max_ANGLE_OF_CLIMB(0,12000,100,"AVE")
+        THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
 
-    THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
+        test = MyCraftStats.graph_prop_effic_advr(0,200)
 
-    plt.show()
-    
+
+
+        #plt.legend()
+        plt.show()
+        
+        

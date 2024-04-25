@@ -333,26 +333,108 @@ class Engine():
         fr = self.TSFC * Thrust/1000
         return fr
     
-class ElectricMotor():
-    def __init__(self,Name:str,MaxPower,Effic,UnitReg: pint.UnitRegistry) -> None:
-        """PlaceHolder for the future Electric motor class
+class Propeller():
+    def __init__(self,Name:str, Diameter, pitch, ur:pint.UnitRegistry) -> None:
+        """Propeller class only really usefull if its give to a motor. BEFORE USE: thrust_polynomal_func and power_polynomal_func need to be assigned as refrences to functions for the corespondig coefficients.
 
         Args:
             Name (str): Name
-            MaxPower: Max motor power consumption
-            Effic: Motor Effic
-            UnitReg (pint.UnitRegistry): UnitReg
+            Diameter (_type_): Diamerter (meters)
+            pitch (_type_): pitch
+            ur (pint.UnitRegistry): unit reg
+        """        
+        self.name = Name
+        self.ur = ur
+        self.diameter = Diameter * ur.meter
+        self.pitch = pitch
+        self.pitchAng = 0
+        self.Ctv0 = 1.23
+        self.Drag = DragClass.Drag(ur)
+        self.thrust_polynomal_func: function
+        self.power_polynomal_func: function
+
+    def calc_advance_ratio(self, vinf, RPS):
+        """Calculates advance ratio
+
+        Args:
+            vinf (_type_): VINFINITY
+            RPS (_type_): radians per second
+
+        Returns:
+            _type_: Advance ratio
+        """        
+        RPS = RPS / ( 2 * self.ur.pi)
+        ADVR = vinf/(RPS * self.diameter)
+        return ADVR.magnitude
+    
+    def calc_tip_mach(self, vinf, radPS,temp = 294):
+        """Calcualates the Tip velocity of the prop and prints a warning if it is apprachig mach 1
+
+        Args:
+            vinf (_type_): Crafts vInf
+            RPS (_type_): Prop Rotations per sec
+            temp (int, optional): Temperature of air. Defaults to 294.
+
+        Returns:
+            _type_: _description_
+        """        
+        RPS = (radPS / (numpy.pi *2)).magnitude
+        tip_rot_vel = (numpy.pi * self.diameter * RPS).magnitude
+        tip_trans_vel = vinf#.magnitude
+
+        totalvel = numpy.sqrt((tip_rot_vel**2) + (tip_trans_vel**2))
+        mach = self.Drag.calc_mach(totalvel,temp)
+        if mach.magnitude >= 0.8:
+            print("Prop tips are appraching mach!")
+        return mach
+    
+    def get_effic_from_advr(self,AdvanceRatio):
+        ct = self.thrust_polynomal_func(AdvanceRatio)
+        cp = self.power_polynomal_func(AdvanceRatio)
+        eff = (ct * AdvanceRatio)/cp
+        return eff
+
+    
+class ElectricMotor():
+    def __init__(self,Name:str,MaxPower,Effic,maxRPM,prop: Propeller,UnitReg: pint.UnitRegistry) -> None:
+        """Electric motor is a basic implementation of a motor. It will assume that MaxPower is constant. Be sure to assign it a prop
+
+        Args:
+            Name (str): Name
+            MaxPower (_type_): Max power (watt)
+            Effic (_type_): Effic
+            maxRPM (_type_): Max RPM
+            prop (Propeller): Prop to use with motor
+            UnitReg (pint.UnitRegistry): Unit reg
         """       
         self.ur = UnitReg
         self.Name = Name
         self.MaxPower = MaxPower * self.ur.watt
         self.effic = Effic
+        self.maxRPM = maxRPM *self.ur.rpm
+        self.prop = prop
+        #quick and dirty max thrust
+        RPS = self.maxRPM.to("rad/sec")
+        advr = self.prop.calc_advance_ratio(0,RPS) #determine advance ratio
+        dens =  1.225 * self.ur.kg / self.ur.meter ** 3
+        CT = prop.thrust_polynomal_func(advr)
+        Thrust = CT * dens * numpy.power(RPS /(2 * numpy.pi),2) * numpy.power(self.prop.diameter, 4)
+        self.MaxThrust = Thrust
 
     def calc_power_consumption_from_output(self,Output_power):
         return (Output_power / self.effic)
     
 class Battery():
     def __init__(self,EnergyDensity, mass,voltage,UnitReg: pint.UnitRegistry,currentEnergy = -1) -> None:
+        """Battery class, max capacity = Density * mass 
+
+        Args:
+            EnergyDensity (_type_): Energy density wH/kg
+            mass (_type_): mass of battery
+            voltage (_type_): voltage 
+            UnitReg (pint.UnitRegistry): _description_
+            currentEnergy (int, optional): _description_. Defaults to -1.
+        """        
         self.ur = UnitReg
         self.density = EnergyDensity
         self.mass = mass* self.ur.kilogram
