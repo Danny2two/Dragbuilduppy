@@ -47,7 +47,7 @@ class Takeoff:
         weight = self.weight
         wingArea = self.Craft.mainwing.Area
         dens = self.ActiveAtmospere.dens_trop_alt(self.Alt)
-        thrust = self.CraftStats.get_thrustAvailable(self.Alt,0*ur.m / ur.s)
+        thrust = self.CraftStats.get_thrustAvailable(self.Alt,0*self.ur.m / self.ur.s)
         #print("THRUST: " + str(thrust.to("newton")))
         Lift = StFl.calc_Lift(self.Craft.CLrolling,0.7 * self.V_LO,wingArea,dens).to("newton")
         Drag = StFl.calc_Drag(self.Craft.Cd0,0.7 * self.V_LO,wingArea,dens,self.Craft.K,self.Craft.CLrolling)
