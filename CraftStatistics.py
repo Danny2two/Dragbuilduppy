@@ -171,9 +171,9 @@ class CraftStatistics():
 
         Returns:
             plt: Plot
-        """     
+        """
         weight = self.weight_from_str(WEIGHT)
-        Velocity = Velocity * ur.m / ur.s
+        Velocity = Velocity * self.ur.m / self.ur.s
         
         alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         prA_array = np.zeros(alt_array.shape)
