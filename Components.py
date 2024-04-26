@@ -363,8 +363,10 @@ class Propeller():
         Returns:
             _type_: Advance ratio
         """        
-        RPS = RPS / ( 2 * self.ur.pi)
-        ADVR = vinf/(RPS * self.diameter)
+        RadPS = RPS.magnitude / ( 2 * self.ur.pi)
+        #print(f"CalcEffic:RPS: {RPS} RadPS:{RadPS}, Dia{self.diameter}, Vinf: {vinf}")
+        ADVR = vinf/(RadPS * self.diameter)
+        print(f'ADVR: {ADVR} = {vinf} / {RadPS * self.diameter}')
         return ADVR.magnitude
     
     def calc_tip_mach(self, vinf, radPS,temp = 294):
@@ -391,7 +393,8 @@ class Propeller():
     def get_effic_from_advr(self,AdvanceRatio):
         ct = self.thrust_polynomal_func(AdvanceRatio)
         cp = self.power_polynomal_func(AdvanceRatio)
-        eff = (ct * AdvanceRatio)/cp
+        eff = (max(ct * AdvanceRatio,0))/max(cp,0.001)
+        print(f'effic {eff} = {ct * AdvanceRatio} / {cp}')
         return eff
 
     
