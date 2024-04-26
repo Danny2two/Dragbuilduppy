@@ -80,6 +80,16 @@ class CraftStatistics():
 
     
     def get_thrustAvailable(self,alt,vel,Mrpm = 0):
+        """Gets thrust available reguardless of type
+
+        Args:
+            alt (_type_): alt
+            vel (_type_): velocity
+            Mrpm (int, optional): Electric motor RPM. Defaults to 0, meaning max rpm
+
+        Returns:
+            _type_: _description_
+        """        
         #print(type(self.StatsCraft.powertrain[0]).__name__)
         if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
             thr =  self.get_ThrustAvailable_Elec(alt,vel,Mrpm)
@@ -90,6 +100,13 @@ class CraftStatistics():
         return (thr)
 
     def get_Power(self,alt,vel,Mrpm = 0):
+        """Gets power available for a craft reguardless of type
+
+        Args:
+            alt (_type_): altitude
+            vel (_type_): velocity
+            Mrpm (int, optional): Electric motor RPM. Defaults to 0, meaning max RPM
+        """        
         #print(type(self.StatsCraft.powertrain[0]).__name__)
         if type(self.StatsCraft.powertrain[0]).__name__ == "ElectricMotor":
             pow = self.get_PowerAvailable_Elec(alt,vel,Mrpm)
@@ -491,6 +508,16 @@ class CraftStatistics():
         return fig
     
     def graph_prop_effic_advr(self,vmin,vmax,Motorrpm = 0):
+        """Graphs prop effic over velocity
+
+        Args:
+            vmin (_type_): v min
+            vmax (_type_): v max
+            Motorrpm (int, optional): RPM to use in math. Defaults to 0, meaning Motors max rpm
+
+        Returns:
+            _type_: _description_
+        """        
         motor:ElectricMotor = self.StatsCraft.powertrain[0]
         prop= motor.prop
         velarr = np.linspace(vmin,vmax,(vmax - vmin))
@@ -538,6 +565,16 @@ class CraftStatistics():
         return fig
     
     def graph_prop_effic_advr_alt(self,altmin,altmax, Motorrpm = 0):
+        """Graphs prop efficency over altitude
+
+        Args:
+            altmin (_type_): min alt
+            altmax (_type_): max alt
+            Motorrpm (int, optional): RPM to use in calculation. Defaults to 0, meaning the motors max RPM
+
+        Returns:
+            _type_: _description_
+        """        
         motor:ElectricMotor = self.StatsCraft.powertrain[0]
         prop= motor.prop
         altarr = np.linspace(altmin,altmax)
