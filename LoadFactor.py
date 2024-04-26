@@ -198,7 +198,7 @@ if __name__ == "__main__":
     #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
     ur = OppaStoppa.ur
-    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,15,ur)
+    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,25,ur)
     atmo = OppaStoppa.Atmosphere
     OppaStoppa.weight_empty = 28 * 9.81 * ur.newtons
     OppaStoppa.weight_takeoff = 28 * 9.81 * ur.newtons
