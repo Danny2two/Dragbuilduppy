@@ -173,7 +173,11 @@ class CraftStatistics():
             plt: Plot
         """
         weight = self.weight_from_str(WEIGHT)
-        Velocity = Velocity * self.ur.m / self.ur.s
+
+        try:  #catch if velocity is provided without units
+            print(self.ur.get_dimensionality(Velocity))
+        except:
+            Velocity = Velocity * self.ur.m / self.ur.s
         
         alt_array = np.linspace(Alt_lower,Alt_upper,num=numPoints) #Array of numbers between lower and upper (inclusive)
         prA_array = np.zeros(alt_array.shape)
