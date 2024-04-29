@@ -650,8 +650,17 @@ class CraftStatistics():
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
         ax2 = ax.twinx()
         ax2.plot(altarr,velarr, label = "Velocity",linestyle = "--",color = "grey")
+        ax2.axes.yaxis.set_label("Velocity (m/s)")
         ax.plot(altarr,rcarr,label="Rate of climb")
-        ax.hlines(0.502,alt_lower,alt_upper,colors=["red"],linestyles=['dotted'],label="Service Ceiling")
+        ax.hlines(0.508,alt_lower,alt_upper,colors=["red"],linestyles=['dotted'],label="0.508 m/s (100 ft/min)")
+        minarr = np.absolute(rcarr - 0.508)
+        locOfCelling = minarr.argmin()
+        ax.vlines(altarr[locOfCelling],rcarr.min(),rcarr.max(),colors="Purple",linestyles="dotted",label="Service Ceiling")
+        textstr = "Service Ceiling: " + str(round(altarr[locOfCelling],1))
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        # place a text box in upper left in axes coords
+        ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment='top',horizontalalignment='center', bbox=props)
         ax.axes.set_ylabel("Meters per Second")
         ax.axes.set_xlabel("Altitude (Meters)")
         ax.set_title("MAX Rate of Climb vs Altitude")
@@ -729,8 +738,8 @@ if __name__ == "__main__":
 
         MyCraftStats = CraftStatistics(OppaStoppa)
 
-        #MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,18000,300,"AVE")
-        #MAXRoc.legend()
+        MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,18000,300,"AVE")
+        MAXRoc.legend()
 
 
 
@@ -746,7 +755,7 @@ if __name__ == "__main__":
 
         #THRA = MyCraftStats.graph_ThrustAvailableS(0,12000,100)
 
-        test = MyCraftStats.graph_prop_effic_advr(0,200)
+        #test = MyCraftStats.graph_prop_effic_advr(0,200)
         #test2 = MyCraftStats.graph_prop_effic_advr_alt(0,18000,6321)
 
 
