@@ -111,10 +111,10 @@ class Wing3d(DragyComponent):
     def printStats(self):
         print("Stats for:" + self.Name )
         print("├Airfoil: " + str(self.airfoil))
-        print("├Span: " + str(self.Span)  + " m")
-        print("├Area: " + str(self.Area) + " m^2")
+        print("├Span: " + str(self.Span))
+        print("├Area: " + str(self.Area))
         print("├Aspect Ratio: " + str(self.AR))
-        print("├Chord: " + str(self.Chord)+ " m")
+        print("├Chord: " + str(self.Chord))
         print("├Sweep: " + str(self.WingSweep)+ " deg")
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
@@ -172,8 +172,8 @@ class Nacelle(DragyComponent):
 
     def printStats(self):
         print("Stats for:" + self.Name )
-        print("├Length: " + str(self.Length)+ " m")
-        print("├CrossArea: " + str(self.CrossSectionArea)+" m^2")
+        print("├Length: " + str(self.Length))
+        print("├CrossArea: " + str(self.CrossSectionArea))
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
         print("├Mach: " + str(self.mach))
@@ -276,17 +276,17 @@ class Fuselage(DragyComponent):
     
     def printStats(self):
         print("Stats for:" + self.Name )
-        print("├Length: " + str(self.length)+ " m")
-        print("├Top Area: " + str(self.atop)+" m^2")
-        print("├Side Area: " + str(self.aside)+" m^2")
-        print("├CrossArea: " + str(self.maxcross)+" m^2")
+        print("├Length: " + str(self.length))
+        print("├Top Area: " + str(self.atop))
+        print("├Side Area: " + str(self.aside))
+        print("├CrossArea: " + str(self.maxcross))
         print("├Dyn Viscosity: " + str(self.dyn_vc))
         print("├Reynolds: " + str(self.rey_nm))
         print("├Mach: " + str(self.mach))
         print("└DRAG BUILDUP")
         print(" ├Skin Friction: " + str(self.FPSF))
         print(" ├Form Factor: " + str(self.FormFactor))
-        print(" ├Wetted Area: " + str(self.Swet) + " m^2")
+        print(" ├Wetted Area: " + str(self.Swet))
         print(" ├Interf factor: " + str(self.Interf_Factor))
         print(" └CD0_fuse: " + str(self.CDC0))
 
@@ -454,11 +454,29 @@ class Battery():
         if self.CurrentEnergy < 0:
             print("Battery over drawn! We are now breaking the laws of physics!")
         else:
-            print(f'Used {voltage * current * time} of energy. \n Current remaing energy: {self.CurrentEnergy}')
+            #print(f'Used {voltage * current * time} of energy. \n Current remaing energy: {self.CurrentEnergy}')
+            pass
+
+    def discharge(self,watts,time):
+        self.CurrentEnergy -= (watts * time)
+        if self.CurrentEnergy < 0:
+            print("Battery over drawn! We are now breaking the laws of physics!")
+        else:
+            #print(f'Used {watts * time} of energy. \n Current remaing energy: {self.CurrentEnergy}')
+            pass
+
+    def discharge(self,joules):
+        self.CurrentEnergy -= (joules)
+        if self.CurrentEnergy < 0:
+            print("Battery over drawn! We are now breaking the laws of physics!")
+        else:
+            #print(f'Used {joules} of energy. \n Current remaing energy: {self.CurrentEnergy}')
+            pass
 
     def print_state(self):
-        print("Battery Status")
-        print(f' Current Energy stored {self.CurrentEnergy}. \n Max Energy {self.MaxEnergy}. \n Voltage {self.voltage}. \n State of Charge {self.CurrentEnergy/self.MaxEnergy}')
+        print(" /Battery Status")
+        print(f'| Current Energy stored {self.CurrentEnergy}. \n| Max Energy {self.MaxEnergy}. \n| Voltage {self.voltage}. \n| State of Charge {self.CurrentEnergy/self.MaxEnergy:0.4f}')
+        print(f"‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
     def get_energy(self):
         return self.CurrentEnergy

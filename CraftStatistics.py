@@ -204,7 +204,7 @@ class CraftStatistics():
         weight = self.weight_from_str(WEIGHT)
 
         try:  #catch if velocity is provided without units
-            print(self.ur.get_dimensionality(Velocity))
+            self.ur.get_dimensionality(Velocity)
         except:
             Velocity = Velocity * self.ur.m / self.ur.s
         
@@ -424,7 +424,7 @@ class CraftStatistics():
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         ax.text(0, 0,350, textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
-        ax.set_box_aspect(aspect=None, zoom=0.8)
+        #ax.set_box_aspect(aspect=None, zoom=0.8)
         fig.add_axes(ax)
         return fig
 
@@ -618,7 +618,18 @@ class CraftStatistics():
         #print(effarr)
         return fig
    
-    def graph_MAX_ROC_PROP(self,alt_lower,alt_upper,numpoints,WEIGHT):
+    def graph_MAX_ROC_PROP(self,alt_lower,alt_upper,numpoints,WEIGHT,GRAPHAOA = False):
+        """Graphs a propeller planes max rate of climb
+
+        Args:
+            alt_lower (_type_): Lower alt limit
+            alt_upper (_type_): Upper alt limit
+            numpoints (_type_): number of points to graph
+            WEIGHT (_type_): Weight to use (see weight_from_str)
+
+        Returns:
+            _type_: Rate of climb graph
+        """        
         weight = self.weight_from_str(WEIGHT)
         motor:ElectricMotor = self.StatsCraft.powertrain[0]
         prop:Propeller = motor.prop 
@@ -631,6 +642,7 @@ class CraftStatistics():
         altarr = np.linspace(alt_lower,alt_upper,numpoints)
         velarr = np.zeros(altarr.shape)
         rcarr = np.zeros(altarr.shape)
+        AOCarr = np.zeros(altarr.shape)
 
         idx = 0
         for i in altarr:
@@ -642,15 +654,20 @@ class CraftStatistics():
             #print(f'Adv: {adv}, eff: {prop.get_effic_from_advr(adv)}, Rad/s: {motor.maxRPM.to("rad/sec")}')
             #rc = (( motor.MaxPower * motor.effic * propeff)/weight) - vel * (1.155/LDmax)
             rc = (( self.get_PowerAvailable_Elec(i,vel))/weight) - vel * (1.155/LDmax)
-
+            AOC = numpy.arctan(rc/vel)
+            AOCarr[idx] =np.rad2deg(AOC.magnitude)
             rcarr[idx] = rc.magnitude 
             idx +=1
 
         fig, ax = plt.subplots()
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
         ax2 = ax.twinx()
-        ax2.plot(altarr,velarr, label = "Velocity",linestyle = "--",color = "grey")
-        ax2.axes.yaxis.set_label("Velocity (m/s)")
+        if GRAPHAOA:
+            ax2.plot(altarr,AOCarr, label = "Angle of Attack (deg)",linestyle = "--",color = "grey")
+            ax2.set(xlabel='Altitude (meters)', ylabel='AOA')
+        else:
+            ax2.plot(altarr,velarr, label = "Velocity",linestyle = "--",color = "grey")
+            ax2.set(xlabel='Altitude (meters)', ylabel='Velocity m/s')
         ax.plot(altarr,rcarr,label="Rate of climb")
         ax.hlines(0.508,alt_lower,alt_upper,colors=["red"],linestyles=['dotted'],label="0.508 m/s (100 ft/min)")
         minarr = np.absolute(rcarr - 0.508)
@@ -661,15 +678,30 @@ class CraftStatistics():
         # place a text box in upper left in axes coords
         ax.text(0.5, 0.85, textstr, transform=ax.transAxes, fontsize=10,
         verticalalignment='top',horizontalalignment='center', bbox=props)
-        ax.axes.set_ylabel("Meters per Second")
+        ax.axes.set_ylabel("Rate Of climb (m/s)")
         ax.axes.set_xlabel("Altitude (Meters)")
         ax.set_title("MAX Rate of Climb vs Altitude")
 
 
         return fig
 
-
-
+    def get_max_climb_angle(self,alt,weight):
+        alt = alt * self.ur.m
+        cd0 = self.StatsCraft.Cd0
+        wingA = self.StatsCraft.mainwing.Area
+        Cweight = self.weight_from_str(weight)
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        power = self.StatsCraft.powertrain[0].MaxPower * 2
+        motor = self.StatsCraft.powertrain[0]
+        print(f'Conditions: CD0: {cd0}, Weight: {Cweight}, Dens: {dens}, Power {power}')
+        k = calc_K_value(self.StatsCraft.mainwing.OswaldE,self.StatsCraft.mainwing.AR)
+        print(f'Kvalue: {k}')
+        vel = (4 * (Cweight/wingA) * k)/(dens * 0.8 * ((power * motor.effic)/Cweight))
+        print(f'Vel: {vel}')
+        sintheta = (0.8 * (power * motor.effic))/(vel * Cweight) - (0.5 * dens * numpy.power(vel,2) * (numpy.power(Cweight/wingA,-1) * cd0)) - ((Cweight/wingA)*((2*k)/(dens * numpy.power(vel,2))))
+        print(sintheta)
+        theta = numpy.arcsin(sintheta)
+        return theta
 
        
 
@@ -738,7 +770,7 @@ if __name__ == "__main__":
 
         MyCraftStats = CraftStatistics(OppaStoppa)
 
-        MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,18000,300,"AVE")
+        MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,15000,300,"AVE",GRAPHAOA=True)
         MAXRoc.legend()
 
 
@@ -746,17 +778,17 @@ if __name__ == "__main__":
         #powavr = MyCraftStats.graph_PowerAval_vs_PowerReq(0,12000,300,25,"AVE",GRAPH_EXCESS=True)
         #powavr.legend()
 
-        #ROC3d = MyCraftStats.graph_ROC_3d(0,12000,50,15,50,50,"AVE")
+        #ROC3d = MyCraftStats.graph_ROC_3d(0,15000,50,15,60,50,"AVE")
 
         #ROC = MyCraftStats.graph_ROC(0,18000,100,33,"AVE")
         #ROC.legend()
 
         #AOC = MyCraftStats.graph_angle_max_ANGLE_OF_CLIMB(0,12000,200,"AVE")
 
-        #THRA = MyCraftStats.graph_ThrustAvailableS(0,12000,100)
+        #THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
 
         #test = MyCraftStats.graph_prop_effic_advr(0,200)
-        #test2 = MyCraftStats.graph_prop_effic_advr_alt(0,18000,6321)
+        #test2 = MyCraftStats.graph_prop_effic_advr_alt(0,18000)
 
 
 

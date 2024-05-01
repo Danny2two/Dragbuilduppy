@@ -37,6 +37,7 @@ class Takeoff:
         self.n_to = n_takeoff
         self.height_Obs = 10.668 * self.ur.m #35 ft
         self.climbAngle = climbangle
+        self.totalDist = 0 * self.ur.m
     
     def GroundRoll(self):
         """Calculates ground roll distance
@@ -103,7 +104,28 @@ class Takeoff:
         aird = self.AirDist(remainingH)
         print(f'Air Distance: {aird}')
         ToD += aird
+        self.totalDist = ToD
         return(ToD)
+    
+    def get_DistTraveled(self):
+        ToD = 0
+        remainingH = self.height_Obs
+
+        rd = self.GroundRoll().to("meter")
+        #print(f'Ground Roll Distance: {rd}')
+        ToD += rd
+
+        trans = self.Transition()
+        #print(f'Transition distance: {trans[0]}')
+        ToD += trans[0]
+        remainingH -= trans[1]
+
+        aird = self.AirDist(remainingH)
+        #print(f'Air Distance: {aird}')
+        ToD += aird
+        
+        linedist = [rd , numpy.sqrt((trans[0] + aird)**2 + self.height_Obs**2)]
+        return(linedist)
     
     def Graph(self)->plt:
         """Graphs the trajectory of takeoff
@@ -189,6 +211,7 @@ class Landing:
         self.V_A = 1.3 * StFl.calc_Vstall(self.Atmos.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
         self.V_F = 1.23 * StFl.calc_Vstall(self.Atmos.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
         self.V_TD = 1.15 * StFl.calc_Vstall(self.Atmos.dens_trop_alt(Alt),self.weight,Craft.mainwing.Area,Craft.CLmax).to("meter/second")
+        self.totalDist = 0 * self.ur.m
         pass
 
     def Flare(self):
@@ -254,6 +277,7 @@ class Landing:
         approach = self.Approach(remainingH)
         print(f'Approach Distance: {approach}')
         ToD += approach
+        self.totalDist = ToD
         return(ToD)
     
     def Graph(self)->plt:
