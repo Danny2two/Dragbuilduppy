@@ -227,6 +227,9 @@ print(f' | This required {ApprEnergy} of energy')
 Battery.discharge(ApprEnergy)
 Battery.print_state()
 print("##End Landing")
+print("\n##END Flight")
+if SHOWGRAPHS:
+    plt.show()
 
 
 
