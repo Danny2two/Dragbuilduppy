@@ -350,6 +350,7 @@ class Propeller():
         self.pitchAng = 0
         self.Ctv0 = 1.23
         self.Drag = DragClass.Drag(ur)
+        self.Max_effic_ADVR = 1.0
         self.thrust_polynomal_func: function
         self.power_polynomal_func: function
 
@@ -365,7 +366,7 @@ class Propeller():
         """        
         RadPS = RPS.magnitude / ( 2 * self.ur.pi)
         #print(f"CalcEffic:RPS: {RPS} RadPS:{RadPS}, Dia{self.diameter}, Vinf: {vinf}")
-        ADVR = vinf/(RadPS * self.diameter)
+        ADVR = vinf/(RadPS * (self.diameter / 0.904))
         #print(f'ADVR: {ADVR} = {vinf} / {RadPS * self.diameter}')
         return ADVR.magnitude
     
@@ -391,10 +392,16 @@ class Propeller():
         return mach
     
     def get_effic_from_advr(self,AdvanceRatio):
-        ct = self.thrust_polynomal_func(AdvanceRatio)
-        cp = self.power_polynomal_func(AdvanceRatio)
-        eff = (max(ct * AdvanceRatio,0))/max(cp,0.001)
-        #print(f'effic {eff} = {ct * AdvanceRatio} / {cp}')
+        if True:# AdvanceRatio > self.Max_effic_ADVR:
+            ct = self.thrust_polynomal_func(AdvanceRatio)
+            cp = self.power_polynomal_func(AdvanceRatio)
+            eff = (max(ct * AdvanceRatio,0))/max(cp,0.001)
+            #print(f'effic {eff} = {ct * AdvanceRatio} / {cp}')
+        else:
+            ct = self.thrust_polynomal_func(self.Max_effic_ADVR)
+            cp = self.power_polynomal_func(self.Max_effic_ADVR)
+            eff = (max(ct * self.Max_effic_ADVR,0))/max(cp,0.001) #Some strangeness here to avoid a division by zero
+            eff -= (0.2) - ((0.2) * (AdvanceRatio/self.Max_effic_ADVR))
         return eff
 
     

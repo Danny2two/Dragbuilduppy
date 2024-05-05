@@ -64,18 +64,20 @@ class CraftStatistics():
     def get_ThrustAvailable_Elec(self,alt,vel,Mrpm =0):
         motor:ElectricMotor = self.StatsCraft.powertrain[0] #gets one of our motors
         prop:Propeller = motor.prop # get the prop on the motor 
-        propDia = prop.diameter
+        propDia = prop.diameter / 0.904 #Sketch way to account for 2 -> 3 bladed prop
         if Mrpm != 0:
             rpm = Mrpm * self.ur.rpm
         else:
             rpm = motor.maxRPM #we want max power avail so max RPM
         RPS = rpm.to("rad/sec")
         advr = prop.calc_advance_ratio(vel,RPS) #determine advance ratio
+        #power = self.get_PowerAvailable_Elec(alt,vel,Mrpm=Mrpm)
         dens = self.Active_Atmosphere.dens_trop_alt(alt)
         CT = prop.thrust_polynomal_func(advr)
-        Thrust = CT * dens * numpy.power(RPS /(2 * np.pi),2) * numpy.power(propDia, 4)
+        Thrust = (CT * dens * numpy.power(RPS /(2 * np.pi),2) * numpy.power(propDia, 4)) * len(self.StatsCraft.powertrain)
 
-        Thrust = Thrust * len(self.StatsCraft.powertrain)
+        #Thrust = Thrust * len(self.StatsCraft.powertrain)
+        #Thrust = power / max(vel,(1 * self.ur.m / self.ur.s))
         return Thrust
 
     
@@ -128,8 +130,8 @@ class CraftStatistics():
         """        
         return ((self.get_thrustAvailable(alt,velocity) * velocity).magnitude * self.ur.watt)
     
-    def get_PowerAvailable_Elec(self,alt,vel,Mrpm = 0):
-        """Gets the power avalible from Electric motors
+    def get_PowerAvailable_Elec(self,alt,vel,Mrpm = 0, METHOD="poly"):
+        """Gets the power avalible from Electric motors and props.
 
         Returns:
             _type_: Power avalible in watts
@@ -142,20 +144,26 @@ class CraftStatistics():
             rpm = motor.maxRPM #we want max power avail so max RPM
         RPS = rpm.to("rad/sec")
         advr = prop.calc_advance_ratio(vel,RPS) #determine advance ratio
-        CT = prop.thrust_polynomal_func(advr)
-        CP = prop.power_polynomal_func(advr) #CHANGE THIS MAYBE
-        dens = self.Active_Atmosphere.dens_trop_alt(alt)
-        Eff = (CT*advr)/CP
-        #print(f"Effic: {Eff}")
+        if METHOD.lower() == "simple":
+            PA = 0
+            Eff = 0.8
+            for motor in self.StatsCraft.powertrain: #total up all power availible  # calc from effic
+                PA += motor.MaxPower
+            PA = PA * motor.effic # take into account motor effic
+            PA = PA * Eff # take into account Prop effic
 
-        PA = (CP * dens * numpy.power(RPS / (2 * numpy.pi),3) * numpy.power(prop.diameter, 5)) * len(self.StatsCraft.powertrain) #calc power from coeff of power
-        #PA = self.get_ThrustAvailable_Elec(alt,vel) * vel # calc power from Thrust * vel
+        elif METHOD.lower() == "poly":
+            CP = prop.power_polynomal_func(advr)
+            dens = self.Active_Atmosphere.dens_trop_alt(alt)
+            PA = (CP * dens * numpy.power(RPS / (2 * numpy.pi),3) * numpy.power((prop.diameter / 0.904), 5)) * len(self.StatsCraft.powertrain) #calc power from coeff of power
+        else:
+            Eff = prop.get_effic_from_advr(advr)
+            PA = 0
+            for motor in self.StatsCraft.powertrain: #total up all power availible  # calc from effic
+                PA += motor.MaxPower
+            PA = PA * motor.effic # take into account motor effic
+            PA = PA * Eff # take into account Prop effic
 
-        #for motor in self.StatsCraft.powertrain: #total up all power availible  # calc from effic
-        #    PA += motor.MaxPower
-        #
-        #PA = PA * motor.effic # take into account motor effic
-        #PA = PA * Eff # take into account Prop effic
         return PA
     
     #PART F
@@ -538,6 +546,7 @@ class CraftStatistics():
             advrarr[idx] = prop.calc_advance_ratio(i*self.ur.m / self.ur.s,RPS)
             powerarr[idx] = self.get_Power(alt,(i*self.ur.m / self.ur.s),Motorrpm).magnitude
             Thrustarr[idx] = self.get_thrustAvailable(alt,i*self.ur.m / self.ur.s,Motorrpm).magnitude
+            #effarr[idx] = (Thrustarr[idx] * i) / powerarr[idx]
             effarr[idx] = prop.get_effic_from_advr(advrarr[idx])
             print(f'Got {effarr[idx]}')
             idx += 1
@@ -549,6 +558,7 @@ class CraftStatistics():
         ax2 = ax.twinx()
         ax2.plot(velarr,advrarr, label = "adv ratio", color="grey", linestyle= "--")
         ax2.plot(velarr,effarr, label = "Effic", color = "green", linestyle = "--")
+        ax2.set_ylim(0,2)
 
         ax2.axes.set_ylabel("Ratio")
         ax2.legend(loc="upper right")
@@ -556,8 +566,9 @@ class CraftStatistics():
         ax.axes.set_xlabel("Velocity m/s")
         ax.set_title("Prop Efficiency Model")
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
+        #ax.set_ylim(0, Thrustarr.mean())
 
-        textstr = f'Prop RPM: {rpm}'
+        textstr = f'Max Prop RPM: {rpm}'
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         fig.text(0.5, 0.2,textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
@@ -611,7 +622,7 @@ class CraftStatistics():
         ax.axes.set_xlabel("Alt")
         ax.set_title("Prop Efficiency Model")
         fig.text(0.5, 0.95, self.StatsCraft.name, horizontalalignment="center",fontsize = 10)
-        textstr = f'Prop RPM: {rpm}'
+        textstr = f'Max Prop RPM: {rpm}'
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
         fig.text(0.5, 0.2,textstr, transform=ax.transAxes, fontsize=10,verticalalignment='top',horizontalalignment='center', bbox=props)
@@ -712,8 +723,8 @@ if __name__ == "__main__":
         ur = OppaStoppa.ur
         OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,15,ur)
         atmo = OppaStoppa.Atmosphere
-        OppaStoppa.weight_empty = 24 * 9.81 * ur.newtons
-        OppaStoppa.weight_takeoff = 24 * 9.81 * ur.newtons
+        OppaStoppa.weight_empty = 15 * 9.81 * ur.newtons
+        OppaStoppa.weight_takeoff = 15 * 9.81 * ur.newtons
         OppaStoppa.CLmax = 1.45
         OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
 
@@ -770,8 +781,8 @@ if __name__ == "__main__":
 
         MyCraftStats = CraftStatistics(OppaStoppa)
 
-        MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,15000,300,"AVE",GRAPHAOA=True)
-        MAXRoc.legend()
+        #MAXRoc = MyCraftStats.graph_MAX_ROC_PROP(0,15000,300,"AVE",GRAPHAOA=True)
+        #MAXRoc.legend()
 
 
 
@@ -787,8 +798,8 @@ if __name__ == "__main__":
 
         #THRA = MyCraftStats.graph_ThrustAvailable(0,12000,100)
 
-        #test = MyCraftStats.graph_prop_effic_advr(0,200)
-        #test2 = MyCraftStats.graph_prop_effic_advr_alt(0,18000)
+        #test = MyCraftStats.graph_prop_effic_advr(0,40,Motorrpm=1000)
+        test2 = MyCraftStats.graph_prop_effic_advr(0,200,Motorrpm=8000)
 
 
 

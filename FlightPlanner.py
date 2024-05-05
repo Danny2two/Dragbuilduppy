@@ -12,7 +12,7 @@ from CraftStatistics import CraftStatistics
 #Kinda assembling the Avengers with these import statements
 #This var will controll if you want to display all the graphs or not.
 SHOWGRAPHS = True
-ROUGH_PROP_EFFIC = 0.8 #VERY rough estimate of prop effic
+ROUGH_PROP_EFFIC = 0.8 #VERY rough estimate of prop effic, This is a gross over simplification but its all we know in this class ig
 
 
 #First we need to define our craft.
@@ -24,8 +24,8 @@ ur = OppaStoppa.ur # Getting the unit reg thats created with the craft to use.
 OppaStoppa.Atmosphere = Atmosphere(600,286.21, 9.77774,1.19,25,ur) 
 atmo = OppaStoppa.Atmosphere
 #Defining the crafts weights, becuse we are electric, they are the same
-OppaStoppa.weight_empty = 28 * 9.81 * ur.newtons
-OppaStoppa.weight_takeoff = 28 * 9.81 * ur.newtons
+OppaStoppa.weight_empty = 15 * 9.81 * ur.newtons
+OppaStoppa.weight_takeoff = 15 * 9.81 * ur.newtons
 #Data from the wings CL vs alpha graph
 OppaStoppa.CLmax = 1.45
 OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
@@ -168,7 +168,7 @@ if SHOWGRAPHS:
     to = MyTakeoff.Graph() #potentally show graph
 print(f'##End Takeoff Section')
 
-print(f'\n##Begin climb to cruise altitude.')
+print(f'\n##Begin climb to cruse altitude.')
 heighttoclimb = atmo.Altitude - (MyTakeoff.height_Obs + MyTakeoff.Alt)
 aveAlt = (atmo.Altitude + (MyTakeoff.height_Obs + MyTakeoff.Alt))/2
 aveROC = MyStats.get_ROC_vel_alt(aveAlt,atmo.Vinfinity,"AVE") * ur.m / ur.s #Unrestricted climb at full power (Vel pinned to 25 m/s, all excess power going into climb)
@@ -178,20 +178,20 @@ Battery.discharge(fullpowerclimbEnergy)# Discharge that energy
 print(f" | Remaining altitude to gain: {heighttoclimb} with an average ROC of {aveROC}. Climb for {TsecondClimb}")
 print(f' | Full power climb will consume {fullpowerclimbEnergy}')
 Battery.print_state()
-print(f'##End Climb to cruise altitude.') 
+print(f'##End Climb to cruse altitude.') 
 
-print(f"\n##Begin cruise")#Start cruise at 600 m alt
-cruiseTimeSec = 3600 * ur.sec
+print(f"\n##Begin cruse")#Start cruise at 600 m alt
+cruseTimeSec = 3600 * ur.sec
 atmo.printAtmos()    
-powerReqCruise = calc_PowerReq(atmo.Density,atmo.Vinfinity,MainWing.Area, OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt") #Get power for SLF
-energyCruise = ((powerReqCruise / (Motor.effic * ROUGH_PROP_EFFIC)) * cruiseTimeSec).to("J") #Joules for entire flight
-print(f"Steady level cruise at {atmo.Altitude} altitude and {atmo.Vinfinity} requires {powerReqCruise} of power.")
-print(f" -Power Draw from battery will be {powerReqCruise / (Motor.effic * ROUGH_PROP_EFFIC)} due to inefficency.")
-print(f"Cruse for {cruiseTimeSec}, using {energyCruise} of energy.")
+powerReqCruse = calc_PowerReq(atmo.Density,atmo.Vinfinity,MainWing.Area, OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt") #Get power for SLF
+energyCruse = ((powerReqCruse / (Motor.effic * ROUGH_PROP_EFFIC)) * cruseTimeSec).to("J") #Joules for entire flight
+print(f"Steady level cruse at {atmo.Altitude} altitude and {atmo.Vinfinity} requires {powerReqCruse} of power.")
+print(f" -Power Draw from battery will be {powerReqCruse / (Motor.effic * ROUGH_PROP_EFFIC)} due to inefficency.")
+print(f"Cruse for {cruseTimeSec}, using {energyCruse} of energy.")
 
-Battery.discharge(energyCruise) #End 
+Battery.discharge(energyCruse) #End 
 Battery.print_state()
-print(f"##End cruise")
+print(f"##End cruse")
 
 print(f'\n##Begin Decent')
 print(f'At this point we have very low energy remaining. Its ideal to glide to a landing.')
@@ -211,7 +211,8 @@ print(f"##End Decent")
 
 print(f"\n##Begin Landing")
 print(f" |->If we apprach landing at our glide slope angle we can save energy, but its going to be a hot landing.")
-MyLanding.apprachA = numpy.rad2deg(OptimGlideTheta.magnitude)
+MyLanding.apprachA = numpy.rad2deg(OptimGlideTheta.magnitude) #IF YOU WANT TO CHANGE APPROACH ANGLE DO IT HERE
+print(f' |-->Landing Approach Angle: {MyLanding.apprachA}')
 PowerReqTOland = calc_PowerReq(atmo.dens_trop_alt(MyLanding.Alt),MyLanding.V_A,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt") #power req for SLF at landing conditions
 thrReqTOland = (PowerReqTOland / MyLanding.V_A).to('newton') #Thrust for slf
 threxcessReqTOApprach = OppaStoppa.weight_takeoff * numpy.sin(numpy.deg2rad(-MyLanding.apprachA)) #Weight is accually helping us here
@@ -230,10 +231,3 @@ print("##End Landing")
 print("\n##END Flight")
 if SHOWGRAPHS:
     plt.show()
-
-
-
-
-
-
-
