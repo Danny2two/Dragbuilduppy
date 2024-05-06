@@ -18,6 +18,7 @@ class Craft():
     weight_takeoff = 0 * ur.newton #5085 * 9.81 #kg * g
     Cd0 = 0
     CLmax = 0
+    Clmin = 0
     CLrolling = 0
     K = 0
     PosStruturalNlimit = 1

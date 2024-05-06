@@ -179,7 +179,7 @@ class Takeoff:
         textstr = f'Takeoff Parameters \n Altitude: {self.Alt} \n ClimbAng: {self.climbAngle}° \n Obstacle: {self.height_Obs}'
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
-        ax.text(0.05, 1.1, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
+        ax.text(0.05, 0.8, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
 
         return fig
     
@@ -337,10 +337,10 @@ class Landing:
         ax.annotate(VelTouch,(GroundRoll.magnitude,0),arrowprops=arrowprops,bbox=bbox,xytext=(-100,20), textcoords='offset points')
 
         #Add info box
-        textstr = f'Landing Parameters \n Altitude: {self.Alt} \n ClimbAng: {self.apprachA}° \n Obstacle: {self.obsH}'
+        textstr = f'Landing Parameters \n Altitude: {self.Alt} \n ApprAng: {self.apprachA:0.2f}° \n Obstacle: {self.obsH}'
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # place a text box in upper left in axes coords
-        ax.text(0.05, 1.2, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
+        ax.text(0.05, 0.7, textstr, transform=ax.transAxes, fontsize=10, bbox=props)
 
         return fig
 

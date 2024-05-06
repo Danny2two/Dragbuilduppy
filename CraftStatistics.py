@@ -714,6 +714,66 @@ class CraftStatistics():
         theta = numpy.arcsin(sintheta)
         return theta
 
+    def graph_powerReq_vs_Vinf(self,alt,vmin,vmax):
+        """Graphs Power Req vs Velocity
+
+        Args:
+            alt (_type_): Altitude to use
+            vmin (_type_): min vel
+            vmax (_type_): max vel
+
+        Returns:
+            _type_: Matplot figure of power vs vinf
+        """        
+        OppaStoppa = self.StatsCraft
+        atmo = self.Active_Atmosphere
+        #Plot Power requred vs V_inf
+        vinfT = OppaStoppa.Atmosphere.Vinfinity
+        dens = self.Active_Atmosphere.dens_trop_alt(alt)
+        vstall = calc_Vstall(dens,OppaStoppa.weight_takeoff,OppaStoppa.mainwing.Area,OppaStoppa.CLmax)
+        k = calc_K_value(OppaStoppa.mainwing.OswaldE,OppaStoppa.mainwing.AR)
+        ur = self.ur
+
+        Vinfarr = numpy.linspace(vmin,vmax,100) * ur.m / ur.s
+
+        ytakeoff = []
+        yempty = []
+        yave = []
+        power = []
+        index = 0
+        for i in Vinfarr:
+            #q = calc_dynpressure(dens,i)
+            p = atmo.Density
+            ytakeoff.append(calc_PowerReq(p,i,OppaStoppa.mainwing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).magnitude/1000)
+            #yempty.append(calc_PowerReq(p,i,MainWing.Area,OppaStoppa.Cd0,k,OppaStoppa.weight_empty).magnitude/1000)
+            #yave.append((yempty[index] + ytakeoff[index])/2)
+            power.append(self.get_Power(alt,i).magnitude / 1000)
+
+            index +=1
+
+        fig, ThrVinf = plt.subplots()
+        ThrVinf.plot(Vinfarr,ytakeoff,"g",linewidth=1,label="Power Required at Takeoff weight")
+        ThrVinf.plot(Vinfarr,power,":b",linewidth=1,label="Power Available")
+
+        #ThrVinf.plot(Vinfarr,yempty,":b",linewidth=1,label="Power Required at Empty weight")
+        #ThrVinf.plot(Vinfarr,yave,"r",label="Power average")
+
+        #find closest value in vinf array to stall speed
+        minarr = numpy.absolute(Vinfarr-vstall)
+        locationofvstall = minarr.argmin()
+
+        minarr = numpy.absolute(Vinfarr-vinfT)
+        locationofvT = minarr.argmin()
+        plt.vlines(vinfT,0,ytakeoff[locationofvT],colors="purple",linestyles="dotted",label="Target V infinty")
+
+        plt.vlines(vstall,0,ytakeoff[locationofvstall],colors="red",linestyles="dotted",label="Stall V infinty")
+
+        plt.legend()
+        ThrVinf.set(xlabel='VInfinity (m/s)', ylabel='Power Required (kW)',
+            title='Vinfinity vs Power Required')
+        
+        return plt
+        
        
 
 if __name__ == "__main__":

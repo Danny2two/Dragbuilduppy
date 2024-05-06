@@ -403,7 +403,6 @@ class Propeller():
             eff = (max(ct * self.Max_effic_ADVR,0))/max(cp,0.001) #Some strangeness here to avoid a division by zero
             eff -= (0.2) - ((0.2) * (AdvanceRatio/self.Max_effic_ADVR))
         return eff
-
     
 class ElectricMotor():
     def __init__(self,Name:str,MaxPower,Effic,maxRPM,prop: Propeller,UnitReg: pint.UnitRegistry) -> None:

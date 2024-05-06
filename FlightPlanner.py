@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pint 
 import TakeOffLanding
 import Atmosphere
+from LoadFactor import LoadFactor
 from craft import Craft
 from StFl import *
 from Components import *
@@ -10,9 +11,9 @@ from CraftStatistics import CraftStatistics
 
 
 #Kinda assembling the Avengers with these import statements
-#This var will controll if you want to display all the graphs or not.
-SHOWGRAPHS = True
-ROUGH_PROP_EFFIC = 0.8 #VERY rough estimate of prop effic, This is a gross over simplification but its all we know in this class ig
+#This var will control if you want to display all the graphs or not.
+SHOWGRAPHS = True #Warning, LOTS of graphs. Like damn near every one we made.
+ROUGH_PROP_EFFIC = 0.8 #VERY rough estimate of prop effic, Code includes a more complicatesd Prop effic model, 0.8 is about where our props max out.
 
 
 #First we need to define our craft.
@@ -28,26 +29,26 @@ OppaStoppa.weight_empty = 15 * 9.81 * ur.newtons
 OppaStoppa.weight_takeoff = 15 * 9.81 * ur.newtons
 #Data from the wings CL vs alpha graph
 OppaStoppa.CLmax = 1.45
+OppaStoppa.Clmin = 0.9
 OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
 
 #Setting load maxes
 OppaStoppa.PosStruturalNlimit = 5
-OppaStoppa.NegStruturalNlimit = -3
+OppaStoppa.NegStruturalNlimit = 3
 
 
 """Defining the draggy components of our craft, each component has methods to calculate its own contribution to the crafts CD0"""
 #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
-N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",34.83,1.29,2.34,.532,-1,15,.12,.3,.02,atmo)
+N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",      34.83,1.29,    2.34,   .532,-1,15,0.12,0.3,0.02,atmo)
 MainWing = N4312Wing
-
-HorizontalTail = Wing3d("Horizontal Tail","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
-VerticalTail = Wing3d("Vertical Tail","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
+HorizontalTail = Wing3d("Horizontal Tail","NACA 0012",26.56,.206 * 2,.73 * 2,.274,0 ,15,0.12,0.3,0.008,atmo)
+VerticalTail = Wing3d("Vertical Tail","NACA 0012",    26.56,.206,    .73,    .274,0 ,15,0.12,0.3,0.004,atmo)
 
 #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
-MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,.02,MainWing.Area,atmo)
+MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,1,MainWing.Area,atmo)
 
 #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
-TailGear = FixedGear("Tail Gear",0.25,0.002,MainWing.Area,1.2,atmo)
+Gear = FixedGear("Tail Gear",0.25,0.008,MainWing.Area,1.2,atmo) #defined here but not included in crafts dragcompoennts 
 
 #MotorNacelle = Nacelle("MotorNacelle", length, maxCrossAra,interf, AreaWet, Mainwing.Area,atmo)
 
@@ -94,7 +95,7 @@ print('##End C_D0 Calculations\n')
 
 k = calc_K_value(MainWing.OswaldE,MainWing.AR)# K calc for mainwing
 q = calc_dynpressure(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity) #Dynamic pressure at cruse.
-#print("dynamic pressure" + str(q))
+print("dynamic pressure" + str(q) + " K: " + str(k))
 #print(f'Vstall calc inputs: Density: {OppaStoppa.Atmosphere.Density} Weight: {OppaStoppa.weight_takeoff} WingArea: {MainWing.Area}')
 vstall = calc_Vstall(OppaStoppa.Atmosphere.Density,OppaStoppa.weight_takeoff,MainWing.Area,OppaStoppa.CLmax) #Calcualte the stall speed
 
@@ -126,7 +127,6 @@ estCL = calc_req_CL(OppaStoppa.weight_takeoff,q,MainWing.Area)
 print("| Estimated CL for routine flight: " + str(estCL.magnitude))
 print("| Max Endurance:" + str(maxrendurance.to("hours")) )
 print("|  -at Vinf: " + str(vinfME.to("meters/second")))
-#print("Max Range:" + str(maxrange) + " meters")
 print("| Max Range:" + str(maxrange.to("kilometers")))
 print("|  -at Vinf: " + str(vinfMR.to("meters/second")))
 print("##End Cruise Condition Statisitcs \n")
@@ -230,4 +230,12 @@ Battery.print_state()
 print("##End Landing")
 print("\n##END Flight")
 if SHOWGRAPHS:
+    PRvsPA = MyStats.graph_PowerAval_vs_PowerReq(0,20000,300,25,"AVE",GRAPH_EXCESS=True)
+    PRvsPA.legend()
+    ROC = MyStats.graph_MAX_ROC_PROP(0,20000,300,"AVE")
+    ROC.legend()
+    PrVsVel = MyStats.graph_powerReq_vs_Vinf(600,10,70)
+    PrVsVel.legend()
+    MyLoadFactor = LoadFactor(OppaStoppa)
+    VnDiag = MyLoadFactor.genVnDiagram(10,65,200,atmo.Altitude,"TAKEOFF",OppaStoppa.Clmin,OppaStoppa.CLmax)
     plt.show()

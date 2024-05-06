@@ -175,8 +175,8 @@ class LoadFactor():
         ax.hlines((-1) * self.LoadCraft.NegStruturalNlimit,Vmin,Vmax,colors="red",linestyles="dotted")
         ax.vlines(vArr[LocNn1],-1,0,colors="orange")
 
-
-        ax.vlines(vstar,0,nplus,colors="grey",linestyles="dotted",label="V*")
+        vs = vstar.to("m/s")
+        ax.vlines(vstar,0,nplus,colors="grey",linestyles="dotted",label=f"V* {vs:0.2f}")
 
         ax.set_ybound((-1) * (self.LoadCraft.NegStruturalNlimit+1), self.LoadCraft.PosStruturalNlimit + 1 )
 
@@ -197,36 +197,45 @@ class LoadFactor():
 if __name__ == "__main__":
     #TESTING OF CLASS, NOT ACTUALL CRAFT PROPTERIES 
     OppaStoppa = Craft("OppaStoppa")
-    ur = OppaStoppa.ur
-    OppaStoppa.Atmosphere = Atmosphere(300,286.21, 9.77774,1.19,25,ur)
+    ur = OppaStoppa.ur # Getting the unit reg thats created with the craft to use.
+
+    #Giving the craft an atmosphere to use for calculations involving atmosphereic quantites
+    #In the future, when a function does not ask for atmosphereic conditions, it will use the atmospheres defaults assingned here.
+    OppaStoppa.Atmosphere = Atmosphere(600,286.21, 9.77774,1.19,25,ur) 
     atmo = OppaStoppa.Atmosphere
-    OppaStoppa.weight_empty = 28 * 9.81 * ur.newtons
-    OppaStoppa.weight_takeoff = 28 * 9.81 * ur.newtons
+    #Defining the crafts weights, becuse we are electric, they are the same
+    OppaStoppa.weight_empty = 15 * 9.81 * ur.newtons
+    OppaStoppa.weight_takeoff = 15 * 9.81 * ur.newtons
+    #Data from the wings CL vs alpha graph
     OppaStoppa.CLmax = 1.45
+    OppaStoppa.Clmin = 0.9
     OppaStoppa.CLrolling = 0.43 #assuming AOA of 2.5 degrees
 
+    #Setting load maxes
+    OppaStoppa.PosStruturalNlimit = 5
+    OppaStoppa.NegStruturalNlimit = 3
 
-    """Defining the draggy components of our craft"""
+
+    """Defining the draggy components of our craft, each component has methods to calculate its own contribution to the crafts CD0"""
     #Wing defined: NAME, AIRFOIL, SWEEP, AREA, SPAN, CHORD, angleZeroLift, AngleStall, TC, XC, AreaWIngObscured, atmosphere
-    N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",34.83,1.29,2.34,.532,-1,15,.12,.3,.02,atmo)
+    N4312Wing = Wing3d("Oppa Main Wing","NACA 4312",      34.83,1.29,    2.34,   .532,-1,15,0.12,0.3,0.02,atmo)
     MainWing = N4312Wing
-
-    HorizontalTail = Wing3d("HT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
-    VerticalTail = Wing3d("VT","NACA 0012",26.56,.206,.73,.274,0,15,0.12,0.03,0.12,atmo)
+    HorizontalTail = Wing3d("Horizontal Tail","NACA 0012",26.56,.206 * 2,.73 * 2,.274,0 ,15,0.12,0.3,0.008,atmo)
+    VerticalTail = Wing3d("Vertical Tail","NACA 0012",    26.56,.206,    .73,    .274,0 ,15,0.12,0.3,0.004,atmo)
 
     #Fuselage defined: NAME, Length, AreaTop, AreaSide, maxCrossSectionArea, Interf, MainwingArea, atmosphere
-    MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,.02,MainWing.Area,atmo)
+    MainFuselage = Fuselage("Oppa Fuselage",1.926,.48,.39,.019,1,MainWing.Area,atmo)
 
     #Gear defined: NAME, CD_component, FrontalArea, MainwingArea, Interf, atmosphere
-    TailGear = FixedGear("Tail Gear",0.25,0.002,MainWing.Area,1.2,atmo)
+    Gear = FixedGear("Tail Gear",0.25,0.008,MainWing.Area,1.2,atmo) #defined here but not included in crafts dragcompoennts 
 
-    """Defining our engines"""
+    #MotorNacelle = Nacelle("MotorNacelle", length, maxCrossAra,interf, AreaWet, Mainwing.Area,atmo)
 
-    
+    """Defining our engines, For the majority of the project we where using Turbojet engines,
+    Only in the last few weeks did we decide to change to Electric prop, so the implementation of props is somewhat rushed."""
 
-    #Define Prop
-    prop = Propeller("16X8",0.4064,8,ur)
-    def thrustproppoly(advr):
+    prop = Propeller("16X8",0.4064,8,ur) #Define a basic propeller, 0.4m in dia, pitch of 8 
+    def thrustproppoly(advr): # To calcualate thrust available, we are using a best fit polynomial from test data of the props
         try:
             advr  = advr.magnitude
         except:
@@ -235,7 +244,7 @@ if __name__ == "__main__":
         return thr
     prop.thrust_polynomal_func = thrustproppoly
 
-    def powerproppoly(advr):
+    def powerproppoly(advr): # To calcualate power available, we are using a best fit polynomial from test data of the props
         try:
             advr  = advr.magnitude
         except:
@@ -244,21 +253,19 @@ if __name__ == "__main__":
         return pwr
     prop.power_polynomal_func = powerproppoly
 
-    Motor = ElectricMotor("V804 KV170",5200,0.90,8000,prop,ur)
+    Motor = ElectricMotor("V804 KV170",5200,0.90,8000,prop,ur) # Defining our electric motors. Maxpower, Effic, MAXRPM, prop
 
-    Battery = Battery(139.76,4.32 * 2,45,ur)
-    #Battery.print_state()
+    Battery = Battery(139.76,4.32 * 2,45,ur) #Defining our battery pack. Density, Mass, voltage
+    #Battery.print_state() #Print our batteries state, to validate the parameters are correct.
 
-    OppaStoppa.powertrain = [Motor,Motor]
-    OppaStoppa.mainwing = MainWing
+    OppaStoppa.powertrain = [Motor,Motor] #Adding the motors to the craft, when the craft then neets to calcualte power or thrust available, it will add both motors together 
+    OppaStoppa.mainwing = MainWing #Give the aircraft a refrence to its mainwing, so it can access it area other properties 
 
-    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail]
-    OppaStoppa.PosStruturalNlimit = 5
-    OppaStoppa.NegStruturalNlimit = 2
+    OppaStoppa.dragcomponents = [MainWing,MainFuselage,HorizontalTail,VerticalTail] #List of all of the compoenents that will add to CD0
 
-    OppaStoppa.compute_components()
+    OppaStoppa.compute_components() #Compute the CD0
 
-    #Structural Limits of craft at n 5,-2
+    #Structural Limits of craft at n 5,-3
     LFA = LoadFactor(OppaStoppa)
     vinf = LFA.ActiveAtmos.Vinfinity
     alt = LFA.ActiveAtmos.Altitude
