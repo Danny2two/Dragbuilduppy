@@ -12,7 +12,7 @@ from CraftStatistics import CraftStatistics
 
 #Kinda assembling the Avengers with these import statements
 #This var will control if you want to display all the graphs or not.
-SHOWGRAPHS = True #Warning, LOTS of graphs. Like damn near every one we made.
+SHOWGRAPHS = False #Warning, LOTS of graphs. Like damn near every one we made.
 ROUGH_PROP_EFFIC = 0.8 #VERY rough estimate of prop effic, Code includes a more complicatesd Prop effic model, 0.8 is about where our props max out.
 
 
@@ -94,7 +94,7 @@ print('##End C_D0 Calculations\n')
 
 
 k = calc_K_value(MainWing.OswaldE,MainWing.AR)# K calc for mainwing
-q = calc_dynpressure(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity) #Dynamic pressure at cruse.
+q = calc_dynpressure(OppaStoppa.Atmosphere.Density,OppaStoppa.Atmosphere.Vinfinity) #Dynamic pressure at cruise.
 print("dynamic pressure" + str(q) + " K: " + str(k))
 #print(f'Vstall calc inputs: Density: {OppaStoppa.Atmosphere.Density} Weight: {OppaStoppa.weight_takeoff} WingArea: {MainWing.Area}')
 vstall = calc_Vstall(OppaStoppa.Atmosphere.Density,OppaStoppa.weight_takeoff,MainWing.Area,OppaStoppa.CLmax) #Calcualte the stall speed
@@ -168,7 +168,7 @@ if SHOWGRAPHS:
     to = MyTakeoff.Graph() #potentally show graph
 print(f'##End Takeoff Section')
 
-print(f'\n##Begin climb to cruse altitude.')
+print(f'\n##Begin climb to cruise altitude.')
 heighttoclimb = atmo.Altitude - (MyTakeoff.height_Obs + MyTakeoff.Alt)
 aveAlt = (atmo.Altitude + (MyTakeoff.height_Obs + MyTakeoff.Alt))/2
 aveROC = MyStats.get_ROC_vel_alt(aveAlt,atmo.Vinfinity,"AVE") * ur.m / ur.s #Unrestricted climb at full power (Vel pinned to 25 m/s, all excess power going into climb)
@@ -178,20 +178,20 @@ Battery.discharge(fullpowerclimbEnergy)# Discharge that energy
 print(f" | Remaining altitude to gain: {heighttoclimb} with an average ROC of {aveROC}. Climb for {TsecondClimb}")
 print(f' | Full power climb will consume {fullpowerclimbEnergy}')
 Battery.print_state()
-print(f'##End Climb to cruse altitude.') 
+print(f'##End Climb to cruise altitude.') 
 
-print(f"\n##Begin cruse")#Start cruise at 600 m alt
-cruseTimeSec = 3600 * ur.sec
+print(f"\n##Begin cruise")#Start cruise at 600 m alt
+cruiseTimeSec = 3600 * ur.sec
 atmo.printAtmos()    
-powerReqCruse = calc_PowerReq(atmo.Density,atmo.Vinfinity,MainWing.Area, OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt") #Get power for SLF
-energyCruse = ((powerReqCruse / (Motor.effic * ROUGH_PROP_EFFIC)) * cruseTimeSec).to("J") #Joules for entire flight
-print(f"Steady level cruse at {atmo.Altitude} altitude and {atmo.Vinfinity} requires {powerReqCruse} of power.")
-print(f" -Power Draw from battery will be {powerReqCruse / (Motor.effic * ROUGH_PROP_EFFIC)} due to inefficency.")
-print(f"Cruse for {cruseTimeSec}, using {energyCruse} of energy.")
+powerReqcruise = calc_PowerReq(atmo.Density,atmo.Vinfinity,MainWing.Area, OppaStoppa.Cd0,k,OppaStoppa.weight_takeoff).to("watt") #Get power for SLF
+energycruise = ((powerReqcruise / (Motor.effic * ROUGH_PROP_EFFIC)) * cruiseTimeSec).to("J") #Joules for entire flight
+print(f"Steady level cruise at {atmo.Altitude} altitude and {atmo.Vinfinity} requires {powerReqcruise} of power.")
+print(f" -Power Draw from battery will be {powerReqcruise / (Motor.effic * ROUGH_PROP_EFFIC)} due to inefficency.")
+print(f"cruise for {cruiseTimeSec}, using {energycruise} of energy.")
 
-Battery.discharge(energyCruse) #End 
+Battery.discharge(energycruise) #End 
 Battery.print_state()
-print(f"##End cruse")
+print(f"##End cruise")
 
 print(f'\n##Begin Decent')
 print(f'At this point we have very low energy remaining. Its ideal to glide to a landing.')
